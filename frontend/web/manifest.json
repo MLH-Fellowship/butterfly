@@ -1,6 +1,6 @@
 {
-    "name": "auth_frontend",
-    "short_name": "auth_frontend",
+    "name": "frontend",
+    "short_name": "frontend",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
