@@ -12,6 +12,8 @@ import 'package:gql/schema.dart';
 
 import 'eventpg.dart';
 // from 'query_mutation.dart' import QueryMutation;
+// screens
+import 'browse_events.dart';
 
 void main() {
   // runApp(const MyApp());
@@ -207,6 +209,8 @@ class _LoginPageState extends State<LoginPage> {
   void _loginPressed() {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => BrowseEvents()));
   }
 
   void _createAccountPressed() async {

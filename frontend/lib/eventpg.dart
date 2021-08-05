@@ -17,7 +17,12 @@ class EventPg extends StatelessWidget {
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: const _EventInfo(),
+        body: const _EventInfo(
+          eventName: 'My event',
+          time: 'time',
+          location: 'location',
+          description: 'description',
+        ),
       ),
     );
   }
