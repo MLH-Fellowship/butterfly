@@ -2,13 +2,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'graphql_conf.dart';
+import 'package:auth_frontend/nav_drawer.dart';
+
 
 class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        endDrawer: NavDrawer(),
         appBar: AppBar(title: const Text('Browse Events')),
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
