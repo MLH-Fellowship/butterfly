@@ -1,4 +1,4 @@
-from graphene_django import DjangoObjectType, DjangoListField
+from graphene_django import DjangoObjectType
 from users.models import Event
 import graphene
 
