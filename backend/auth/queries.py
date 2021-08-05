@@ -11,5 +11,5 @@ class Query(graphene.ObjectType):
         return Event.objects.all().order_by('date')
 
     # Resolver for post field
-    def resolve_event(self, parent, info, eventId):
+    def resolve_event(self, parent, eventId):
         return Event.objects.get(id=eventId)
