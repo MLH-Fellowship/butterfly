@@ -10,7 +10,22 @@ class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // get a list of all events from backend
-    final list = [0, 1, 2];
+    final list = [
+      {
+        "name": 'Martha\'s Birthday Bash',
+        "date": "2016-07-20T12:00:15+00:00",
+        "tag": "Meeting",
+        "organizer": "Martha's Family",
+        "location": "1234 W Sample St, Vancouver, BC"
+      },
+      {
+        "name": 'Martha\'s Birthday Bash',
+        "date": "2016-07-20T12:00:15+00:00",
+        "tag": "Meeting",
+        "organizer": "Martha's Family",
+        "location": "1234 W Sample St, Vancouver, BC"
+      }
+    ];
 
     // render each event as a card
     return Scaffold(
