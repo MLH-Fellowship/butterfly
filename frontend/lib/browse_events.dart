@@ -2,7 +2,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:auth_frontend/nav_drawer.dart';
+import 'nav_drawer.dart';
+import 'register_button.dart';
 
 
 class BrowseEvents extends StatelessWidget {
@@ -85,14 +86,10 @@ class BrowseEvents extends StatelessWidget {
           child: const Text('4', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
           )
         ),
-        ElevatedButton(
-          onPressed: null, 
-          // style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-          child: const Text('Register', style: TextStyle(fontSize: 11)) )
+        RegisterButton()
       ]
     );
   
-    // void _registerPressed() {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) => BrowseEvents()));
-    // }
 }
+
+
