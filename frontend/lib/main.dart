@@ -9,6 +9,8 @@ import 'package:gql/document.dart';
 import 'package:gql/language.dart';
 import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
+
+import 'eventpg.dart';
 // from 'query_mutation.dart' import QueryMutation;
 
 void main() {
@@ -28,12 +30,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Demo Asap',
-      theme: ThemeData(primarySwatch: Colors.red),
-      home: const LoginPage(
-        title: 'Sample Login App',
-      ),
-    );
+        title: 'Login Demo Asap',
+        theme: ThemeData(primarySwatch: Colors.red),
+        //home: const LoginPage(
+        //title: 'Sample Login App',
+        //),
+        routes: <String, WidgetBuilder>{
+          '/': (context) => LoginPage(title: 'Sample Login App'),
+          '/eventpg': (context) => EventPg(),
+        });
   }
 }
 
@@ -165,6 +170,16 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               child: const Text('Forgot Password?'),
               onPressed: _passwordReset,
+            ),
+            // @ToDo Remove eventpg textbutton after linked routing
+            TextButton(
+              child: const Text('GoTo EventPg'),
+              onPressed: () {
+                Route route =
+                    MaterialPageRoute(builder: (context) => EventPg());
+                Navigator.push(context, route);
+                //Navigator.push(context, '/eventpg');
+              },
             )
           ],
         ),
