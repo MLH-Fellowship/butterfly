@@ -8,7 +8,7 @@ class AddEvent(graphene.Mutation):
 
     event = graphene.Field(EventType)
 
-    def mutate(parent, info, input=None):
+    def mutate(self, parent, input=None):
         if input is None:
             return AddEvent(event=None)
         _event = Event.objects.create(**input)
