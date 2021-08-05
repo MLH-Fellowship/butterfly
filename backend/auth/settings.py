@@ -57,7 +57,11 @@ MIDDLEWARE = [
 ]
 
 GRAPHENE = {
+<<<<<<< HEAD
     'SCHEMA':'auth.schema.schema', 
+=======
+    'SCHEMA': 'auth.schema.schema', 
+>>>>>>> 6c7592b (saving before db delete)
     # 'MIDDLEWARE': [
     #     'graphql_jwt.middleware.JSONWebTokenMiddleware',
     # ],

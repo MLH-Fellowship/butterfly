@@ -14,7 +14,6 @@ class UserTestCase(TestCase):
         self.assertEqual("testuser@gmail.com", user.email)
         self.assertEqual("testpassword123", user.password)
 
-# Test event model string representation, user to user relation, and attendee to user relation
 class EventTestCase(TestCase):
     def test_string_representation(self):
         """ 
