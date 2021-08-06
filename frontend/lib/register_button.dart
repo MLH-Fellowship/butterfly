@@ -15,6 +15,6 @@ class RegisterButton extends StatelessWidget {
   }
 
   // void _registerPressed() {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) => BrowseEvents()));
-    // }
+  //     Navigator.push(context, MaterialPageRoute(builder: (context) => BrowseEvents()));
+  //   }
 }
