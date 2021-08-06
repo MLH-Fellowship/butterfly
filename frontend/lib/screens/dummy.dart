@@ -1,6 +1,6 @@
 // dummy page for testing
 import 'package:flutter/material.dart';
-import 'nav_drawer.dart';
+import '../widgets/nav_drawer.dart';
 
 class DummyPage extends StatelessWidget {
   @override

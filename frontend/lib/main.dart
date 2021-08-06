@@ -10,10 +10,10 @@ import 'package:gql/language.dart';
 import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
 
-import 'eventpg.dart';
+import 'screens/eventpg.dart';
 // from 'query_mutation.dart' import QueryMutation;
 // screens
-import 'browse_events.dart';
+import 'screens/browse_events.dart';
 
 void main() {
   // runApp(const MyApp());
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         //title: 'Sample Login App',
         //),
         routes: <String, WidgetBuilder>{
-          '/': (context) => LoginPage(title: 'Sample Login App'),
+          '/': (context) => LoginPage(title: 'Butterfly'),
           '/eventpg': (context) => EventPg(),
         });
   }
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       // appBar: _buildBar(context),
       appBar: AppBar(
-        title: const Text('Sample Login App'),
+        title: const Text('Butterfly'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
