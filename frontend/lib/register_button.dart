@@ -10,7 +10,7 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: null, 
-      // style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
+       //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
       child: const Text('Register', style: TextStyle(fontSize: 11)) );
   }
 

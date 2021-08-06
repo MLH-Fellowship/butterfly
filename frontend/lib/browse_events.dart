@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'nav_drawer.dart';
 import 'register_button.dart';
 
-
 class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,6 @@ class BrowseEvents extends StatelessWidget {
       shadowColor: Colors.grey.withOpacity(0.5),
       elevation: 5,
       margin: EdgeInsets.all(12),
-
       child: Container(
         padding: EdgeInsets.all(18),
         child: Row( 
@@ -116,5 +114,3 @@ class BrowseEvents extends StatelessWidget {
   }
   
 }
-
-
