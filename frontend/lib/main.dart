@@ -9,7 +9,6 @@ import 'package:gql/document.dart';
 import 'package:gql/language.dart';
 import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
-// from 'query_mutation.dart' import QueryMutation;
 
 // screens
 import 'browse_events.dart';
