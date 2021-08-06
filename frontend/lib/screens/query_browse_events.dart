@@ -1,5 +1,7 @@
-// Browse events screen
 import 'dart:ui';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../tut_api.dart';
 import 'package:flutter/material.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
@@ -8,36 +10,47 @@ class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // get a list of all events from backend
-    final list = [
-      {
-        "name": 'Martha\'s Birthday Bash',
-        "date": "2016-07-20T12:00:15+00:00",
-        "tag": "Meeting",
-        "organizer": "Martha's Family",
-        "location": "1234 W Sample St, Vancouver, BC"
-      },
-      {
-        "name": 'Martha\'s Birthday Bash',
-        "date": "2016-07-20T12:00:15+00:00",
-        "tag": "Meeting",
-        "organizer": "Martha's Family",
-        "location": "1234 W Sample St, Vancouver, BC"
-      }
-    ];
+    // final list = [
+    //   {
+    //     "name": 'Martha\'s Birthday Bash',
+    //     "date": "2016-07-20T12:00:15+00:00",
+    //     "tag": "Meeting",
+    //     "organizer": "Martha's Family",
+    //     "location": "1234 W Sample St, Vancouver, BC"
+    //   },
+    //   {
+    //     "name": 'Martha\'s Birthday Bash',
+    //     "date": "2016-07-20T12:00:15+00:00",
+    //     "tag": "Meeting",
+    //     "organizer": "Martha's Family",
+    //     "location": "1234 W Sample St, Vancouver, BC"
+    //   }
+    // ];
+    return Query(
+      options: QueryOptions(documentNode: gql(getEventsQuery), pollInterval: 1),
+       builder: (QueryResult result,{required VoidCallback refetch, required FetchMore fetchMore}) {
+         // render each event as a card
+          return Scaffold(
+              endDrawer: NavDrawer(),
+              appBar: AppBar(title: const Text('Browse Events')),
+              body: ListView(
+                padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
+                children: <Widget>[
+                  for(final event in result.data['allEvents']) extractEventData(event)
+                ],
+              ));
+       });
 
-    // render each event as a card
-    return Scaffold(
-        endDrawer: NavDrawer(),
-        appBar: AppBar(title: const Text('Browse Events')),
-        body: ListView(
-          padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
-          children: <Widget>[
-            for(final item in list) buildEventCard()
-          ],
-        ));
+
   }
 
-  Widget buildEventCard() => Card(
+  Widget extractEventData(List events, {list}){
+    print(events);
+    //parse data
+    return buildEventCard(events);
+  }
+
+  Widget buildEventCard(List events) => Card(
       // make corners rounded
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
 
