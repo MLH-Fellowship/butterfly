@@ -2,16 +2,10 @@
 import 'dart:ui';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'tut_api.dart';
+import '../tut_api.dart';
 import 'package:flutter/material.dart';
-
-import 'package:gql/ast.dart';
-import 'package:gql/document.dart';
-import 'package:gql/language.dart';
-import 'package:gql/operation.dart';
-import 'package:gql/schema.dart';
-import 'nav_drawer.dart';
-import 'register_button.dart';
+import '../widgets/nav_drawer.dart';
+import '../widgets/register_button.dart';
 
 class BrowseEvents extends StatelessWidget {
   @override
