@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 //screens
 import 'dummy.dart';
-import 'package:frontend/eventpg.dart';
+import 'eventpg.dart';
 
 class NavDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);

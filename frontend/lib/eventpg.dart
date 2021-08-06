@@ -2,7 +2,7 @@
 
 // This sample shows creation of a [Card] widget that shows album information
 // and two actions.
-import 'dart:ui';
+//import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'nav_drawer.dart';
 import 'register_button.dart';
@@ -25,6 +25,8 @@ class EventPg extends StatelessWidget {
           time: 'time',
           location: 'location',
           description: 'description',
+          attendee: 'attendee',
+          discussion: 'discussion',
         ),
       ),
     );
@@ -36,6 +38,7 @@ class _EventInfo extends StatelessWidget {
   const _EventInfo({
     Key? key,
     required this.eventName,
+    required this.date,
     required this.time,
     required this.location,
     required this.description,
@@ -44,6 +47,7 @@ class _EventInfo extends StatelessWidget {
   }) : super(key: key);
 
   final String eventName;
+  final String date;
   final String time;
   final String location;
   final String description;
@@ -70,6 +74,17 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+              Spacer(flex: 2),
+              Text(
+                date,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.black45,
+                ),
+              ),
+              Spacer(flex: 3),
               Text(
                 time,
                 maxLines: 1,
@@ -79,6 +94,7 @@ class _EventInfo extends StatelessWidget {
                   color: Colors.black45,
                 ),
               ),
+              Spacer(flex: 3),
               Text(
                 location,
                 maxLines: 1,
@@ -88,6 +104,7 @@ class _EventInfo extends StatelessWidget {
                   color: Colors.black45,
                 ),
               ),
+              Spacer(flex: 3),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
             ],
           ),
@@ -98,13 +115,6 @@ class _EventInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                location,
-                style: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.black87,
-                ),
-              ),
-              Text(
                 attendee,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -114,6 +124,7 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+              Spacer(flex: 2),
               Text(
                 description,
                 maxLines: 2,
@@ -124,6 +135,7 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+              Spacer(flex: 2),
               Text(
                 discussion,
                 maxLines: 2,
@@ -134,6 +146,7 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+              Spacer(flex: 2),
               RegisterButton(),
             ],
           ),
