@@ -1,4 +1,3 @@
-// Browse events screen
 import 'dart:ui';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -10,57 +9,7 @@ import '../widgets/register_button.dart';
 class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Query(
-  options: QueryOptions(
-    documentNode: gql(getEventsQuery)
-  ),
-  builder: (QueryResult result, { required VoidCallback refetch, required FetchMore fetchMore }) {
-    if (result.hasException) {
-        return Text(result.exception.toString());
-    }
-
-    List events = result.data['allEvents'];
-
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) {
-        final event = events[index];
-
-        return Text(event['name']);
-    });
-  });
-
-  
-
-
-    // return Query(
-    //     options:
-    //         QueryOptions(documentNode: gql(getEventsQuery), pollInterval: 1),
-    //     builder: (QueryResult result) {    
-    //         return Scaffold(
-    //           appBar: AppBar(
-    //             title: Text("Event List"),
-    //           ),
-    //           body: Center(
-    //               child: result.hasException
-    //                   ? Text(result.exception.toString())
-    //                   : result.loading
-    //                       ? CircularProgressIndicator()
-    //                       : extractEventData(result.data['allEvents'])),
-    // );
-            // render each event as a card
-            // return Scaffold(
-            //   endDrawer: NavDrawer(),
-            //   appBar: AppBar(title: const Text('Browse Events')),
-            //   body: ListView(
-            //         padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
-            //         children: [
-            //             // for(final event in result.data.allEvents) extractEventData(event)
-            //             extractEventData(result.data.allEvents)         
-            //       ]
-            //   ));
-      // });
-    // // get a list of all events from backend <--query here?
+    // get a list of all events from backend
     // final list = [
     //   {
     //     "name": 'Martha\'s Birthday Bash',
@@ -77,9 +26,23 @@ class BrowseEvents extends StatelessWidget {
     //     "location": "1234 W Sample St, Vancouver, BC"
     //   }
     // ];
+    return Query(
+      options: QueryOptions(documentNode: gql(getEventsQuery), pollInterval: 1),
+       builder: (QueryResult result,{required VoidCallback refetch, required FetchMore fetchMore}) {
+         // render each event as a card
+          return Scaffold(
+              endDrawer: NavDrawer(),
+              appBar: AppBar(title: const Text('Browse Events')),
+              body: ListView(
+                padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
+                children: <Widget>[
+                  for(final event in result.data['allEvents']) extractEventData(event)
+                ],
+              ));
+       });
 
-    
-  // }
+
+  }
 
   Widget extractEventData(List events, {list}){
     print(events);
@@ -101,7 +64,7 @@ class BrowseEvents extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildCardLeft(
-            eventName: 'Martha\'s Birthday Bash',// eventData[0]
+            eventName: 'Martha\'s Birthday Bash',
             location: '1234 W Sample St, Vancouver, BC',
             time: '6:00pm - 11:00pm',
             description: 'Celebrating Martha\'s 75th birthday'
@@ -162,4 +125,4 @@ class BrowseEvents extends StatelessWidget {
     );
   }
   
-}}
+}
