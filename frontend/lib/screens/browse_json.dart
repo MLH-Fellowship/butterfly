@@ -1,13 +1,40 @@
 // Browse events screen
 import 'dart:ui';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
 
-class BrowseEvents extends StatelessWidget {
+class BrowseEvents extends StatefulWidget {
+
+  @override
+  _BrowseEventsState createState() => _BrowseEventsState();
+}
+
+class _BrowseEventsState extends State<BrowseEvents>{
   @override
   Widget build(BuildContext context) {
+    List _allEvents = json.decode(dummy_events.data.toString());
+    // get a list of all events from backend
+
+    // final eventsJson = jsonDecode('dummy_events.json')['allEvents'];
+    // List<String> allEvents = eventsJson != null ? List.from(eventsJson) : null;
+    // List<dynamic> allEvents = jsonDecode('dummy_events.json');
+    // final String response =  rootBundle.loadString('assets/dummy_events.json').toString();
+    // final data =  json.decode(response);
+    // print(data);
+    // final allEvents = data['allEvents'];
+    // print(allEvents);
+
+    Future<void> readJson() async {
+      final String response = await rootBundle.loadString('assets/dummy_events.json');
+      final data = await json.decode(response);
+      print(data['allEvents'].runtimeType);
+      setState(() {
+        _allEvents = data['allEvents'];
+      });
+  }
     // render each event as a card
     return Scaffold(
         endDrawer: NavDrawer(),
@@ -15,7 +42,8 @@ class BrowseEvents extends StatelessWidget {
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
-            for(var i=0; i<3; i++) buildEventCard()
+            FutureBuilder(builder: context, snapshot){}
+            //for(final event in _allEvents) buildEventCard()
           ],
         ));
   }
