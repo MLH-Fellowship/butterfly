@@ -23,12 +23,15 @@ class BrowseEvents extends StatelessWidget {
   Widget buildEventCard() => Card(
       // make corners rounded
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-
       // add drop shadow
       shadowColor: Colors.grey.withOpacity(0.5),
       elevation: 5,
       margin: EdgeInsets.all(12),
-      child: Container(
+      child: InkWell( // wrap in gesture detector to make card clickable
+        onTap: _cardTapped,
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+        child:
+      Container(
         padding: EdgeInsets.all(18),
         child: Row( 
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +51,10 @@ class BrowseEvents extends StatelessWidget {
           )
         ],)
       )
-    );
+    )
+  );
+    
+  
 
     // card text in left col
     Widget buildCardLeft({required String eventName, required String location, required String time, required String description }) {
@@ -93,6 +99,10 @@ class BrowseEvents extends StatelessWidget {
         RegisterButton()
       ]
     );
+  }
+
+  void _cardTapped(){
+    print('card tapped');
   }
   
 }
