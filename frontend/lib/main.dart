@@ -9,6 +9,7 @@ import 'package:gql/document.dart';
 import 'package:gql/language.dart';
 import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'screens/eventpg.dart';
 // from 'query_mutation.dart' import QueryMutation;
