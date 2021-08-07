@@ -14,10 +14,12 @@ import 'eventpg.dart';
 // from 'query_mutation.dart' import QueryMutation;
 // screens
 import 'browse_events.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
   // runApp(const MyApp());
-
+  //for sensitive keys in .env which needs async
+  await dotenv.load(fileName: ".env");
   // create conf objs
   WidgetsFlutterBinding.ensureInitialized();
   runApp(GraphQLProvider(
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
         //title: 'Sample Login App',
         //),
         routes: <String, WidgetBuilder>{
-          '/': (context) => LoginPage(title: 'Sample Login App'),
+          '/': (context) => LoginPage(title: ' YOUR App'),
           '/eventpg': (context) => EventPg(),
         });
   }

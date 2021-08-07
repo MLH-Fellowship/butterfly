@@ -4,8 +4,8 @@
 // and two actions.
 //import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'nav_drawer.dart';
-import 'register_button.dart';
+import '../nav_drawer.dart';
+import '../register_button.dart';
 
 /// This is the main application widget.
 class EventPg extends StatelessWidget {
@@ -22,6 +22,7 @@ class EventPg extends StatelessWidget {
         appBar: AppBar(title: const Text(_title)),
         body: const _EventInfo(
           eventName: 'My event',
+          date: 'date',
           time: 'time',
           location: 'location',
           description: 'description',
@@ -84,7 +85,7 @@ class _EventInfo extends StatelessWidget {
                   color: Colors.black45,
                 ),
               ),
-              Spacer(flex: 3),
+              Spacer(),
               Text(
                 time,
                 maxLines: 1,
@@ -94,7 +95,7 @@ class _EventInfo extends StatelessWidget {
                   color: Colors.black45,
                 ),
               ),
-              Spacer(flex: 3),
+              Spacer(flex: 2),
               Text(
                 location,
                 maxLines: 1,
@@ -124,7 +125,7 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-              Spacer(flex: 2),
+              Spacer(flex: 1),
               Text(
                 description,
                 maxLines: 2,
@@ -146,7 +147,7 @@ class _EventInfo extends StatelessWidget {
                 ),
               ),
               const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-              Spacer(flex: 2),
+              Spacer(),
               RegisterButton(),
             ],
           ),
