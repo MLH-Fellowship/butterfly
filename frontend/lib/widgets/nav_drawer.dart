@@ -1,12 +1,12 @@
 // side menu that pops up when you click the hamburger icon
 
-import 'browse_events.dart';
-import 'main.dart';
+import '../screens/browse_events.dart';
+import '../main.dart';
 import 'package:flutter/material.dart';
 
 //screens
-import 'dummy.dart';
-import 'eventpg.dart';
+import '../screens/dummy.dart';
+import '../screens/eventpg.dart';
 
 class NavDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);

@@ -2,8 +2,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'nav_drawer.dart';
-import 'register_button.dart';
+import '/widgets/nav_drawer.dart';
+import '/widgets/register_button.dart';
 
 class BrowseEvents extends StatelessWidget {
   @override
