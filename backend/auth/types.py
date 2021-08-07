@@ -5,7 +5,7 @@ import graphene
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ("id", "name", "date", "time", "tag", "organizer", "location")
+        fields = ("id", "name", "date", "tag", "organizer", "location", "description")
 
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
@@ -14,3 +14,4 @@ class EventInput(graphene.InputObjectType):
     tag = graphene.String(required=True)
     organizer = graphene.String(required=True)
     location = graphene.String(required=True)
+    description = graphene.String(required=True)
