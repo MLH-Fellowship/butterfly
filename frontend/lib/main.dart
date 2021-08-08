@@ -1,25 +1,19 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/eventgoingpg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
-import 'package:gql/ast.dart';
-import 'package:gql/document.dart';
-import 'package:gql/language.dart';
-import 'package:gql/operation.dart';
-import 'package:gql/schema.dart';
 
-import 'screens/eventpg.dart';
-// from 'query_mutation.dart' import QueryMutation;
 // screens
 import 'screens/browse_events.dart';
+import 'package:flutter_config/flutter_config.dart';
 
-void main() {
-  // runApp(const MyApp());
-
-  // create conf objs
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
+
   runApp(GraphQLProvider(
     client: GraphQLConfiguration.client,
     child: const CacheProvider(child: MyApp()),
@@ -31,6 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(FlutterConfig.get('BuildableIdentifier'));
     return MaterialApp(
         title: 'Login Demo Asap',
         theme: ThemeData(primarySwatch: Colors.red),
@@ -39,7 +34,7 @@ class MyApp extends StatelessWidget {
         //),
         routes: <String, WidgetBuilder>{
           '/': (context) => LoginPage(title: 'Butterfly'),
-          '/eventpg': (context) => EventPg(),
+          '/eventgoingpg': (context) => EventGoingPg(),
         });
   }
 }
@@ -178,9 +173,8 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('GoTo EventPg'),
               onPressed: () {
                 Route route =
-                    MaterialPageRoute(builder: (context) => EventPg());
+                    MaterialPageRoute(builder: (context) => EventGoingPg());
                 Navigator.push(context, route);
-                //Navigator.push(context, '/eventpg');
               },
             )
           ],
