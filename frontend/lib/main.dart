@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(FlutterConfig.get('BuildableIdentifier'));
+    //print(FlutterConfig.get('BuildableIdentifier'));
     return MaterialApp(
         title: 'Login Demo Asap',
         theme: ThemeData(primarySwatch: Colors.red),
