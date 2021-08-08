@@ -6,8 +6,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
 
-//import 'screens/eventpg.dart';
-// from 'query_mutation.dart' import QueryMutation;
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -15,9 +13,6 @@ import 'package:flutter_config/flutter_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
-  // runApp(const MyApp());
-  //for sensitive keys in .env which needs async
-  // create conf objs
 
   runApp(GraphQLProvider(
     client: GraphQLConfiguration.client,
