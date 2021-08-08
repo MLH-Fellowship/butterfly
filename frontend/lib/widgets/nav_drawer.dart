@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 //screens
 import '../screens/dummy.dart';
-import '../screens/eventpg.dart';
+import '../screens/eventgoingpg.dart';
 
 class NavDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -119,7 +119,7 @@ class NavDrawer extends StatelessWidget {
         break;
       case 2:
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => EventPg()));
+            .push(MaterialPageRoute(builder: (context) => EventGoingPg()));
         break;
       // case 3:
       //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => YourPageName()));
