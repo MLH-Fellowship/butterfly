@@ -2,8 +2,11 @@
 import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:frontend/config/palette.dart';
+import '../widgets/custom_bar.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
+import 'eventpg.dart';
 
 class BrowseEvents extends StatelessWidget {
   @override
@@ -11,7 +14,7 @@ class BrowseEvents extends StatelessWidget {
     // render each event as a card
     return Scaffold(
         endDrawer: NavDrawer(),
-        appBar: AppBar(title: const Text('Browse Events')),
+        appBar: CustomBar('Browse Events', false),
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
@@ -25,6 +28,7 @@ class BrowseEvents extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       // add drop shadow
       shadowColor: Colors.grey.withOpacity(0.5),
+      color: Palette.secondary_background,
       elevation: 5,
       margin: EdgeInsets.all(12),
       child: InkWell( // wrap in gesture detector to make card clickable
@@ -103,6 +107,8 @@ class BrowseEvents extends StatelessWidget {
 
   void _cardTapped(){
     print('card tapped');
+    // Navigator.of(context).pop();
+    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
   }
   
 }

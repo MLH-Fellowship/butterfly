@@ -1,6 +1,8 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'config/palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
@@ -10,9 +12,8 @@ import 'package:gql/language.dart';
 import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
 
+import 'widgets/custom_bar.dart';
 import 'screens/eventpg.dart';
-// from 'query_mutation.dart' import QueryMutation;
-// screens
 import 'screens/browse_events.dart';
 
 void main() {
@@ -32,8 +33,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Login Demo Asap',
-        theme: ThemeData(primarySwatch: Colors.red),
+        title: 'Butterfly',
+        debugShowCheckedModeBanner: false, //hide the debug banner
+        theme: ThemeData(
+          scaffoldBackgroundColor: Palette.primary_background,
+          primaryColor: Palette.secondary_background,
+          accentColor: Palette.highlight_1,
+          buttonColor: Palette.highlight_1,
+          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
+          // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+          iconTheme: const IconThemeData(color: Palette.primary_text),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+          textTheme: GoogleFonts.montserratTextTheme()
+        ),
         //home: const LoginPage(
         //title: 'Sample Login App',
         //),
@@ -112,9 +124,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: _buildBar(context),
-      appBar: AppBar(
-        title: const Text('Butterfly'),
-      ),
+      appBar: CustomBar('Butterfly', true),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -139,9 +149,12 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: <Widget>[
           Container(
+            // TODO: change focus color of text field to primary_1
             child: TextField(
               controller: _emailFilter,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
             ),
           ),
           Container(
@@ -164,14 +177,17 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               child: const Text('Login'),
               onPressed: _loginPressed,
+              style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
             ),
             TextButton(
               child: const Text('Dont have an account? Tap here to register.'),
               onPressed: _formChange,
+              style: TextButton.styleFrom(primary: Palette.highlight_1)
             ),
             TextButton(
               child: const Text('Forgot Password?'),
               onPressed: _passwordReset,
+              style: TextButton.styleFrom(primary: Palette.highlight_1)
             ),
             // @ToDo Remove eventpg textbutton after linked routing
             TextButton(
@@ -182,6 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.push(context, route);
                 //Navigator.push(context, '/eventpg');
               },
+              style: TextButton.styleFrom(primary: Palette.highlight_1)
             )
           ],
         ),

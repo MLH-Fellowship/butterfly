@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../config/palette.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({
@@ -11,7 +12,9 @@ class RegisterButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: _registerPressed, 
        //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-      child: const Text('Register', style: TextStyle(fontSize: 11)) );
+      child: const Text('Register', style: TextStyle(fontSize: 11)),
+      style: ElevatedButton.styleFrom(primary: Palette.highlight_1), 
+      );
   }
 
   void _registerPressed() {

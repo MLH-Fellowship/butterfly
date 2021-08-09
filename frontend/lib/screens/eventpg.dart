@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
+import '../widgets/custom_bar.dart';
 
 /// This is the main application widget.
 class EventPg extends StatelessWidget {
@@ -15,20 +16,20 @@ class EventPg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
+    return Scaffold( //Nhi: changed to scaffold bc Material App overrides the styling
+      // title: _title,
+      // home: Scaffold(
         endDrawer: NavDrawer(),
-        appBar: AppBar(title: const Text(_title)),
+        appBar: CustomBar('My Event', false), //'false' aligns text to the left
         body: const _EventInfo(
-          eventName: 'My event',
+          eventName: 'Event Page',
           time: 'time',
           location: 'location',
           description: 'description',
           attendee: 'Martha',
           discussion: 'hello',
         ),
-      ),
+      //),
     );
   }
 }
