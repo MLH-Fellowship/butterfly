@@ -5,7 +5,6 @@ import '../../graphql_conf.dart';
 import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
-import 'package:flutter_chips_input/flutter_chips_input.dart';
 import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 

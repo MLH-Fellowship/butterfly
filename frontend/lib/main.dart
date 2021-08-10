@@ -44,9 +44,7 @@ class MyApp extends StatelessWidget {
         title: 'Login Demo Asap',
         theme: ThemeData(primarySwatch: Colors.red),
         debugShowCheckedModeBanner: false,
-        //home: const LoginPage(
-        //title: 'Sample Login App',
-        //),
+ 
         routes: <String, WidgetBuilder>{
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
