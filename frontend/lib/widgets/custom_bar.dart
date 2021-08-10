@@ -5,10 +5,10 @@ PreferredSizeWidget CustomBar(String name, bool centeredTitle) {
   // Custom app bar
   return AppBar(
     centerTitle: centeredTitle, // left-align the text
-    title: Text(name, 
+    title: Text(name.toString(), 
       style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 36,
+        fontSize: 28,
         color: Palette.primary_text
       ),       
     ),  

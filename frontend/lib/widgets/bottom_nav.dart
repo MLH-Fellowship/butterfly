@@ -14,10 +14,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    DisplayEvents(),
+    DisplayEvents(pageName: 'Browse Events',),
     DummyPage(),
-    DisplayEvents(),
-    DisplayEvents(),
+    DisplayEvents(pageName: 'Events you\'re hosting',),
+    DisplayEvents(pageName: 'Events you\'re attending',),
     DummyPage(),
   ];
 

@@ -9,7 +9,9 @@ import '../widgets/bottom_nav.dart';
 import 'eventpg.dart';
 
 class DisplayEvents extends StatefulWidget {
-  const DisplayEvents({ Key? key }) : super(key: key);
+  // takes a paramter to customize the page name
+  final String pageName;
+  const DisplayEvents({ Key? key, required this.pageName }) : super(key: key);
 
   @override
   _DisplayEventsState createState() => _DisplayEventsState();
@@ -21,7 +23,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
     // render each event as a card
     return Scaffold(
         // endDrawer: NavDrawer(),
-        appBar: CustomBar('Browse Events', false),
+        appBar: CustomBar(widget.pageName, false), //display a custom title
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
@@ -31,6 +33,8 @@ class _DisplayEventsState extends State<DisplayEvents> {
         bottomNavigationBar: BottomNav(),
       );
   }
+
+  //TODO: Based on param, determine type of request to make to the backend
 
   Widget buildEventCard() => Card(
       // make corners rounded

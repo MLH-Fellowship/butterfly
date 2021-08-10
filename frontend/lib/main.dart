@@ -14,7 +14,6 @@ import 'package:gql/schema.dart';
 
 import 'widgets/custom_bar.dart';
 import 'screens/eventpg.dart';
-import 'screens/browse_events.dart';
 import 'screens/display_events.dart';
 
 void main() {
@@ -228,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DisplayEvents()));
+        context, MaterialPageRoute(builder: (context) => DisplayEvents(pageName: 'Browse Events',)));
   }
 
   void _createAccountPressed() async {
