@@ -51,27 +51,30 @@ class _DisplayEventsState extends State<DisplayEvents> {
       child: InkWell( // wrap in gesture detector to make card clickable
         onTap: _cardTapped,
         borderRadius: BorderRadius.all(Radius.circular(50)),
-        child:
-      Container(
-        padding: EdgeInsets.all(18),
-        child: Row( 
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildCardLeft(
-            eventName: 'Martha\'s Birthday Bash',
-            location: '1234 W Sample St, Vancouver, BC',
-            time: '6:00pm - 11:00pm',
-            description: 'Celebrating Martha\'s 75th birthday'
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-            child: buildCardRight(
-              month: 'NOV',
-              day: '4'
-            ),
-          )
-        ],)
-      )
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Container(
+            padding: EdgeInsets.all(18),
+            child: Row( 
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildCardLeft(
+                eventName: 'Martha\'s Birthday Bash',
+                location: '1234 W Sample St, Vancouver, BC',
+                time: '6:00pm - 11:00pm',
+                description: 'Celebrating Martha\'s 75th birthday'
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: buildCardRight(
+                  month: 'NOV',
+                  day: '4'
+                ),
+              )
+            ],)
+      ),
+        )
+      
     )
   );
     
