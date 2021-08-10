@@ -1,7 +1,12 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/models/account.dart';
 import 'package:frontend/screens/eventgoingpg.dart';
+import 'package:frontend/screens/landingpg.dart';
+import 'package:frontend/screens/signup.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
@@ -9,6 +14,13 @@ import 'query_mutation.dart';
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'screens/registerform.dart';
+import 'package:frontend/screens/eventform.dart';
+import '../widgets/exp_datetime.dart';
+import 'package:flutter/services.dart';
+import 'package:frontend/screens/login.dart';
+
+GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,18 +35,26 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  get account => null; //for SignUp
+
   @override
   Widget build(BuildContext context) {
     //print(FlutterConfig.get('BuildableIdentifier'));
     return MaterialApp(
         title: 'Login Demo Asap',
         theme: ThemeData(primarySwatch: Colors.red),
+        debugShowCheckedModeBanner: false,
         //home: const LoginPage(
         //title: 'Sample Login App',
         //),
         routes: <String, WidgetBuilder>{
-          '/': (context) => LoginPage(title: 'Butterfly'),
+          '/': (context) => LandingPg(),
+          '/login': (context) => LoginPage(title: 'Butterfly'),
+          '/signup': (context) => SignUp(account: this.account, isAdd: false),
+          '/eventform': (context) => EventForm(account: this.account, isAdd: false),
           '/eventgoingpg': (context) => EventGoingPg(),
+          '/registerform': (context) => RegisterForm(),
+
         });
   }
 }
@@ -61,15 +81,16 @@ class LoginPage extends StatefulWidget {
 enum FormType { login, register }
 
 class _LoginPageState extends State<LoginPage> {
-  GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
+  //GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
   QueryMutation addMutation = QueryMutation();
 
   final TextEditingController _emailFilter = TextEditingController();
   final TextEditingController _passwordFilter = TextEditingController();
   String _email = "";
   String _password = "";
-  FormType _form = FormType
-      .login; // our default setting is to login, and we should switch to creating an account when the user chooses to
+  FormType _form = FormType.login;
+
+  var account; // our default setting is to login, and we should switch to creating an account when the user chooses to
 
   _LoginPageState() {
     _emailFilter.addListener(_emailListen);
@@ -170,13 +191,39 @@ class _LoginPageState extends State<LoginPage> {
             ),
             // @ToDo Remove eventpg textbutton after linked routing
             TextButton(
+              child: const Text('Register an Account'),
+              onPressed: () {
+                Route route =
+                    MaterialPageRoute(builder: (context) => RegisterForm());
+                Navigator.push(context, route);
+              },
+            ),
+            TextButton(
               child: const Text('GoTo EventPg'),
               onPressed: () {
                 Route route =
                     MaterialPageRoute(builder: (context) => EventGoingPg());
                 Navigator.push(context, route);
               },
-            )
+            ),
+            TextButton(
+              child: const Text('Sign Up'),
+              onPressed: () {
+                Route route = MaterialPageRoute(
+                    builder: (context) =>
+                        SignUp(account: this.account, isAdd: false));
+                Navigator.push(context, route);
+              },
+            ),
+            TextButton(
+              child: const Text('Create an Event'),
+              onPressed: () {
+                Route route = MaterialPageRoute(
+                    builder: (context) =>
+                        EventForm(account: this.account, isAdd: false));
+                Navigator.push(context, route);
+              },
+            ),
           ],
         ),
       );
@@ -184,10 +231,10 @@ class _LoginPageState extends State<LoginPage> {
       return Container(
         child: Column(
           children: <Widget>[
-            ElevatedButton(
-              child: const Text('Create an Account'),
-              onPressed: _createAccountPressed,
-            ),
+            // ElevatedButton(
+            //   child: const Text('Create an Account'),
+            //   onPressed: _createAccountPressed(),
+            // ),
             TextButton(
               child: const Text('Have an account? Click here to log in.'),
               onPressed: _formChange,
@@ -207,7 +254,7 @@ class _LoginPageState extends State<LoginPage> {
         context, MaterialPageRoute(builder: (context) => BrowseEvents()));
   }
 
-  void _createAccountPressed() async {
+  void _createAccountPressed(id, firstName, lastName, email, password) async {
     // ignore: avoid_print
     print('The user wants to create an account with $_email and $_password');
 
@@ -216,7 +263,8 @@ class _LoginPageState extends State<LoginPage> {
       MutationOptions(
         // documentNode: addMutation.register('$_email', '', '$_password'),
         // ignore: deprecated_member_use
-        documentNode: gql(addMutation.register(_email, '', _password)),
+        documentNode: gql(
+            addMutation.addAccount(id, firstName, lastName, email, password)),
       ),
     );
     if (result.data["success"] != null) {
