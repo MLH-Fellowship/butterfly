@@ -54,10 +54,13 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
             opacity: _logoController,
             child: Column(
               children: [
-                Text(
-                  'butterfly',
-                  style: TextStyle(
-                    fontSize: 60,
+                Padding(
+                  padding: EdgeInsets.all(40.0),
+                  child: Text(
+                    'butterfly',
+                    style: TextStyle(
+                      fontSize: 60,
+                    ),
                   ),
                 ),
                 butterflyLottie(),
