@@ -15,6 +15,7 @@ import 'package:gql/schema.dart';
 import 'widgets/custom_bar.dart';
 import 'screens/eventpg.dart';
 import 'screens/display_events.dart';
+import 'screens/screen_type.dart';
 
 void main() {
   // runApp(const MyApp());
@@ -124,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: _buildBar(context),
-      appBar: CustomBar('Butterfly', true),
+      appBar: CustomBar(ScreenType.Butterfly, true),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -227,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DisplayEvents(pageName: 'Browse Events',)));
+        context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
   }
 
   void _createAccountPressed() async {

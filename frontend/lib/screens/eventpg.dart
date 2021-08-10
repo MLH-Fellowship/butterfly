@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
 import '../widgets/custom_bar.dart';
+import 'screen_type.dart';
 
 /// This is the main application widget.
 class EventPg extends StatelessWidget {
@@ -20,7 +21,7 @@ class EventPg extends StatelessWidget {
       // title: _title,
       // home: Scaffold(
         endDrawer: NavDrawer(),
-        appBar: CustomBar('My Event', false), //'false' aligns text to the left
+        appBar: CustomBar(ScreenType.EventPg, false), //'false' aligns text to the left
         body: const _EventInfo(
           eventName: 'Event Page',
           time: 'time',

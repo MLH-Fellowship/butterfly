@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
+import '../screens/screen_type.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({ Key? key }) : super(key: key);
+  final ScreenType screen;
+  // final int pageIndex;
+  const BottomNav({ Key? key, required this.screen }) : super(key: key);
 
   @override
   _BottomNavState createState() => _BottomNavState();
@@ -14,10 +17,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    DisplayEvents(pageName: 'Browse Events',),
+    DisplayEvents(screen: ScreenType.Browse,),
     DummyPage(),
-    DisplayEvents(pageName: 'Events you\'re hosting',),
-    DisplayEvents(pageName: 'Events you\'re attending',),
+    DisplayEvents(screen: ScreenType.Hosting,),
+    DisplayEvents(screen: ScreenType.Attending,),
     DummyPage(),
   ];
 
@@ -31,6 +34,13 @@ class _BottomNavState extends State<BottomNav> {
 
   @override
   Widget build(BuildContext context) {
+    
+    setState(() {
+      _selectedIndex = widget.screen.index;
+    });
+
+    // print(_selectedIndex);
+    print(widget.screen.index);
     return BottomNavigationBar(
       backgroundColor: Palette.secondary_background,
       unselectedItemColor: Palette.primary_text,
@@ -61,7 +71,8 @@ class _BottomNavState extends State<BottomNav> {
           label: 'Profile'
         ),
       ],
-      currentIndex: _selectedIndex,
+      // currentIndex: _selectedIndex,
+      currentIndex: widget.screen.index,
       onTap: _onItemTap, // excl () bc we only call this func when we tap. Having () means we call it indefinitely
     );
   }

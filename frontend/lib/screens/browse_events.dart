@@ -8,6 +8,7 @@ import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
 import '../widgets/bottom_nav.dart';
 import 'eventpg.dart';
+import 'screen_type.dart';
 
 
 class BrowseEvents extends StatelessWidget {
@@ -16,14 +17,14 @@ class BrowseEvents extends StatelessWidget {
     // render each event as a card
     return Scaffold(
         // endDrawer: NavDrawer(),
-        appBar: CustomBar('Browse Events', false),
+        appBar: CustomBar(ScreenType.Browse, false),
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
             for(var i=0; i<3; i++) buildEventCard()
           ],
         ),
-        bottomNavigationBar: BottomNav(),
+        bottomNavigationBar: BottomNav(screen: ScreenType.Browse,),
       );
   }
 
