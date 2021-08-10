@@ -75,6 +75,7 @@ class _EventListState extends State<EventList> {
                   {VoidCallback? refetch, FetchMore? fetchMore}) {
         
                 final events = (result!.data['allEvents']);
+                print(events);
 
                 return Expanded(
                   child: ListView.builder(
@@ -82,8 +83,8 @@ class _EventListState extends State<EventList> {
                     itemBuilder: (BuildContext context, int index) {
                       final event = events[index];
                       return ListTile(
-                        title: Text(event['title']),
-                        subtitle: Text(event['description']),
+                        title: Text(event['name']),
+                        // subtitle: Text(event['description']),
                       );
                     },
                   ),
