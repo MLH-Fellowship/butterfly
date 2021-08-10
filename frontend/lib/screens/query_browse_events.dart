@@ -1,46 +1,64 @@
-// Browse events screen
 import 'dart:ui';
-import 'dart:convert';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+import '../tut_api.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/config/palette.dart';
-import '../widgets/custom_bar.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
-import '../widgets/bottom_nav.dart';
-import 'eventpg.dart';
-import 'screen_type.dart';
-
 
 class BrowseEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // render each event as a card
-    return Scaffold(
-        // endDrawer: NavDrawer(),
-        appBar: CustomBar(ScreenType.Browse, false),
-        body: ListView(
-          padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
-          children: <Widget>[
-            for(var i=0; i<3; i++) buildEventCard()
-          ],
-        ),
-        bottomNavigationBar: BottomNav(screen: ScreenType.Browse,),
-      );
+    // get a list of all events from backend
+    // final list = [
+    //   {
+    //     "name": 'Martha\'s Birthday Bash',
+    //     "date": "2016-07-20T12:00:15+00:00",
+    //     "tag": "Meeting",
+    //     "organizer": "Martha's Family",
+    //     "location": "1234 W Sample St, Vancouver, BC"
+    //   },
+    //   {
+    //     "name": 'Martha\'s Birthday Bash',
+    //     "date": "2016-07-20T12:00:15+00:00",
+    //     "tag": "Meeting",
+    //     "organizer": "Martha's Family",
+    //     "location": "1234 W Sample St, Vancouver, BC"
+    //   }
+    // ];
+    return Query(
+      options: QueryOptions(documentNode: gql(getEventsQuery), pollInterval: 1),
+       builder: (QueryResult result,{required VoidCallback refetch, required FetchMore fetchMore}) {
+         // render each event as a card
+          return Scaffold(
+              endDrawer: NavDrawer(),
+              appBar: AppBar(title: const Text('Browse Events')),
+              body: ListView(
+                padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
+                children: <Widget>[
+                  for(final event in result.data['allEvents']) extractEventData(event)
+                ],
+              ));
+       });
+
+
   }
 
-  Widget buildEventCard() => Card(
+  Widget extractEventData(List events, {list}){
+    print(events);
+    //parse data
+    return buildEventCard(events);
+  }
+
+  Widget buildEventCard(List events) => Card(
       // make corners rounded
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+
       // add drop shadow
       shadowColor: Colors.grey.withOpacity(0.5),
-      color: Palette.secondary_background,
       elevation: 5,
       margin: EdgeInsets.all(12),
-      child: InkWell( // wrap in gesture detector to make card clickable
-        onTap: _cardTapped,
-        borderRadius: BorderRadius.all(Radius.circular(50)),
-        child:
-      Container(
+      child: Container(
         padding: EdgeInsets.all(18),
         child: Row( 
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,10 +78,7 @@ class BrowseEvents extends StatelessWidget {
           )
         ],)
       )
-    )
-  );
-    
-  
+    );
 
     // card text in left col
     Widget buildCardLeft({required String eventName, required String location, required String time, required String description }) {
@@ -108,12 +123,6 @@ class BrowseEvents extends StatelessWidget {
         RegisterButton()
       ]
     );
-  }
-
-  void _cardTapped(){
-    print('card tapped');
-    // Navigator.of(context).pop();
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
   }
   
 }

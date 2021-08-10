@@ -1,4 +1,3 @@
-// Browse events screen
 import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -11,22 +10,35 @@ import 'eventpg.dart';
 import 'screen_type.dart';
 
 
-class BrowseEvents extends StatelessWidget {
+
+class DisplayEvents extends StatefulWidget {
+  // takes a paramter to customize the page name
+  // final String pageName;
+  final ScreenType screen;
+  const DisplayEvents({ Key? key, required this.screen }) : super(key: key);
+
+  @override
+  _DisplayEventsState createState() => _DisplayEventsState();
+}
+
+class _DisplayEventsState extends State<DisplayEvents> {
   @override
   Widget build(BuildContext context) {
     // render each event as a card
     return Scaffold(
         // endDrawer: NavDrawer(),
-        appBar: CustomBar(ScreenType.Browse, false),
+        appBar: CustomBar(widget.screen, false), //display a custom title
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
             for(var i=0; i<3; i++) buildEventCard()
           ],
         ),
-        bottomNavigationBar: BottomNav(screen: ScreenType.Browse,),
+        bottomNavigationBar: BottomNav(screen: widget.screen,),
       );
   }
+  
+  //TODO: Based on param, determine type of request to make to the backend
 
   Widget buildEventCard() => Card(
       // make corners rounded
@@ -112,8 +124,7 @@ class BrowseEvents extends StatelessWidget {
 
   void _cardTapped(){
     print('card tapped');
-    // Navigator.of(context).pop();
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
+    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
   }
-  
 }

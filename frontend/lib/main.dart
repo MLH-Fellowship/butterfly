@@ -19,6 +19,20 @@ import 'package:frontend/screens/eventform.dart';
 import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'config/palette.dart';
+import 'graphql_conf.dart';
+import 'query_mutation.dart';
+import 'package:gql/ast.dart';
+import 'package:gql/document.dart';
+import 'package:gql/language.dart';
+import 'package:gql/operation.dart';
+import 'package:gql/schema.dart';
+
+import 'widgets/custom_bar.dart';
+import 'screens/eventpg.dart';
+import 'screens/display_events.dart';
+import 'screens/screen_type.dart';
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
@@ -41,10 +55,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //print(FlutterConfig.get('BuildableIdentifier'));
     return MaterialApp(
-        title: 'Login Demo Asap',
-        theme: ThemeData(primarySwatch: Colors.red),
-        debugShowCheckedModeBanner: false,
- 
+        title: 'Butterfly',
+        debugShowCheckedModeBanner: false, //hide the debug banner
+        theme: ThemeData(
+          scaffoldBackgroundColor: Palette.primary_background,
+          primaryColor: Palette.secondary_background,
+          accentColor: Palette.highlight_1,
+          buttonColor: Palette.highlight_1,
+          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
+          // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+          iconTheme: const IconThemeData(color: Palette.primary_text),
+          fontFamily: GoogleFonts.montserrat().fontFamily,
+          textTheme: GoogleFonts.montserratTextTheme()
+        ),
+        //home: const LoginPage(
+        //title: 'Sample Login App',
+        //),
         routes: <String, WidgetBuilder>{
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
@@ -126,9 +152,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: _buildBar(context),
-      appBar: AppBar(
-        title: const Text('Butterfly'),
-      ),
+      appBar: CustomBar(ScreenType.Butterfly, true),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -153,9 +177,12 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: <Widget>[
           Container(
+            // @TODO: change focus color of text field to primary_1
             child: TextField(
               controller: _emailFilter,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
             ),
           ),
           Container(
@@ -178,14 +205,17 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               child: const Text('Login'),
               onPressed: _loginPressed,
+              style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
             ),
             TextButton(
               child: const Text('Dont have an account? Tap here to register.'),
               onPressed: _formChange,
+              style: TextButton.styleFrom(primary: Palette.highlight_1)
             ),
             TextButton(
               child: const Text('Forgot Password?'),
               onPressed: _passwordReset,
+              style: TextButton.styleFrom(primary: Palette.highlight_1)
             ),
             // @ToDo Remove eventpg textbutton after linked routing
             TextButton(
@@ -195,6 +225,8 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(builder: (context) => RegisterForm());
                 Navigator.push(context, route);
               },
+            style: TextButton.styleFrom(primary: Palette.highlight_1)
+
             ),
             TextButton(
               child: const Text('GoTo EventPg'),
@@ -203,6 +235,8 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(builder: (context) => EventGoingPg());
                 Navigator.push(context, route);
               },
+            style: TextButton.styleFrom(primary: Palette.highlight_1)
+
             ),
             TextButton(
               child: const Text('Sign Up'),
@@ -212,6 +246,8 @@ class _LoginPageState extends State<LoginPage> {
                         SignUp(account: this.account, isAdd: false));
                 Navigator.push(context, route);
               },
+            style: TextButton.styleFrom(primary: Palette.highlight_1)
+
             ),
             TextButton(
               child: const Text('Create an Event'),
@@ -221,7 +257,10 @@ class _LoginPageState extends State<LoginPage> {
                         EventForm(account: this.account, isAdd: false));
                 Navigator.push(context, route);
               },
+            style: TextButton.styleFrom(primary: Palette.highlight_1)
+
             ),
+    
           ],
         ),
       );
@@ -229,10 +268,11 @@ class _LoginPageState extends State<LoginPage> {
       return Container(
         child: Column(
           children: <Widget>[
-            // ElevatedButton(
-            //   child: const Text('Create an Account'),
-            //   onPressed: _createAccountPressed(),
-            // ),
+            ElevatedButton(
+              child: const Text('Create an Account'),
+              onPressed: null,
+              //onPressed: _createAccountPressed(id: 1, firstName:"d", lastName:"d", email:"fd", password:"d"),
+            ),
             TextButton(
               child: const Text('Have an account? Click here to log in.'),
               onPressed: _formChange,
@@ -249,29 +289,29 @@ class _LoginPageState extends State<LoginPage> {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BrowseEvents()));
+        context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
   }
 
-  void _createAccountPressed(id, firstName, lastName, email, password) async {
-    // ignore: avoid_print
-    print('The user wants to create an account with $_email and $_password');
+  // void _createAccountPressed(int id, String firstName, String lastName, String email, String password) async {
+  //   // ignore: avoid_print
+  //   print('The user wants to create an account with $_email and $_password');
 
-    GraphQLClient _client = graphQLConfiguration.clientToQuery();
-    QueryResult result = await _client.mutate(
-      MutationOptions(
-        // documentNode: addMutation.register('$_email', '', '$_password'),
-        // ignore: deprecated_member_use
-        documentNode: gql(
-            addMutation.addAccount(id, firstName, lastName, email, password)),
-      ),
-    );
-    if (result.data["success"] != null) {
-      print('The user was created successfully!');
-    } else {
-      print('There was an error!');
-      print(result.data["register"]["errors"]["email"][0]["message"]);
-    }
-  }
+  //   GraphQLClient _client = graphQLConfiguration.clientToQuery();
+  //   QueryResult result = await _client.mutate(
+  //     MutationOptions(
+  //       // documentNode: addMutation.register('$_email', '', '$_password'),
+  //       // ignore: deprecated_member_use
+  //       documentNode: gql(
+  //           addMutation.addAccount(id, firstName, lastName, email, password)),
+  //     ),
+  //   );
+  //   if (result.data["success"] != null) {
+  //     print('The user was created successfully!');
+  //   } else {
+  //     print('There was an error!');
+  //     print(result.data["register"]["errors"]["email"][0]["message"]);
+  //   }
+  // }
 
   void _passwordReset() {
     // ignore: avoid_print

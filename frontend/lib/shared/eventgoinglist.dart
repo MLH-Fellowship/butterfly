@@ -60,7 +60,7 @@ class _EventGoingListState extends State<EventGoingList> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => EventPg(eventgoing: eventgoing)));
+                builder: (context) => EventPg()));
       },
       contentPadding: EdgeInsets.all(25),
       title: Row(
