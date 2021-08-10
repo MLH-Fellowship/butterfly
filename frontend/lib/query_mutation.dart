@@ -1,19 +1,58 @@
 class QueryMutation {
-  String register(String email, String user, String password) {
+  String addAccount(String id, String firstName, String lastName, String email,
+      String password) {
     return """ 
       mutation {
-        register(
+        addAccount(
+          id: "$id",
+          firstName: "$firstName",
+          lastName: "$lastName",
           email: "$email",
-          username: "$user",
-          password1: "$password",
-          password2: "$password",
-        ) {
-          success,
-          errors,
-          token,
-          refreshToken
+          password: "$password",
+        ){
+          id
+          firstName
+          lastName
+          email
+          password
         }
       }
     """;
   }
+
+  String getAll() {
+    return """
+    {
+      accounts{
+        id
+        firstName
+        lastName
+        email
+        password
+      }
+    }
+    """;
+  }
+
+  String deleteAccount(id) {
+    return """
+      mutation{
+        deleteAccount(id:"$id"){
+          id
+        }
+      }
+      """;
+  }
+
+  String editAccount(
+      String id, String firstName, String lastName, String email) {
+    return """
+      mutation{
+        editAccount(id: "$id", firstName: "$firstName", lastName: "$lastName", email: "$email"){
+          email
+          }
+      }
+    """;
+  }
+  
 }

@@ -28,7 +28,7 @@ class _EventGoingListState extends State<EventGoingList> {
           description: 'description',
           attendee: 'attendee',
           discussion: 'discussion',
-          img: 'i1.png'),
+          img: '../../images/i2.png'),
       EventGoing(
           eventName: 'MLH 2',
           date: 'date',
@@ -37,7 +37,7 @@ class _EventGoingListState extends State<EventGoingList> {
           description: 'description',
           attendee: 'attendee',
           discussion: 'discussion',
-          img: 'i1.png'),
+          img: '../../images/i2.png'),
       EventGoing(
           eventName: 'MLH 3',
           date: 'date',
@@ -46,7 +46,7 @@ class _EventGoingListState extends State<EventGoingList> {
           description: 'description',
           attendee: 'attendee',
           discussion: 'discussion',
-          img: 'i1.png'),
+          img: 'i3.png'),
     ];
 
     _eventgoing.forEach((EventGoing event) {
@@ -63,7 +63,7 @@ class _EventGoingListState extends State<EventGoingList> {
                 builder: (context) => EventPg(eventgoing: eventgoing)));
       },
       contentPadding: EdgeInsets.all(25),
-      title: Column(
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text('${eventgoing.date} nights',
