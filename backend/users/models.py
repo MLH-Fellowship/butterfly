@@ -1,11 +1,14 @@
 from django.db import models
 
 # Create your models here.
-from django.contrib.auth.models import AbstractUser
 
-class CustomUser(AbstractUser):
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email' 
-    REQUIRED_FIELDS = ['username']
-    username = models.CharField(blank=True, max_length=254,)
-    email = models.EmailField(blank=False, max_length=254, unique=True, verbose_name='email address')
+class Event(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateTimeField()
+    tag = models.CharField(max_length=100)
+    organizer = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

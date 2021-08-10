@@ -1,21 +1,19 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/eventgoingpg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
-import 'package:gql/ast.dart';
-import 'package:gql/document.dart';
-import 'package:gql/language.dart';
-import 'package:gql/operation.dart';
-import 'package:gql/schema.dart';
-// from 'query_mutation.dart' import QueryMutation;
 
-void main() {
-  // runApp(const MyApp());
+// screens
+import 'screens/browse_events.dart';
+import 'package:flutter_config/flutter_config.dart';
 
-  // create conf objs
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
+
   runApp(GraphQLProvider(
     client: GraphQLConfiguration.client,
     child: const CacheProvider(child: MyApp()),
@@ -27,13 +25,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(FlutterConfig.get('BuildableIdentifier'));
     return MaterialApp(
-      title: 'Login Demo Asap',
-      theme: ThemeData(primarySwatch: Colors.red),
-      home: const LoginPage(
-        title: 'Sample Login App',
-      ),
-    );
+        title: 'Login Demo Asap',
+        theme: ThemeData(primarySwatch: Colors.red),
+        //home: const LoginPage(
+        //title: 'Sample Login App',
+        //),
+        routes: <String, WidgetBuilder>{
+          '/': (context) => LoginPage(title: 'Butterfly'),
+          '/eventgoingpg': (context) => EventGoingPg(),
+        });
   }
 }
 
@@ -106,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       // appBar: _buildBar(context),
       appBar: AppBar(
-        title: const Text('Sample Login App'),
+        title: const Text('Butterfly'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -165,6 +167,15 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               child: const Text('Forgot Password?'),
               onPressed: _passwordReset,
+            ),
+            // @ToDo Remove eventpg textbutton after linked routing
+            TextButton(
+              child: const Text('GoTo EventPg'),
+              onPressed: () {
+                Route route =
+                    MaterialPageRoute(builder: (context) => EventGoingPg());
+                Navigator.push(context, route);
+              },
             )
           ],
         ),
@@ -192,6 +203,8 @@ class _LoginPageState extends State<LoginPage> {
   void _loginPressed() {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => BrowseEvents()));
   }
 
   void _createAccountPressed() async {
