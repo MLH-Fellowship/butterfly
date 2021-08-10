@@ -1,4 +1,3 @@
-// Browse events screen
 import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -9,8 +8,14 @@ import '../widgets/register_button.dart';
 import '../widgets/bottom_nav.dart';
 import 'eventpg.dart';
 
+class DisplayEvents extends StatefulWidget {
+  const DisplayEvents({ Key? key }) : super(key: key);
 
-class BrowseEvents extends StatelessWidget {
+  @override
+  _DisplayEventsState createState() => _DisplayEventsState();
+}
+
+class _DisplayEventsState extends State<DisplayEvents> {
   @override
   Widget build(BuildContext context) {
     // render each event as a card
@@ -111,8 +116,7 @@ class BrowseEvents extends StatelessWidget {
 
   void _cardTapped(){
     print('card tapped');
-    // Navigator.of(context).pop();
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
+    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventPg()));
   }
-  
 }

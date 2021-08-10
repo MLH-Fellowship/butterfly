@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/dummy.dart';
-import 'package:frontend/screens/browse_events.dart';
+import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
 
 class BottomNav extends StatefulWidget {
@@ -14,10 +14,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    BrowseEvents(),
+    DisplayEvents(),
     DummyPage(),
-    DummyPage(),
-    DummyPage(),
+    DisplayEvents(),
+    DisplayEvents(),
     DummyPage(),
   ];
 
