@@ -6,6 +6,7 @@ import 'package:frontend/config/palette.dart';
 import '../widgets/custom_bar.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
+import '../widgets/bottom_nav.dart';
 import 'eventpg.dart';
 
 class BrowseEvents extends StatelessWidget {
@@ -13,14 +14,16 @@ class BrowseEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     // render each event as a card
     return Scaffold(
-        endDrawer: NavDrawer(),
+        // endDrawer: NavDrawer(),
         appBar: CustomBar('Browse Events', false),
         body: ListView(
           padding: EdgeInsets.fromLTRB(2, 5, 2, 5), //add padding to outside of the cards
           children: <Widget>[
             for(var i=0; i<3; i++) buildEventCard()
           ],
-        ));
+        ),
+        bottomNavigationBar: BottomNav(),
+      );
   }
 
   Widget buildEventCard() => Card(

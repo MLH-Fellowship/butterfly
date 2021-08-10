@@ -15,6 +15,7 @@ PreferredSizeWidget CustomBar(String name, bool centeredTitle) {
     toolbarHeight: 80.0,
     backgroundColor: Palette.primary_background,
     elevation: 0,
+    automaticallyImplyLeading: false, // rm the back arrow
   );
 }
 
