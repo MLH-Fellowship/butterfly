@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:page_transition/page_transition.dart';
 
 import 'package:frontend/screens/event_page.dart';
 import '../widgets/custom_bar.dart';
