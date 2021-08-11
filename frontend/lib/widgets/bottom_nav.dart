@@ -28,7 +28,7 @@ class _BottomNavState extends State<BottomNav> {
     setState(() {
       _selectedIndex = index;
     });
-    Navigator.of(context).pop();
+    // We don't pop, bc we want to return to this pg when we dismiss the event page
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => _navItems.elementAt(_selectedIndex)));
   }
 
