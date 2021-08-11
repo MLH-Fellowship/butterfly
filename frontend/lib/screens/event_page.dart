@@ -12,10 +12,10 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: change eventId to our param
+    // pass eventID to the query
     final String getEventById = """
         query getEventById {
-          event(eventId: "1") {
+          event(eventId: "${eventID}") {
             name
             date  
             tag
