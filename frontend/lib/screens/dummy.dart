@@ -1,4 +1,4 @@
-// dummy page for testing
+// dummy page for Event Page
 import 'package:flutter/material.dart';
 import 'package:frontend/widgets/custom_bar.dart';
 import 'package:frontend/widgets/nav_drawer.dart';

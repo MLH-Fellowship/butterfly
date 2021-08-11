@@ -14,8 +14,7 @@ import 'query_mutation.dart';
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'screens/registerform.dart';
-import 'package:frontend/screens/eventform.dart';
+import 'screens/event_register.dart';
 import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
@@ -75,9 +74,8 @@ class MyApp extends StatelessWidget {
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
           '/signup': (context) => SignUp(account: this.account, isAdd: false),
-          '/eventform': (context) => EventForm(account: this.account, isAdd: false),
           '/eventgoingpg': (context) => EventGoingPg(),
-          '/registerform': (context) => RegisterForm(),
+          '/registerform': (context) => RegisterForm(screen: ScreenType.Create),
 
         });
   }
@@ -222,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Register an Account'),
               onPressed: () {
                 Route route =
-                    MaterialPageRoute(builder: (context) => RegisterForm());
+                    MaterialPageRoute(builder: (context) => RegisterForm(screen: ScreenType.Create));
                 Navigator.push(context, route);
               },
             style: TextButton.styleFrom(primary: Palette.highlight_1)
@@ -244,17 +242,6 @@ class _LoginPageState extends State<LoginPage> {
                 Route route = MaterialPageRoute(
                     builder: (context) =>
                         SignUp(account: this.account, isAdd: false));
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
-
-            ),
-            TextButton(
-              child: const Text('Create an Event'),
-              onPressed: () {
-                Route route = MaterialPageRoute(
-                    builder: (context) =>
-                        EventForm(account: this.account, isAdd: false));
                 Navigator.push(context, route);
               },
             style: TextButton.styleFrom(primary: Palette.highlight_1)

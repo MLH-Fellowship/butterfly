@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:frontend/config/palette.dart';
 import 'package:frontend/widgets/nav_drawer.dart';
 import 'package:lottie/lottie.dart';
 import 'login.dart';
 import 'signup.dart';
-// import '../widgets/palette.dart';
+import 'login.dart';
+//import '../widgets/palette.dart';
+import 'delete.dart';
 
 class LandingPg extends StatefulWidget {
   const LandingPg({Key? key}) : super(key: key);
@@ -25,16 +28,16 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
     _logoController = AnimationController(
       vsync: this,
       //animate fade in
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 2000),
     );
     _logoController.forward();
 
     _buttonsController = AnimationController(
       vsync: this,
-      //animate
-      duration: Duration(milliseconds: 800),
+      duration: Duration(milliseconds: 2000),
     );
-    _buttonsController.forward();
+    Future.delayed(
+        Duration(milliseconds: 1000), () => _buttonsController.forward());
   }
 
   @override
@@ -47,10 +50,9 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      endDrawer: NavDrawer(),
-      // backgroundColor: Palette.primary_background;
-      backgroundColor: Color(0XFFFAEEE7),
+      // appBar: AppBar(),
+      // endDrawer: NavDrawer(),
+      backgroundColor: Palette.primary_background,
       body: Column(
         children: [
           FadeTransition(
@@ -58,7 +60,7 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.fromLTRB(40.0, 100.0, 40.0, 1.0),
                   child: Text(
                     'butterfly',
                     style: TextStyle(
@@ -74,8 +76,16 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
             opacity: _buttonsController,
             child: Column(
               children: [
-                //login(),
-                //signup(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(40.0, 1.0, 40.0, 5.0),
+                  child: Login(),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
+                //   child:
+                //   //SignUp(),
+                //   Delete(),
+                // ),
               ],
             ),
           ),

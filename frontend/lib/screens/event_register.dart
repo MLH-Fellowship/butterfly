@@ -1,73 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/screens/screen_type.dart';
 import 'package:velocity_x/velocity_x.dart';
+import '../widgets/bottom_nav.dart';
+class RegisterForm extends StatefulWidget {
+   final ScreenType screen;
+     const RegisterForm({ Key? key, required this.screen }) : super(key: key);
 
-class RegisterForm extends StatelessWidget {
+  @override
+  _RegisterFormState createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Sign Up',
-      home: Scaffold(
-
+    return Scaffold(
           //backgroundColor: Colors.transparent,
           backgroundColor: context.canvasColor,
-          
           body: SafeArea(
             child: Container(
                 padding: Vx.m32,
-
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    "Sign Up"
+                    "Create an Event"
                         .text
-                        .xl5
+                        .xl4
                         .bold
                         .color(context.theme.accentColor)
                         .make(),
-                    "Create your account".text.xl2.make(),
-
-                
+                    SizedBox(
+                      height: 25,
+                    ),
+                    "Event Details".text.xl2.make(),
                     CupertinoFormSection(
-                        header: "Personal Details".text.make(),
+                        header: "Event Details".text.make(),
                         children: [
                           CupertinoFormRow(
                             child: CupertinoTextFormFieldRow(
-                              placeholder: "Enter First Name",
+                              placeholder: "Enter Event Name",
                             ),
-                            prefix: "First Name".text.make(),
+                            prefix: "Event Name".text.make(),
                           ),
                           CupertinoFormRow(
                             child: CupertinoTextFormFieldRow(
-                              placeholder: "Enter Last Name",
+                              placeholder: "Enter Date",
                             ),
-                            prefix: "Last Name".text.make(),
-                          )
+                            prefix: "Date".text.make(),
+                          ),
+                          CupertinoFormRow(
+                            child: CupertinoTextFormFieldRow(
+                              placeholder: "Enter Start Time",
+                            ),
+                            prefix: "Start Time".text.make(),
+                          ),
+                          CupertinoFormRow(
+                            child: CupertinoTextFormFieldRow(
+                              placeholder: "Enter Description",
+                            ),
+                            prefix: "Description".text.make(),
+                          ),
                         ]),
-                    CupertinoFormSection(header: "User".text.make(), children: [
-                      CupertinoFormRow(
-                        child: CupertinoTextFormFieldRow(
-                          placeholder: "Enter email",
-                        ),
-                        prefix: "Email".text.make(),
-                      ),
-                      
-                      CupertinoFormRow(
-                        child: CupertinoTextFormFieldRow(
-                          obscureText: true,
-                        ),
-                        prefix: "Password".text.make(),
-                      ),
-                      CupertinoFormRow(
-                        child: CupertinoTextFormFieldRow(
-                          obscureText: true,
-                        ),
-                        prefix: "Confirm Password".text.make(),
-                      )
-                    ]),
+                    // CupertinoFormSection(header: "User".text.make(), children: [
+                    //   CupertinoFormRow(
+                    //     child: CupertinoTextFormFieldRow(
+                    //       placeholder: "Enter Description",
+                    //     ),
+                    //     prefix: "Description".text.make(),
+                    //   ),
+                    // ]),
                     20.heightBox,
                     Material(
                       color: context.theme.buttonColor,
@@ -79,7 +82,7 @@ class RegisterForm extends StatelessWidget {
                           height: 50,
                           alignment: Alignment.center,
                           child: Text(
-                            "SignUp",
+                            "Create Event",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -91,7 +94,7 @@ class RegisterForm extends StatelessWidget {
                     ).centered(),
                   ],
                 )),
-          )
+          ),
           // FormBuilder(
           //   key: _formKey,
           //   child: Column(
@@ -105,7 +108,8 @@ class RegisterForm extends StatelessWidget {
           //   onChanged: () => print("Form has been changed"),
           //   autovalidateMode: AutovalidateMode.always,
           // ),
-          ),
+          bottomNavigationBar: BottomNav(screen: widget.screen,),
+
     );
   }
 }
