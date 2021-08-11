@@ -89,7 +89,7 @@ class EventPage extends StatelessWidget {
             children: [
                 Column(
                 children: [
-                  Text(month, style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+                  Text(month, style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal)),
                   Text(day, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
                 ]   
               )
@@ -99,20 +99,20 @@ class EventPage extends StatelessWidget {
           Column(
             children: [
               // title
-              Text(eventName, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              Text(eventName, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
               // location
               Container(
-                padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Column(
                   children: [
-                    Text(location, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
+                    Text(location, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
                     ],
                 )
               ),
               // time
               Container(
-                padding: EdgeInsets.fromLTRB(0, 2, 0, 24),
-                child: Text(time, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
+                padding: EdgeInsets.fromLTRB(0, 2, 0, 28),
+                child: Text(time, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
                 )
               ),
             ],
@@ -135,10 +135,10 @@ class EventPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // heading
-                    Text(heading, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                    Text(heading, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis),
                     const Divider(
                       color: Palette.primary_text,
-                      height: 16,
+                      height: 14,
                       thickness: 1.5,
                     ),
                     // body
