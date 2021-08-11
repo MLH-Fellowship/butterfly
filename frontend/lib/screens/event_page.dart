@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
+
 import '../config/palette.dart';
 
 class EventPage extends StatelessWidget {
@@ -8,6 +11,18 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: change eventId to our param
+    final String getEventById = """
+        query getEventById {
+          event(eventId: "1") {
+            name
+            date  
+            tag
+            organizer
+            location
+          }
+        }
+      """;
 
     return Scaffold(
       appBar: AppBar(
@@ -23,23 +38,32 @@ class EventPage extends StatelessWidget {
         // title: Text('Browse Events'),
         // centerTitle: false,
       ),
-      body: Container(
-        padding: EdgeInsets.all(30.0),
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Palette.secondary_background,
-          borderRadius: BorderRadius.circular(40.0)
+      body: Query(
+        options: QueryOptions(
+          documentNode: gql(getEventById),
+          fetchPolicy: FetchPolicy.networkOnly,
         ),
-        child: renderContent(
-          'Martha\'s Birthday Bash', 
-          '1234 W Sample St, Vancouver, BC', 
-          'NOV', 
-          '4', 
-          '6:00pm - 11:00pm', 
-          'Celebrating Martha\'s 75th birthday. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        )
-      )
+        builder: (QueryResult? result,
+            {VoidCallback? refetch, FetchMore? fetchMore}) {
+          final event = result!.data['event'];
+          return Container(
+            padding: EdgeInsets.all(30.0),
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Palette.secondary_background,
+              borderRadius: BorderRadius.circular(40.0)
+            ),
+            child: renderContent(
+              event['name'],
+              event['location'],
+              event['date'].substring(5, 7),
+              event['date'].substring(8, 10),
+              event['date'],
+              'Team meeting to brief each other on our progress and decide next steps.') //not sure
+            );
+        },
+      ),
     );
   }
 

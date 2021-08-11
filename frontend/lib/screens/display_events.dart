@@ -104,7 +104,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                         eventName: event['name'],
                         location: event['location'],
                         time: event['date'],
-                        description: 'Celebrating Martha\'s 75th birthday'),
+                        description: 'Team meeting to brief each other'),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
@@ -146,9 +146,12 @@ class _DisplayEventsState extends State<DisplayEvents> {
                       fontStyle: FontStyle.italic))),
           Container(
               padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: Text(description,
-                  style: TextStyle(fontSize: 15),
-                  overflow: TextOverflow.ellipsis))
+              child: 
+                  Text(description,
+                      style: TextStyle(fontSize: 15),
+                      overflow: TextOverflow.ellipsis)
+                ),
+            
         ]);
   }
 
