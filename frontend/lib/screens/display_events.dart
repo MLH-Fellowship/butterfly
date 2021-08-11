@@ -13,6 +13,7 @@ import 'browse_events.dart';
 import 'eventpg.dart';
 import 'screen_type.dart';
 import 'event_page.dart';
+import 'map_month.dart';
 
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
@@ -113,7 +114,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
-                        month: event['date'].substring(5, 7),
+                        month: mapMonth(event['date'].substring(5, 7)),
                         day: event['date'].substring(8, 10),
                       ),
                     )

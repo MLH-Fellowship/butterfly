@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'map_month.dart';
 
 
 import '../config/palette.dart';
@@ -48,7 +49,7 @@ class EventPage extends StatelessWidget {
             {VoidCallback? refetch, FetchMore? fetchMore}) {
           final event = result!.data['event'];
           return Container(
-            padding: EdgeInsets.all(30.0),
+            padding: EdgeInsets.all(45.0),
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -63,8 +64,8 @@ class EventPage extends StatelessWidget {
                     renderContent(
                       event['name'],
                       event['location'],
-                      event['date'].substring(5, 7),
-                      event['date'].substring(8, 10),
+                      mapMonth(event['date'].substring(5, 7)), // month
+                      event['date'].substring(8, 10), // day
                       event['date'],
                       'Team meeting to brief each other on our progress and decide next steps. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
                     ),
@@ -99,19 +100,17 @@ class EventPage extends StatelessWidget {
           Column(
             children: [
               // title
-              Text(eventName, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Text(eventName, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
               // location
               Container(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Column(
-                  children: [
-                    Text(location, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
-                    ],
-                )
+                child: Text(location, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
               ),
               // time
               Container(
-                padding: EdgeInsets.fromLTRB(0, 2, 0, 28),
+                padding: EdgeInsets.fromLTRB(0, 2, 0, 40),
                 child: Text(time, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
                 )
               ),
@@ -119,9 +118,9 @@ class EventPage extends StatelessWidget {
           ),
           // description 
           renderSection('Description', description),
-          SizedBox(height: 42,), // add spacing b/w sections
+          SizedBox(height: 50,), // add spacing b/w sections
           renderSection('Attendees', 'TBD'),
-          SizedBox(height: 42,),
+          SizedBox(height: 50,),
           renderSection('Discussion', 'TBD '),
         ]
     );
