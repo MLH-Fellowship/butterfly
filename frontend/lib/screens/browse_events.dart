@@ -34,7 +34,7 @@ class BrowseEvents extends StatelessWidget {
   }
 }
 
-class EventList extends StatefulWidget {
+class EventList<List> extends StatefulWidget {
   const EventList({
     Key? key,
   }) : super(key: key);
