@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/screens/screen_type.dart';
 import 'package:velocity_x/velocity_x.dart';
+import '../widgets/bottom_nav.dart';
+class RegisterForm extends StatefulWidget {
+   final ScreenType screen;
+     const RegisterForm({ Key? key, required this.screen }) : super(key: key);
 
-class RegisterForm extends StatelessWidget {
+  @override
+  _RegisterFormState createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Create an Event',
       debugShowCheckedModeBanner: false, //hide the debug banner
-
       home: Scaffold(
-
           //backgroundColor: Colors.transparent,
           backgroundColor: context.canvasColor,
           body: SafeArea(
@@ -90,7 +97,7 @@ class RegisterForm extends StatelessWidget {
                     ).centered(),
                   ],
                 )),
-          )
+          ),
           // FormBuilder(
           //   key: _formKey,
           //   child: Column(
@@ -104,6 +111,8 @@ class RegisterForm extends StatelessWidget {
           //   onChanged: () => print("Form has been changed"),
           //   autovalidateMode: AutovalidateMode.always,
           // ),
+          bottomNavigationBar: BottomNav(screen: widget.screen,),
+
           ),
     );
   }

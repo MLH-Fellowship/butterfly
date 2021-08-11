@@ -4,7 +4,7 @@ import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
 import 'package:frontend/screens/eventpg.dart';
-import 'package:frontend/screens/registerform.dart';
+import 'package:frontend/screens/event_register.dart';
 import '../screens/screen_type.dart';
 
 class BottomNav extends StatefulWidget {
@@ -20,7 +20,7 @@ class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
     DisplayEvents(screen: ScreenType.Browse,),
-    RegisterForm(),
+    RegisterForm(screen: ScreenType.Create,),
     DisplayEvents(screen: ScreenType.Hosting,),
     DisplayEvents(screen: ScreenType.Attending,),
     DummyPage(),
