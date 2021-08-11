@@ -80,6 +80,8 @@ class _DisplayEventsState extends State<DisplayEvents> {
     );
   }
 
+  //TODO: Based on param, determine type of request to make to the backend
+
   Widget buildEventCard(event) => Card(
       // make corners rounded
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
