@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:frontend/screens/event_page.dart';
 import '../widgets/custom_bar.dart';
 import '../widgets/nav_drawer.dart';
 import '../widgets/register_button.dart';
@@ -10,6 +11,7 @@ import '../widgets/bottom_nav.dart';
 import 'browse_events.dart';
 import 'eventpg.dart';
 import 'screen_type.dart';
+import 'event_page.dart';
 
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
@@ -169,8 +171,9 @@ class _DisplayEventsState extends State<DisplayEvents> {
 
   void _cardTapped() {
     print('card tapped');
-    Navigator.of(context).pop();
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => EventPg()));
+    // We don't pop, bc we want to return to this pg when we dismiss the event page
+    Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (context) => EventPage(eventID: 1)));
   }
 }
