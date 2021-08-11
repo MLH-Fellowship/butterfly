@@ -88,19 +88,23 @@ class _DisplayEventsState extends State<DisplayEvents> {
       return Column(
       crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
       children: [
+        // event name
         Container(
-          child: Text(eventName, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),)
+          child: Text(eventName, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)
         ),
+        // location
         Container(
           padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
           child: Text(location, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
           )
         ),
+        // time
         Container(
           padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
           child: Text(time, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
           )
         ),
+        // description
         Container(
           padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
           child: Text(description, style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis)

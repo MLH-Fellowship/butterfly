@@ -23,6 +23,36 @@ class EventPage extends StatelessWidget {
         // title: Text('Browse Events'),
         // centerTitle: false,
       ),
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Palette.secondary_background,
+          borderRadius: BorderRadius.circular(40.0)
+        ),
+        child: CustomScrollView(slivers: [
+           SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
+              children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,//pushes icon to the end
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Event Name', 
+                    style: TextStyle(fontSize: 28),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Icon(CupertinoIcons.ellipsis)
+                  )
+              ],)
+            ],),
+          )
+        ],),
+      ),
     );
   }
 }
