@@ -37,7 +37,7 @@ class EventPage extends StatelessWidget {
           'NOV', 
           '4', 
           '6:00pm - 11:00pm', 
-          'Celebrating Martha\'s 75th birthday'
+          'Celebrating Martha\'s 75th birthday. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         )
       )
     );
@@ -63,7 +63,7 @@ class EventPage extends StatelessWidget {
                 Column(
                   children: [
                     // title
-                    Text(eventName, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                    Text(eventName, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
                     // location
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
@@ -75,7 +75,7 @@ class EventPage extends StatelessWidget {
                     ),
                     // time
                     Container(
-                      padding: EdgeInsets.fromLTRB(0, 2, 0, 32),
+                      padding: EdgeInsets.fromLTRB(0, 2, 0, 24),
                       child: Text(time, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
                       )
                     ),
@@ -86,7 +86,9 @@ class EventPage extends StatelessWidget {
                 SizedBox(height: 42,), // add spacing b/w sections
                 renderSection('Attendees', 'TBD'),
                 SizedBox(height: 42,),
-                renderSection('Discussion', 'TBD')
+                renderSection('Discussion', 'TBD'),
+                // button
+                // renderButton('Register')
               ]
           );
   }
@@ -102,15 +104,19 @@ class EventPage extends StatelessWidget {
                     Text(heading, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
                     const Divider(
                       color: Palette.primary_text,
-                      height: 10,
+                      height: 16,
                       thickness: 1.5,
                     ),
                     // body
-                    Text(body, style: TextStyle(fontSize: 15), overflow: TextOverflow.ellipsis)
+                    Text(body, style: TextStyle(fontSize: 15),)
                   ],
                 ),
               ),
             ],
           );             
   } // renderContent
+
+  Widget renderButton(String mode){
+    return ElevatedButton(onPressed: () {}, child: Text(mode));
+  }
 }
