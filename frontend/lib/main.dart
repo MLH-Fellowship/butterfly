@@ -288,8 +288,17 @@ class _LoginPageState extends State<LoginPage> {
   void _loginPressed() {
     // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+    Navigator.push(context, PageRouteBuilder(
+        opaque: false,
+        transitionDuration: Duration.zero,
+        pageBuilder: (BuildContext context, _, __) {
+          //return Center(child: Text('My PageRoute'));
+          return DisplayEvents(screen: ScreenType.Browse,);
+        }
+      )
+    );
   }
 
   // void _createAccountPressed(int id, String firstName, String lastName, String email, String password) async {
