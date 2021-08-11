@@ -118,9 +118,11 @@ class _DisplayEventsState extends State<DisplayEvents> {
       return Column(
       crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
       children: [
+        //month
         Container(
           child: Text(month, style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),)
         ),
+        // day
         Container(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
           child: Text(day, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
