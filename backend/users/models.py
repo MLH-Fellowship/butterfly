@@ -12,3 +12,9 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+class User(models.Model):
+    name = models.CharField(max_length = 100)
+    dateJoined = models.DateTimeField()
+    birthday = models.DateTimeField()
+    typeOfUser = models.CharField(max_length = 100)
+    
