@@ -23,15 +23,17 @@ class EventPage extends StatelessWidget {
         query getEventById {
           event(eventId: "${eventID}") {
             name
-            date  
+            date
+            startTime
+            endTime  
             tag
-            organizer
             location
             description
           }
         }
       """;
 
+    VoidCallback refetchQuery;
     return Scaffold(
       appBar: AppBar(
         // leadingWidth: 145.0, //to avoid overflow error
@@ -51,8 +53,16 @@ class EventPage extends StatelessWidget {
           documentNode: gql(getEventById),
           fetchPolicy: FetchPolicy.networkOnly,
         ),
-        builder: (QueryResult? result,
-            {VoidCallback? refetch, FetchMore? fetchMore}) {
+        builder: (QueryResult? result,{VoidCallback? refetch, FetchMore? fetchMore}) {
+          // handle exceptions and loading
+          refetchQuery = refetch!;
+          if (result!.hasException) {
+            return Text(result.exception.toString());
+          }
+          if (result.loading) {
+            return Text(''); //just display a blank page when loading
+          }
+
           final event = result!.data['event'];
           return Container(
             padding: EdgeInsets.all(45.0),

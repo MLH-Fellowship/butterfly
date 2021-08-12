@@ -46,6 +46,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
       """;
 
     // render each event as a card
+    VoidCallback refetchQuery;
     return Scaffold(
       // endDrawer: NavDrawer(),
       appBar: CustomBar(widget.screen, false), //display a custom title
@@ -58,9 +59,17 @@ class _DisplayEventsState extends State<DisplayEvents> {
               documentNode: gql(getAllEvents),
               fetchPolicy: FetchPolicy.networkOnly,
             ),
-            builder: (QueryResult? result,
-                {VoidCallback? refetch, FetchMore? fetchMore}) {
-              final events = result!.data['allEvents'];
+            
+            builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
+              // handle exceptions and loading
+              refetchQuery = refetch!;
+              if (result!.hasException) {
+                return Text(result.exception.toString());
+              }
+              if (result.loading) {
+                return Text(''); //just display a blank page when loading
+              }
+              final events = result.data['allEvents'];
 
               return ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -68,10 +77,6 @@ class _DisplayEventsState extends State<DisplayEvents> {
                 itemCount: events.length,
                 itemBuilder: (BuildContext context, int index) {
                   final event = events[index];
-                  // return ListTile(
-                  //   title: Text(event['name']),
-                  //   // subtitle: Text(event['description']),
-                  // );
                   return buildEventCard(event);
                 },
               );
