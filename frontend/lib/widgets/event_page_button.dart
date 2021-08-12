@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+
 import 'package:frontend/config/palette.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/screens/dummy.dart';
@@ -64,16 +66,6 @@ class _eventPageButtonState extends State<eventPageButton> {
 
     return ElevatedButton(
         onPressed: _handleClick,
-          // Navigator.push(context, PageRouteBuilder(
-          //   opaque: false,
-          //   transitionDuration: Duration.zero,
-          //   pageBuilder: (BuildContext context, _, __) {
-          //     //return Center(child: Text('My PageRoute'));
-          //           return DummyPage();
-          //     }
-          //   )
-          // );
-       // }, 
         child: Text(buttonText, style: TextStyle(fontSize: buttonFontSize, fontWeight: FontWeight.w500),), 
         style: ElevatedButton.styleFrom(
           primary: buttonColor, 
@@ -83,8 +75,8 @@ class _eventPageButtonState extends State<eventPageButton> {
     );
   }
 
+  // determine the button action based on the button mode
   void _handleClick(){
-    // determine the button action based on the button mode
     // register: take to the register form
     if(widget.mode == EventButtonMode.Register){
       Navigator.push(context, PageRouteBuilder(
@@ -99,29 +91,66 @@ class _eventPageButtonState extends State<eventPageButton> {
     }
     // delete: send a delete request, then send back to hosting page
     else if(widget.mode == EventButtonMode.Delete){
-      Navigator.push(context, PageRouteBuilder(
-        opaque: false,
-        transitionDuration: Duration.zero,
-        pageBuilder: (BuildContext context, _, __) {
-          //return Center(child: Text('My PageRoute'));
-                return DisplayEvents(screen: ScreenType.Hosting, mode: widget.mode,);
-          }
-        )
-      );
+      // display a warning popup
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.WARNING,
+        headerAnimationLoop: false,
+        animType: AnimType.TOPSLIDE,
+        showCloseIcon: true,
+        closeIcon: Icon(Icons.close_fullscreen_outlined),
+        title: 'Warning',
+        desc:
+            'Are you sure you want to delete this event?',
+        btnCancelOnPress: () {},
+        onDissmissCallback: (type) {
+          debugPrint('Dialog Dissmiss from callback $type');
+        },
+        // if they confirm, then take them back to the hosting page and display a confirmation dialog
+        btnOkOnPress: () {
+          Navigator.push(context, PageRouteBuilder(
+            opaque: false,
+            transitionDuration: Duration.zero,
+            pageBuilder: (BuildContext context, _, __) {
+            return DisplayEvents(screen: ScreenType.Hosting, mode: widget.mode,);
+              }
+            )
+          );
+        }
+      )
+      ..show();        
     }
     // cancel: send a cancel request, then send back to attending page
     else if(widget.mode == EventButtonMode.Cancel){
-      Navigator.push(context, PageRouteBuilder(
-        opaque: false,
-        transitionDuration: Duration.zero,
-        pageBuilder: (BuildContext context, _, __) {
-          //return Center(child: Text('My PageRoute'));
-                return DisplayEvents(screen: ScreenType.Attending, mode: widget.mode,);
-          }
-        )
-      );
+      // display a confirmation popup
+      AwesomeDialog(
+        context: context,
+        animType: AnimType.LEFTSLIDE,
+        headerAnimationLoop: false,
+        dialogType: DialogType.SUCCES,
+        showCloseIcon: true,
+        title: 'Success',
+        desc:
+            'Registration has been canceled',
+        btnOkOnPress: () {
+          // take user back to the attending page
+          Navigator.push(context, PageRouteBuilder(
+            opaque: false,
+            transitionDuration: Duration.zero,
+            pageBuilder: (BuildContext context, _, __) {
+              //return Center(child: Text('My PageRoute'));
+                    return DisplayEvents(screen: ScreenType.Attending, mode: widget.mode,);
+              }
+            )
+          );
+        },
+        btnOkIcon: Icons.check_circle,
+        onDissmissCallback: (type) {
+          debugPrint('Dialog Dissmiss from callback $type');
+        })
+      ..show();
     }
   }
-  
+
 }
   
