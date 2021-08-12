@@ -29,16 +29,3 @@ class AddUser(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     add_event = AddEvent.Field()
     add_user = AddUser.Field()
-
-# type Event:
-#     id: ID!
-#     name: String!
-#     tag: String!
-#     organizer: User!
-#     location: String!
-#     description: String!
-
-# type User:
-#     id: ID!
-#     username: String!
-#     password: String!

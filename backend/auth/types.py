@@ -9,8 +9,6 @@ class EventType(DjangoObjectType):
         # To be implemented
         # fields = ("id", "name", "date", "tag", "user", "location", "description", "attendees")
 
-
-
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String(required=True)
