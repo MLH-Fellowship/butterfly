@@ -27,7 +27,7 @@ class EventInput(graphene.InputObjectType):
 class UserType(DjangoObjectType):
     class Meta:
         model = User
-        fields = ("id", "name", "username", "password")
+        fields = ("id", "name", "email", "password")
 
     events = DjangoListField(EventType)
 
@@ -47,5 +47,5 @@ class UserType(DjangoObjectType):
 class UserInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String(required=True)
-    username = graphene.String(required=True)
+    email = graphene.String(required=True)
     password = graphene.String(required=True)
