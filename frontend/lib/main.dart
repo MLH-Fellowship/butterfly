@@ -58,25 +58,33 @@ class MyApp extends StatelessWidget {
         title: 'Butterfly',
         debugShowCheckedModeBanner: false, //hide the debug banner
         theme: ThemeData(
-          scaffoldBackgroundColor: Palette.primary_background,
-          primaryColor: Palette.secondary_background,
-          accentColor: Palette.highlight_1,
-          buttonColor: Palette.highlight_1,
-          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
-          // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-          iconTheme: const IconThemeData(color: Palette.primary_text),
-          fontFamily: GoogleFonts.montserrat().fontFamily,
-          textTheme: GoogleFonts.montserratTextTheme()
-        ),
+            scaffoldBackgroundColor: Palette.primary_background,
+            primaryColor: Palette.secondary_background,
+            accentColor: Palette.highlight_1,
+            buttonColor: Palette.highlight_1,
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
+            // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+            iconTheme: const IconThemeData(color: Palette.primary_text),
+            fontFamily: GoogleFonts.montserrat().fontFamily,
+            textTheme: GoogleFonts.montserratTextTheme(),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CupertinoPageTransitionsBuilder( 
+                ),
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            })),
         //home: const LoginPage(
         //title: 'Sample Login App',
         //),
         routes: <String, WidgetBuilder>{
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
-          '/signup': (context) => CreateAccount(account: this.account, isAdd: false, screen: ScreenType.CreateAccount, ),
-          '/registerform': (context) => CreateEventForm(screen: ScreenType.Create),
-
+          '/signup': (context) => CreateAccount(
+                account: this.account,
+                isAdd: false,
+                screen: ScreenType.CreateAccount,
+              ),
+          '/registerform': (context) =>
+              CreateEventForm(screen: ScreenType.Create),
         });
   }
 }
@@ -206,26 +214,24 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
             ),
             TextButton(
-              child: const Text('Dont have an account? Tap here to register.'),
-              onPressed: _formChange,
-              style: TextButton.styleFrom(primary: Palette.highlight_1)
-            ),
+                child:
+                    const Text('Dont have an account? Tap here to register.'),
+                onPressed: _formChange,
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
             TextButton(
-              child: const Text('Forgot Password?'),
-              onPressed: _passwordReset,
-              style: TextButton.styleFrom(primary: Palette.highlight_1)
-            ),
+                child: const Text('Forgot Password?'),
+                onPressed: _passwordReset,
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
             // @ToDo Remove eventpg textbutton after linked routing
             TextButton(
-              child: const Text('Register an Account'),
-              onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => CreateEventForm(screen: ScreenType.Create));
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
-
-            ),
+                child: const Text('Register an Account'),
+                onPressed: () {
+                  Route route = MaterialPageRoute(
+                      builder: (context) =>
+                          CreateEventForm(screen: ScreenType.Create));
+                  Navigator.push(context, route);
+                },
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
 
             // TextButton(
             //   child: const Text('CreateAccount'),
@@ -238,7 +244,6 @@ class _LoginPageState extends State<LoginPage> {
             // style: TextButton.styleFrom(primary: Palette.highlight_1)
 
             // ),
-    
           ],
         ),
       );
@@ -268,15 +273,17 @@ class _LoginPageState extends State<LoginPage> {
     print('The user wants to login with $_email and $_password');
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
-    Navigator.push(context, PageRouteBuilder(
-        opaque: false,
-        transitionDuration: Duration.zero,
-        pageBuilder: (BuildContext context, _, __) {
-          //return Center(child: Text('My PageRoute'));
-          return DisplayEvents(screen: ScreenType.Browse,);
-        }
-      )
-    );
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            opaque: false,
+            transitionDuration: Duration.zero,
+            pageBuilder: (BuildContext context, _, __) {
+              //return Center(child: Text('My PageRoute'));
+              return DisplayEvents(
+                screen: ScreenType.Browse,
+              );
+            }));
   }
 
   // void _createAccountPressed(int id, String firstName, String lastName, String email, String password) async {

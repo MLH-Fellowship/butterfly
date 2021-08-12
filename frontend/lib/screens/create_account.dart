@@ -110,7 +110,8 @@ class _CreateAccountState extends State<CreateAccount> {
                   Route route =
                       MaterialPageRoute(builder: (context) => LandingPg());
                   Navigator.push(context, route);
-                }),
+                }
+                ),
               ),
             
           ),
