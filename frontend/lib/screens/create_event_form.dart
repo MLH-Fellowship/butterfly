@@ -79,9 +79,9 @@ class _CreateEventFormState extends State<CreateEventForm> {
               height: 15,
             ),
             ElevatedButton(
-              onPressed: _registerPressed,
+              onPressed: _submitPressed,
               //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-              child: const Text('Register', style: TextStyle(fontSize: 11)),
+              child: const Text('Submit', style: TextStyle(fontSize: 11)),
               style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
             ),
           ],
@@ -97,10 +97,10 @@ class _CreateEventFormState extends State<CreateEventForm> {
     );
   }
 
-  void _registerPressed() {
+  void _submitPressed() {
     Navigator.of(context).pop();
     //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-    print('Event Register pressed');
+    print('Event Submit pressed');
   }
 }
 

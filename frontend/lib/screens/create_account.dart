@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/palette.dart';
 import 'package:frontend/screens/landingpg.dart';
 import 'package:frontend/screens/screen_type.dart';
 import 'package:frontend/widgets/bottom_nav.dart';
@@ -9,18 +10,18 @@ import '../../graphql_conf.dart';
 import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
+import 'display_events.dart';
 
 // ignore: must_be_immutable
 class CreateAccount extends StatefulWidget {
   final ScreenType screen;
-  CreateAccount(
-      {Key? key,
-      required this.account,
-      required this.isAdd,
-      required this.screen,
-      //required this.myFocusNode
-      })
-      : super(key: key);
+  CreateAccount({
+    Key? key,
+    required this.account,
+    required this.isAdd,
+    required this.screen,
+    //required this.myFocusNode
+  }) : super(key: key);
 
   //final String title;
   final Account account; //Alert
@@ -102,18 +103,15 @@ class _CreateAccountState extends State<CreateAccount> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            padding:EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
-            child: 
-              FloatingActionButton(
-                child: backButton,
-                onPressed: () => setState(() {
-                  Route route =
-                      MaterialPageRoute(builder: (context) => LandingPg());
-                  Navigator.push(context, route);
-                }
-                ),
-              ),
-            
+            padding: EdgeInsets.fromLTRB(50.0, 0.0, 0.0, 0.0),
+            child: FloatingActionButton(
+              child: backButton,
+              onPressed: () => setState(() {
+                Route route =
+                    MaterialPageRoute(builder: (context) => LandingPg());
+                Navigator.push(context, route);
+              }),
+            ),
           ),
           FloatingActionButton(
             heroTag: "nextBtn",
@@ -123,7 +121,14 @@ class _CreateAccountState extends State<CreateAccount> {
               //myFocusNode.requestFocus();
               if (_formKey.currentState!.validate()) {
                 debugPrint('All fields entered.');
-
+                ElevatedButton(
+                  onPressed: _registerPressed,
+                  //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
+                  child: const Text('Add to calendar',
+                      style: TextStyle(fontSize: 11)),
+                  style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+                );
+                
                 nextButton = Icon(Icons.done);
                 debugPrint('submit clicked');
               }
@@ -132,10 +137,20 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
         ],
       ),
-            bottomNavigationBar: BottomNav(
-        screen: ScreenType.Create,
-      ),
+      //       bottomNavigationBar: BottomNav(
+      //   screen: ScreenType.Create,
+      // ),
     );
+  }
+
+  void _registerPressed() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DisplayEvents(
+                  screen: ScreenType.Browse,
+                )));
+    print('Event Confirmation pressed');
   }
 }
 
@@ -226,22 +241,44 @@ class _buildForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 obscureText: true,
-                //controller: confirmTxtPassword,
-                // validator: (value) {
-                //   if (value!= txtpassword.value.text) {
-                //     return ' Password do not match.';
-                //   }
-                //   return null;
-                // },
+                //controller: txtPassword,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Password required';
+                  } else if (value.length < 3) {
+                    return 'Password must be at least 3 characters long.';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
-                  hintText: 'Re-enter your password',
+                  hintText: 'Re-enter your  password',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.next,
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: TextFormField(
+            //     obscureText: true,
+            //     //controller: confirmTxtPassword,
+            //     // validator: (value) {
+            //     //   if (value!= txtpassword.value.text) {
+            //     //     return ' Password do not match.';
+            //     //   }
+            //     //   return null;
+            //     // },
+            //     decoration: InputDecoration(
+            //       labelText: 'Confirm Password',
+            //       hintText: 'Re-enter your password',
+            //       border: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(20.0)),
+            //     ),
+            //     textInputAction: TextInputAction.done,
+            //   ),
+            // ),
           ],
         ));
   }

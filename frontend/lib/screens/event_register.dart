@@ -94,7 +94,11 @@ class _EventRegisterState extends State<EventRegister> {
 
   void _registerPressed() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => EventConfirmation(screen: ScreenType.EventConfirmation,)));
+        context,
+        MaterialPageRoute(
+            builder: (context) => EventConfirmation(
+                  screen: ScreenType.EventConfirmation,
+                )));
     print('Event Register pressed');
   }
 }
@@ -144,6 +148,25 @@ class _buildForm extends StatelessWidget {
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
+                    return 'Username required';
+                  } else if (value.length < 3) {
+                    return 'Username must be at least 3 characters long.';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  hintText: 'Enter your Username',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
                     return 'Name required';
                   } else if (value.length < 3) {
                     return 'Name must be at least 3 characters long.';
@@ -152,7 +175,7 @@ class _buildForm extends StatelessWidget {
                 },
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: 'Enter your name',
+                  hintText: 'Enter your Name',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
@@ -172,25 +195,6 @@ class _buildForm extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Email',
                   hintText: 'Enter Email',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0)),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Password required';
-                  } else if (value.length < 3) {
-                    return 'Password must be at least 3 characters long.';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  hintText: 'Enter Password',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),

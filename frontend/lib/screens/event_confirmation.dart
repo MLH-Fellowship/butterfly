@@ -124,6 +124,10 @@ class _buildForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: RichText(
                 overflow: TextOverflow.clip,
+
+
+
+                
                 text: TextSpan(
                   text: 'You\'re registered for an event! \n\n',
                   style: TextStyle(
