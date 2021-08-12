@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/dummy.dart';
+import 'package:frontend/screens/event_register.dart';
+import 'package:frontend/screens/screen_type.dart';
 import '../config/palette.dart';
 
 class RegisterButton extends StatefulWidget {
@@ -23,7 +24,7 @@ class _RegisterButtonState extends State<RegisterButton> {
 
   void _registerPressed() {
       Navigator.of(context).pop();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => DummyPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegister(screen: ScreenType.EventRegister,)));
       print('register pressed');
     }
 }

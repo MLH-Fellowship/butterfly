@@ -4,9 +4,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/models/account.dart';
-import 'package:frontend/screens/eventgoingpg.dart';
 import 'package:frontend/screens/landingpg.dart';
-import 'package:frontend/screens/signup.dart';
+import 'package:frontend/screens/create_account.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
@@ -14,7 +13,7 @@ import 'query_mutation.dart';
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'screens/event_register.dart';
+import 'screens/create_event_form.dart';
 import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
@@ -48,7 +47,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  get account => null; //for SignUp
+  get account => null;
+
+  //get myFocusNode => null; //for Create account
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +74,8 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
-          '/signup': (context) => SignUp(account: this.account, isAdd: false),
-          '/eventgoingpg': (context) => EventGoingPg(),
-          '/registerform': (context) => RegisterForm(screen: ScreenType.Create),
+          '/signup': (context) => CreateAccount(account: this.account, isAdd: false, screen: ScreenType.CreateAccount, ),
+          '/registerform': (context) => CreateEventForm(screen: ScreenType.Create),
 
         });
   }
@@ -220,33 +220,24 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Register an Account'),
               onPressed: () {
                 Route route =
-                    MaterialPageRoute(builder: (context) => RegisterForm(screen: ScreenType.Create));
+                    MaterialPageRoute(builder: (context) => CreateEventForm(screen: ScreenType.Create));
                 Navigator.push(context, route);
               },
             style: TextButton.styleFrom(primary: Palette.highlight_1)
 
             ),
-            TextButton(
-              child: const Text('GoTo EventPg'),
-              onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => EventGoingPg());
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
 
-            ),
-            TextButton(
-              child: const Text('Sign Up'),
-              onPressed: () {
-                Route route = MaterialPageRoute(
-                    builder: (context) =>
-                        SignUp(account: this.account, isAdd: false));
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
+            // TextButton(
+            //   child: const Text('CreateAccount'),
+            //   onPressed: () {
+            //     Route route = MaterialPageRoute(
+            //         builder: (context) =>
+            //             CreateAccount(account: this.account, isAdd: false, screen: null,));
+            //     Navigator.push(context, route);
+            //   },
+            // style: TextButton.styleFrom(primary: Palette.highlight_1)
 
-            ),
+            // ),
     
           ],
         ),

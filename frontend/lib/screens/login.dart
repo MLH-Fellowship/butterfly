@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/screens/screen_type.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../config/palette.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -10,7 +11,7 @@ import '../widgets/nav_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/loginWidgets.dart';
 import '../widgets/password-input.dart';
-import 'signup.dart';
+import 'create_account.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  var myFocusNode;
+
   get account => null;
 
   @override
@@ -67,10 +70,11 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Route route = MaterialPageRoute(
                       builder: (context) =>
-                          SignUp(account: this.account, isAdd: false));
+                          CreateAccount(account: this.account, isAdd: false, screen: ScreenType.CreateAccount, ));
                   Navigator.push(context, route);
                 },
-                style: TextButton.styleFrom(primary: Palette.highlight_1)),
+                style: TextButton.styleFrom(primary: Palette.highlight_1)
+                ),
           ],
         ),
         // GestureDetector(

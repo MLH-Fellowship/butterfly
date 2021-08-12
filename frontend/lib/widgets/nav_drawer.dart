@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 //screens
 import '../screens/dummy.dart';
-import '../screens/eventgoingpg.dart';
 import '../screens/display_events.dart';
 import '../screens/screen_type.dart';
 
@@ -118,10 +117,7 @@ class NavDrawer extends StatelessWidget {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => DummyPage()));
         break;
-      case 2:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => EventGoingPg()));
-        break;
+ 
       // case 3:
       //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => YourPageName()));
       //   break;
