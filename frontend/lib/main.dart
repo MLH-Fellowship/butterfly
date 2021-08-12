@@ -4,6 +4,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/models/account.dart';
+import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/eventgoingpg.dart';
 import 'package:frontend/screens/landingpg.dart';
 import 'package:frontend/screens/signup.dart';
@@ -284,7 +285,7 @@ class _LoginPageState extends State<LoginPage> {
         transitionDuration: Duration.zero,
         pageBuilder: (BuildContext context, _, __) {
           //return Center(child: Text('My PageRoute'));
-          return DisplayEvents(screen: ScreenType.Browse,);
+          return DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,);
         }
       )
     );

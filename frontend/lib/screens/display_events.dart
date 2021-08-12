@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/event_button_mode.dart';
+import 'package:frontend/widgets/event_page_button.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:frontend/screens/event_page.dart';
@@ -17,9 +19,9 @@ import 'map_month.dart';
 
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
-  // final String pageName;
   final ScreenType screen;
-  const DisplayEvents({Key? key, required this.screen}) : super(key: key);
+  final EventButtonMode mode;
+  const DisplayEvents({Key? key, required this.screen, required this.mode}) : super(key: key);
 
   @override
   _DisplayEventsState createState() => _DisplayEventsState();
@@ -97,7 +99,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
             // We don't pop, bc we want to return to this pg when we dismiss the event page
             Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (context) => EventPage(eventID: event['id'])));
+            builder: (context) => EventPage(eventID: event['id'], mode: widget.mode, screen: ScreenType.EventPage,)));
           },
           borderRadius: BorderRadius.all(Radius.circular(50)),
           child: FittedBox(
@@ -182,7 +184,8 @@ class _DisplayEventsState extends State<DisplayEvents> {
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Text(day,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
-          RegisterButton()
+          // RegisterButton()
+          eventPageButton(mode: widget.mode, screen: widget.screen)
         ]);
   }
 }

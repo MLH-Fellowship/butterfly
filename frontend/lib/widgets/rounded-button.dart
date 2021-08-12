@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/display_events.dart';
+import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/screen_type.dart';
 import '../config/palette.dart';
 
@@ -26,7 +27,7 @@ class RoundedButton extends StatelessWidget {
       child: TextButton(
         onPressed: () {
           Route route = MaterialPageRoute(
-              builder: (context) => DisplayEvents(screen: ScreenType.Browse));
+              builder: (context) => DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,),);
           Navigator.push(context, route);
         },
         child: Text(

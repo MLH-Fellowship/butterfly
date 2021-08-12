@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/eventpg.dart';
 import 'package:frontend/screens/event_register.dart';
 import '../screens/screen_type.dart';
@@ -19,10 +20,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    DisplayEvents(screen: ScreenType.Browse,), // browse events
+    DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,), // browse events
     RegisterForm(screen: ScreenType.Create,), // create event
-    DisplayEvents(screen: ScreenType.Hosting,), // events you're hosting
-    DisplayEvents(screen: ScreenType.Attending,), // events you're attending
+    DisplayEvents(screen: ScreenType.Hosting, mode: EventButtonMode.Delete,), // events you're hosting
+    DisplayEvents(screen: ScreenType.Attending, mode: EventButtonMode.Cancel,), // events you're attending
     DummyPage(), // profile
   ];
 

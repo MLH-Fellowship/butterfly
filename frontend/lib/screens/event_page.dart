@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/dummy.dart';
+import 'package:frontend/screens/event_button_mode.dart';
+import 'package:frontend/screens/screen_type.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'map_month.dart';
+import 'package:frontend/screens/dummy.dart';
+import 'package:frontend/widgets/event_page_button.dart';
 
 
 import '../config/palette.dart';
 
 class EventPage extends StatelessWidget {
   final String eventID;
-  const EventPage({ Key? key, required this.eventID }) : super(key: key);
+  final EventButtonMode mode;
+  final ScreenType screen;
+  const EventPage({ Key? key, required this.eventID, required this.mode, required this.screen }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +76,7 @@ class EventPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                eventPageButton(mode: 'Register')
+                eventPageButton(mode: mode, screen: screen)
               ],
             )
           );
@@ -147,39 +152,3 @@ class EventPage extends StatelessWidget {
   } // renderContent
 }
 
-class eventPageButton extends StatefulWidget {
-  final String mode;
-  const eventPageButton({ Key? key, required this.mode, }) : super(key: key);
-
-  @override
-  _eventPageButtonState createState() => _eventPageButtonState();
-}
-
-class _eventPageButtonState extends State<eventPageButton> {
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      // alignment: Alignment.bottomCenter,
-      bottom: 0.0,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(context, PageRouteBuilder(
-            opaque: false,
-            transitionDuration: Duration.zero,
-            pageBuilder: (BuildContext context, _, __) {
-              //return Center(child: Text('My PageRoute'));
-                    return DummyPage();
-              }
-            )
-          );
-        }, 
-        child: Text(widget.mode, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),), 
-        style: ElevatedButton.styleFrom(
-          primary: Palette.highlight_1, 
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          padding: EdgeInsets.all(12.0),
-          ),
-      )
-    );
-  }
-}

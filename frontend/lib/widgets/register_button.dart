@@ -27,25 +27,3 @@ class _RegisterButtonState extends State<RegisterButton> {
       print('register pressed');
     }
 }
-
-// Stateless vs stateful
-// class RegisterButton extends StatelessWidget {
-//   const RegisterButton({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ElevatedButton(
-//       onPressed: _registerPressed, 
-//        //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-//       child: const Text('Register', style: TextStyle(fontSize: 11)),
-//       style: ElevatedButton.styleFrom(primary: Palette.highlight_1), 
-//       );
-//   }
-
-//   void _registerPressed() {
-//       Navigator.push(context, MaterialPageRoute(builder: (context) => DummyPage()));
-//       print('register pressed');
-//     }
-// }

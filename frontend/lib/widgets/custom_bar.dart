@@ -35,7 +35,7 @@ String display_title(ScreenType screen){
   else if(screen == ScreenType.Attending){
     return 'Events you\'re attending';
   }
-  else if(screen == ScreenType.EventPg){
+  else if(screen == ScreenType.EventPage){
     return 'Event';
   }
   else return '';

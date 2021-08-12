@@ -5,6 +5,6 @@ enum ScreenType{
   Hosting,
   Attending,
   Profile,
-  EventPg,
+  EventPage,
   Butterfly
 }

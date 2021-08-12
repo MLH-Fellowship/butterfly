@@ -1,5 +1,7 @@
 // side menu that pops up when you click the hamburger icon
 
+import 'package:frontend/screens/event_button_mode.dart';
+
 import '../main.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +114,7 @@ class NavDrawer extends StatelessWidget {
       case 0:
         print('Browse events clicked');
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+            .push(MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,)));
         break;
       case 1:
         Navigator.of(context)

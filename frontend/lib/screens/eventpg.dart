@@ -22,7 +22,7 @@ class EventPg extends StatelessWidget {
       // home: Scaffold(
       endDrawer: NavDrawer(),
       appBar: CustomBar(
-          ScreenType.EventPg, false), //'false' aligns text to the left
+          ScreenType.EventPage, false), //'false' aligns text to the left
       body: const _EventInfo(
         eventName: 'Event Page',
         time: 'time',
