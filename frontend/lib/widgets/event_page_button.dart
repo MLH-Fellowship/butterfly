@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/screen_type.dart';
@@ -19,7 +20,7 @@ class eventPageButton extends StatefulWidget {
 class _eventPageButtonState extends State<eventPageButton> {
   @override
   Widget build(BuildContext context) {
-    
+  
     return Positioned(
       // alignment: Alignment.bottomCenter,
       bottom: 0.0,
@@ -62,17 +63,17 @@ class _eventPageButtonState extends State<eventPageButton> {
     }
 
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(context, PageRouteBuilder(
-            opaque: false,
-            transitionDuration: Duration.zero,
-            pageBuilder: (BuildContext context, _, __) {
-              //return Center(child: Text('My PageRoute'));
-                    return DummyPage();
-              }
-            )
-          );
-        }, 
+        onPressed: _handleClick,
+          // Navigator.push(context, PageRouteBuilder(
+          //   opaque: false,
+          //   transitionDuration: Duration.zero,
+          //   pageBuilder: (BuildContext context, _, __) {
+          //     //return Center(child: Text('My PageRoute'));
+          //           return DummyPage();
+          //     }
+          //   )
+          // );
+       // }, 
         child: Text(buttonText, style: TextStyle(fontSize: buttonFontSize, fontWeight: FontWeight.w500),), 
         style: ElevatedButton.styleFrom(
           primary: buttonColor, 
@@ -81,4 +82,46 @@ class _eventPageButtonState extends State<eventPageButton> {
           ),
     );
   }
+
+  void _handleClick(){
+    // determine the button action based on the button mode
+    // register: take to the register form
+    if(widget.mode == EventButtonMode.Register){
+      Navigator.push(context, PageRouteBuilder(
+        opaque: false,
+        transitionDuration: Duration.zero,
+        pageBuilder: (BuildContext context, _, __) {
+          //return Center(child: Text('My PageRoute'));
+                return DummyPage();
+          }
+        )
+      );
+    }
+    // delete: send a delete request, then send back to hosting page
+    else if(widget.mode == EventButtonMode.Delete){
+      Navigator.push(context, PageRouteBuilder(
+        opaque: false,
+        transitionDuration: Duration.zero,
+        pageBuilder: (BuildContext context, _, __) {
+          //return Center(child: Text('My PageRoute'));
+                return DisplayEvents(screen: ScreenType.Hosting, mode: widget.mode,);
+          }
+        )
+      );
+    }
+    // cancel: send a cancel request, then send back to attending page
+    else if(widget.mode == EventButtonMode.Cancel){
+      Navigator.push(context, PageRouteBuilder(
+        opaque: false,
+        transitionDuration: Duration.zero,
+        pageBuilder: (BuildContext context, _, __) {
+          //return Center(child: Text('My PageRoute'));
+                return DisplayEvents(screen: ScreenType.Attending, mode: widget.mode,);
+          }
+        )
+      );
+    }
+  }
+  
 }
+  

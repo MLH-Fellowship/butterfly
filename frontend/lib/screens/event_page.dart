@@ -18,6 +18,8 @@ class EventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback refetchQuery;
+
     // pass eventID to the query
     final String getEventById = """
         query getEventById {
@@ -33,7 +35,6 @@ class EventPage extends StatelessWidget {
         }
       """;
 
-    VoidCallback refetchQuery;
     return Scaffold(
       appBar: AppBar(
         // leadingWidth: 145.0, //to avoid overflow error
@@ -45,8 +46,7 @@ class EventPage extends StatelessWidget {
           icon: const Icon(CupertinoIcons.chevron_down), 
           label: Text('')
         ),
-        // title: Text('Browse Events'),
-        // centerTitle: false,
+        
       ),
       body: Query(
         options: QueryOptions(

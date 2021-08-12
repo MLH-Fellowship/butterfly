@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/determine_query.dart';
 import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/widgets/event_page_button.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -30,23 +31,12 @@ class DisplayEvents extends StatefulWidget {
 class _DisplayEventsState extends State<DisplayEvents> {
   @override
   Widget build(BuildContext context) {
-    final String getAllEvents = """
-        query getAllEvents {
-          allEvents {
-            id
-            name
-            date
-            startTime
-            endTime  
-            tag
-            location
-            description
-          }
-        }
-      """;
+    VoidCallback refetchQuery;
+    
+    // Based on param, determine type of request to make to the backend
+    final String getAllEvents = determineQuery(widget.screen);
 
     // render each event as a card
-    VoidCallback refetchQuery;
     return Scaffold(
       // endDrawer: NavDrawer(),
       appBar: CustomBar(widget.screen, false), //display a custom title
@@ -89,8 +79,6 @@ class _DisplayEventsState extends State<DisplayEvents> {
       ),
     );
   }
-
-  //TODO: Based on param, determine type of request to make to the backend
 
   Widget buildEventCard(event) => Card(
       // make corners rounded
