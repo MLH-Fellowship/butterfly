@@ -111,7 +111,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                         eventName: event['name'],
                         location: event['location'],
                         time: event['date'],
-                        description: 'Team meeting to brief each other. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+                        description: 'Team meeting to brief each other.'),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
@@ -132,7 +132,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
           Container(
             width: 275,
             child: Text(
-            'This is my really loooong name. I am looking for someone that sells genuine tupperware',
+            eventName,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis
             )
@@ -142,7 +142,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
             padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
             child: Text(location,
                 style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w300,
                     fontStyle: FontStyle.italic)
               )
@@ -152,7 +152,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
             padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
             child: Text(time,
                 style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeight.w300,
                     fontStyle: FontStyle.italic)
             )
@@ -162,7 +162,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
             padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
             width: 275,
             child: Text(description,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 16),
                 overflow: TextOverflow.ellipsis
             )
           )          
