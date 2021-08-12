@@ -14,8 +14,11 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   final _formKey = GlobalKey<FormBuilderState>();
+  
   @override
   Widget build(BuildContext context) {
+    //debug
+    print('Create Event called');
     return Scaffold(
           //backgroundColor: Colors.transparent,
           backgroundColor: context.canvasColor,

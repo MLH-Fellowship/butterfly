@@ -128,25 +128,22 @@ class EventPage extends StatelessWidget {
   
   Widget renderSection(String heading, String body){
     return Row(
+      children: [
+        Expanded( //wrap in expanded so the divider knows how much space to take
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded( //wrap in expanded so the divider knows how much space to take
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // heading
-                    Text(heading, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis),
-                    const Divider(
-                      color: Palette.primary_text,
-                      height: 14,
-                      thickness: 1.5,
-                    ),
-                    // body
-                    Text(body, style: TextStyle(fontSize: 15),)
-                  ],
-                ),
-              ),
+              // heading
+              Text(heading, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+              // divider
+              const Divider(color: Palette.primary_text, height: 14,thickness: 1.5,),
+              // body
+              Text(body, style: TextStyle(fontSize: 15),)
             ],
-          );             
+          ),
+        ),
+      ],
+    );             
   } // renderContent
 }
 

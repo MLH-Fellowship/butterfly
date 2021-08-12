@@ -19,11 +19,11 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    DisplayEvents(screen: ScreenType.Browse,),
-    RegisterForm(screen: ScreenType.Create,),
-    DisplayEvents(screen: ScreenType.Hosting,),
-    DisplayEvents(screen: ScreenType.Attending,),
-    DummyPage(),
+    DisplayEvents(screen: ScreenType.Browse,), // browse events
+    RegisterForm(screen: ScreenType.Create,), // create event
+    DisplayEvents(screen: ScreenType.Hosting,), // events you're hosting
+    DisplayEvents(screen: ScreenType.Attending,), // events you're attending
+    DummyPage(), // profile
   ];
 
   void _onItemTap(int index){

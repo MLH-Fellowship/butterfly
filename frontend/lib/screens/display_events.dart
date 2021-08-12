@@ -94,6 +94,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
       child: InkWell(
           // wrap in gesture detector to make card clickable
           onTap: (){
+            // We don't pop, bc we want to return to this pg when we dismiss the event page
             Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
             builder: (context) => EventPage(eventID: event['id'])));
@@ -110,7 +111,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                         eventName: event['name'],
                         location: event['location'],
                         time: event['date'],
-                        description: 'Team meeting to brief each other'),
+                        description: 'Team meeting to brief each other. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
@@ -123,41 +124,48 @@ class _DisplayEventsState extends State<DisplayEvents> {
           )));
 
   // card text in left col
-  Widget buildCardLeft(
-      {required String eventName,
-      required String location,
-      required String time,
-      required String description}) {
+  Widget buildCardLeft({required String eventName,required String location, required String time, required String description}) {
     print(eventName);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
         children: [
+          // event name
           Container(
-              child: Text(
-            eventName,
+            width: 275,
+            child: Text(
+            'This is my really loooong name. I am looking for someone that sells genuine tupperware',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          )),
+            overflow: TextOverflow.ellipsis
+            )
+          ),
+          // location
           Container(
-              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
-              child: Text(location,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic))),
+            padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+            child: Text(location,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic)
+              )
+          ),
+          // time
           Container(
-              padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-              child: Text(time,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic))),
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+            child: Text(time,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic)
+            )
+          ),
+          // description
           Container(
-              padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: 
-                  Text(description,
-                      style: TextStyle(fontSize: 15),
-                      overflow: TextOverflow.ellipsis)
-                ),
-            
+            padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+            width: 275,
+            child: Text(description,
+                style: TextStyle(fontSize: 15),
+                overflow: TextOverflow.ellipsis
+            )
+          )          
         ]);
   }
 
@@ -177,12 +185,4 @@ class _DisplayEventsState extends State<DisplayEvents> {
           RegisterButton()
         ]);
   }
-
-  // void _cardTapped{
-  //   print('card tapped');
-  //   // We don't pop, bc we want to return to this pg when we dismiss the event page
-  //   Navigator.of(context).push(MaterialPageRoute(
-  //     fullscreenDialog: true,
-  //     builder: (context) => EventPage(eventID: event['id'])));
-  // }
 }

@@ -220,7 +220,9 @@ class _LoginPageState extends State<LoginPage> {
               child: const Text('Register an Account'),
               onPressed: () {
                 Route route =
-                    MaterialPageRoute(builder: (context) => RegisterForm(screen: ScreenType.Create));
+                  //Nhi: supposed to map to register acct, but maps to create event. I changed it to SignUp
+                    // MaterialPageRoute(builder: (context) => RegisterForm(screen: ScreenType.Create));
+                    MaterialPageRoute(builder: (context) => SignUp(account: account, isAdd: false));
                 Navigator.push(context, route);
               },
             style: TextButton.styleFrom(primary: Palette.highlight_1)
