@@ -35,9 +35,10 @@ class _DisplayEventsState extends State<DisplayEvents> {
           allEvents {
             id
             name
-            date  
+            date
+            startTime
+            endTime  
             tag
-            organizer
             location
             description
           }
