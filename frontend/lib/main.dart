@@ -5,9 +5,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:frontend/models/account.dart';
 import 'package:frontend/screens/event_button_mode.dart';
-import 'package:frontend/screens/eventgoingpg.dart';
 import 'package:frontend/screens/landingpg.dart';
-import 'package:frontend/screens/signup.dart';
+import 'package:frontend/screens/create_account.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'graphql_conf.dart';
 import 'query_mutation.dart';
@@ -15,7 +14,7 @@ import 'query_mutation.dart';
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'screens/event_register.dart';
+import 'screens/create_event_form.dart';
 import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
@@ -49,7 +48,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  get account => null; //for SignUp
+  get account => null;
+
+  //get myFocusNode => null; //for Create account
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +59,33 @@ class MyApp extends StatelessWidget {
         title: 'Butterfly',
         debugShowCheckedModeBanner: false, //hide the debug banner
         theme: ThemeData(
-          scaffoldBackgroundColor: Palette.primary_background,
-          primaryColor: Palette.secondary_background,
-          accentColor: Palette.highlight_1,
-          buttonColor: Palette.highlight_1,
-          buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
-          // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-          iconTheme: const IconThemeData(color: Palette.primary_text),
-          fontFamily: GoogleFonts.montserrat().fontFamily,
-          textTheme: GoogleFonts.montserratTextTheme()
-        ),
+            scaffoldBackgroundColor: Palette.primary_background,
+            primaryColor: Palette.secondary_background,
+            accentColor: Palette.highlight_1,
+            buttonColor: Palette.highlight_1,
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
+            // elevatedButtonTheme: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+            iconTheme: const IconThemeData(color: Palette.primary_text),
+            fontFamily: GoogleFonts.montserrat().fontFamily,
+            textTheme: GoogleFonts.montserratTextTheme(),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CupertinoPageTransitionsBuilder( 
+                ),
+              TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            })),
         //home: const LoginPage(
         //title: 'Sample Login App',
         //),
         routes: <String, WidgetBuilder>{
           '/': (context) => LandingPg(),
           '/login': (context) => LoginPage(title: 'Butterfly'),
-          '/signup': (context) => SignUp(account: this.account, isAdd: false),
-          '/eventgoingpg': (context) => EventGoingPg(),
-          '/registerform': (context) => RegisterForm(screen: ScreenType.Create),
-
+          '/signup': (context) => CreateAccount(
+                account: this.account,
+                isAdd: false,
+                screen: ScreenType.CreateAccount,
+              ),
+          '/registerform': (context) =>
+              CreateEventForm(screen: ScreenType.Create),
         });
   }
 }
@@ -207,50 +215,36 @@ class _LoginPageState extends State<LoginPage> {
               style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
             ),
             TextButton(
-              child: const Text('Dont have an account? Tap here to register.'),
-              onPressed: _formChange,
-              style: TextButton.styleFrom(primary: Palette.highlight_1)
-            ),
+                child:
+                    const Text('Dont have an account? Tap here to register.'),
+                onPressed: _formChange,
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
             TextButton(
-              child: const Text('Forgot Password?'),
-              onPressed: _passwordReset,
-              style: TextButton.styleFrom(primary: Palette.highlight_1)
-            ),
+                child: const Text('Forgot Password?'),
+                onPressed: _passwordReset,
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
             // @ToDo Remove eventpg textbutton after linked routing
             TextButton(
-              child: const Text('Register an Account'),
-              onPressed: () {
-                Route route =
-                  //Nhi: supposed to map to register acct, but maps to create event. I changed it to SignUp
-                    // MaterialPageRoute(builder: (context) => RegisterForm(screen: ScreenType.Create));
-                    MaterialPageRoute(builder: (context) => SignUp(account: account, isAdd: false));
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
+                child: const Text('Register an Account'),
+                onPressed: () {
+                  Route route = MaterialPageRoute(
+                      builder: (context) =>
+                          CreateEventForm(screen: ScreenType.Create));
+                  Navigator.push(context, route);
+                },
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
 
-            ),
-            TextButton(
-              child: const Text('GoTo EventPg'),
-              onPressed: () {
-                Route route =
-                    MaterialPageRoute(builder: (context) => EventGoingPg());
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
+            // TextButton(
+            //   child: const Text('CreateAccount'),
+            //   onPressed: () {
+            //     Route route = MaterialPageRoute(
+            //         builder: (context) =>
+            //             CreateAccount(account: this.account, isAdd: false, screen: null,));
+            //     Navigator.push(context, route);
+            //   },
+            // style: TextButton.styleFrom(primary: Palette.highlight_1)
 
-            ),
-            TextButton(
-              child: const Text('Sign Up'),
-              onPressed: () {
-                Route route = MaterialPageRoute(
-                    builder: (context) =>
-                        SignUp(account: this.account, isAdd: false));
-                Navigator.push(context, route);
-              },
-            style: TextButton.styleFrom(primary: Palette.highlight_1)
-
-            ),
-    
+            // ),
           ],
         ),
       );
@@ -280,15 +274,17 @@ class _LoginPageState extends State<LoginPage> {
     print('The user wants to login with $_email and $_password');
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
-    Navigator.push(context, PageRouteBuilder(
-        opaque: false,
-        transitionDuration: Duration.zero,
-        pageBuilder: (BuildContext context, _, __) {
-          //return Center(child: Text('My PageRoute'));
-          return DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,);
-        }
-      )
-    );
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            opaque: false,
+            transitionDuration: Duration.zero,
+            pageBuilder: (BuildContext context, _, __) {
+              //return Center(child: Text('My PageRoute'));
+              return DisplayEvents(
+                screen: ScreenType.Browse, mode: EventButtonMode.Register,
+              );
+            }));
   }
 
   // void _createAccountPressed(int id, String firstName, String lastName, String email, String password) async {

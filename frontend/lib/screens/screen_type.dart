@@ -6,5 +6,9 @@ enum ScreenType{
   Attending,
   Profile,
   EventPage,
-  Butterfly
+  Butterfly, 
+  CreateAccount,
+  CreateEventForm,
+  EventRegister,
+  EventConfirmation,
 }
