@@ -27,6 +27,7 @@ class EventPage extends StatelessWidget {
             tag
             organizer
             location
+            description
           }
         }
       """;
@@ -72,7 +73,7 @@ class EventPage extends StatelessWidget {
                       mapMonth(event['date'].substring(5, 7)), // month
                       event['date'].substring(8, 10), // day
                       event['date'],
-                      'Team meeting to brief each other on our progress and decide next steps. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                      event['description']
                     ),
                   ],
                 ),

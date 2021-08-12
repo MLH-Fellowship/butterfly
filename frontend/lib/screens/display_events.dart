@@ -39,6 +39,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
             tag
             organizer
             location
+            description
           }
         }
       """;
@@ -113,7 +114,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                         eventName: event['name'],
                         location: event['location'],
                         time: event['date'],
-                        description: 'Team meeting to brief each other.'),
+                        description: event['description']),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
