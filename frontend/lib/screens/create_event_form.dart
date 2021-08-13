@@ -9,6 +9,14 @@ import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
 
+String eventName = "";
+String date = "";
+String startTime = "";
+String endTime = "";
+String tag = "";
+String location = "";
+String description = "";
+
 class CreateEventForm extends StatefulWidget {
   final ScreenType screen;
   CreateEventForm({Key? key, required this.screen}) : super(key: key);
@@ -65,6 +73,21 @@ class _CreateEventFormState extends State<CreateEventForm> {
 
   @override
   Widget build(BuildContext context) {
+    final String addEvent = """
+      mutation addEvent(\$input: EventInput!) {
+        addEvent(input: \$input) {
+            event { 
+              name
+              date
+              startTime
+              endTime
+              tag
+              location
+              description
+          }
+        }
+      }
+      """;
     return Scaffold(
       appBar: CustomBar(widget.screen, false), //display a custom title
       body: Container(
@@ -78,23 +101,69 @@ class _CreateEventFormState extends State<CreateEventForm> {
             SizedBox(
               height: 15,
             ),
-            ElevatedButton(
-              onPressed: _submitPressed,
-              //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-              child: const Text('Submit', style: TextStyle(fontSize: 11)),
-              style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-            ),
-          ],
-        ),
-      ),
+            Mutation(
+              options: MutationOptions(
+                documentNode: gql(addEvent),
+                onCompleted: (dynamic resultData){
+                  if(resultData?.isEmpty ?? true){
+                    print('null data');
+                  }
+                  else{
+                    print('nonnull data');
+                    var data = resultData.data["addEvent"];
 
-      // bottomNavigationBar: BottomNav(
-      //   screen: widget.screen,
-      // ),
-      bottomNavigationBar: BottomNav(
-        screen: ScreenType.Create,
-      ),
-    );
+                    setState(() {
+                      eventName = data['name'];
+                      date = data['date'];
+                      startTime = data['startTime'];
+                      endTime = data['endTime'];
+                      tag = data['tag'];
+                      location = data['location'];
+                      description = data['description'];
+                    });
+
+                    print("mutation added: ${data}");
+                  }
+                },
+                onError: (err) {
+                  print(err.graphqlErrors);
+                },
+              ), 
+              builder: (RunMutation runMutation, QueryResult result){
+                // next & submit button
+                return ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()){
+                      debugPrint('All fields entered.');
+                      print('submit pressed');
+                      runMutation({
+                        "input": {
+                          "name": eventName,
+                          "date": date,
+                          "startTime": startTime,
+                          "endTime": endTime,
+                          "tag": tag,
+                          "user": "1", 
+                          "location": location,
+                          "description": description
+                        }
+                      });
+                    }
+                    
+                  },
+                  //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
+                  child: const Text('Submit', style: TextStyle(fontSize: 11)),
+                  style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+                );
+                },
+              ),
+              
+            ]
+              //child: Icon(Icons.keyboard_return_rounded),
+          )   
+        ),
+        bottomNavigationBar: BottomNav(screen: ScreenType.Create),
+      );
   }
 
   void _submitPressed() {
@@ -121,6 +190,7 @@ class _buildForm extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // event name
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -128,7 +198,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Event name must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    eventName = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Event name',
@@ -147,7 +220,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Date must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    date = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Date',
@@ -166,7 +242,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Start Time must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    startTime = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Start Time',
@@ -185,7 +264,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'End Time not valid.';
                   }
-                  return null;
+                  else{
+                    endTime = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'End Time',
@@ -197,6 +279,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // tag
               child: TextFormField(
                 obscureText: true,
                 //controller: txtPassword,
@@ -206,7 +289,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Tag must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    tag = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Tag',
@@ -218,8 +304,18 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // location
               child: TextFormField(
                 obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Location required';
+                  } 
+                  else{
+                    location = value;
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                   labelText: 'Enter location',
                   hintText: 'Enter location',
@@ -232,6 +328,15 @@ class _buildForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 obscureText: true,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Description required';
+                  } 
+                  else{
+                    description = value;
+                    return null;
+                  }
+                },
                 decoration: InputDecoration(
                   labelText: 'Enter description',
                   hintText: 'Enter description',
