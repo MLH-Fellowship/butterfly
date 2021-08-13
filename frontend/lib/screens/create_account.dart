@@ -12,7 +12,10 @@ import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
 import 'display_events.dart';
-import 'global_create_account.dart' as globals;
+
+String name = "";
+String email = "";
+String password = "";
 
 // ignore: must_be_immutable
 class CreateAccount extends StatefulWidget {
@@ -79,10 +82,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-
-    String name = "";
-    String email = "";
-    String password = "";
 
     final String addUser = """
       mutation addUser(\$input: UserInput!) {
@@ -166,16 +165,11 @@ class _CreateAccountState extends State<CreateAccount> {
                   // run the mutation
                   runMutation({
                     "input": {
-                        "name": globals.name,
-                        "email": globals.email,
-                        "password": globals.password
+                        "name": name,
+                        "email": email,
+                        "password": password
                       }
                   });
-
-                  // clear the inputs
-                  globals.name = '';
-                  globals.email = '';
-                  globals.password = '';          
                 }
               }),
               //child: Icon(Icons.keyboard_return_rounded),
@@ -250,7 +244,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else{
                     // we'll pass this to the backend
-                    globals.name = value;
+                    name = value;
                     return null;
                   }
                   
@@ -278,7 +272,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else {
                     // we'll pass this to the backend
-                    globals.email = value;
+                    email = value;
                     return null;
                   }
                 },
@@ -306,7 +300,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else {
                     // we'll pass this to the backend
-                    globals.password = value;
+                    password = value;
                     return null;
                   }
                 },
