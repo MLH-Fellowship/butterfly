@@ -12,6 +12,7 @@ import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
 import 'display_events.dart';
+import 'global_create_account.dart' as globals;
 
 // ignore: must_be_immutable
 class CreateAccount extends StatefulWidget {
@@ -106,9 +107,6 @@ class _CreateAccountState extends State<CreateAccount> {
             child: Column(
               children: <Widget>[
                 _buildForm(
-                  name: name,
-                  email: email,
-                  password: password,
                   formKey: _formKey,
                   //myFocusNode: this.myFocusNode,
                 ),
@@ -168,13 +166,16 @@ class _CreateAccountState extends State<CreateAccount> {
                   // run the mutation
                   runMutation({
                     "input": {
-                        "name": "Test",
-                        "email": "nhi",
-                        "password": "nhi"
+                        "name": globals.name,
+                        "email": globals.email,
+                        "password": globals.password
                       }
                   });
 
-            
+                  // clear the inputs
+                  globals.name = '';
+                  globals.email = '';
+                  globals.password = '';          
                 }
               }),
               //child: Icon(Icons.keyboard_return_rounded),
@@ -205,14 +206,18 @@ class _CreateAccountState extends State<CreateAccount> {
 
 // ignore: must_be_immutable
 class _buildForm extends StatelessWidget{
-  String name = "";
-  String  email = "";
-  String  password = "";
+  TextEditingController txtId = TextEditingController();
+  TextEditingController txtName = TextEditingController();
+  //TextEditingController txtLastName = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  final TextEditingController txtPassword =
+      TextEditingController(); //passwordController
+  final TextEditingController confirmTxtPassword =
+      TextEditingController(); //confirmPasswordController
+
+
   //removed const bc myFocusNode can't be final
   _buildForm({
-    required name,
-    required email,
-    required password,
     Key? key,
     required GlobalKey<FormState> formKey,
     //required this.myFocusNode,
@@ -225,21 +230,8 @@ class _buildForm extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
      // vars to pass to mutation
-    // String name;
-    // String email;
-    // String password;
 
-
-
-  TextEditingController txtId = TextEditingController();
-  TextEditingController txtName = TextEditingController();
-  //TextEditingController txtLastName = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
-  final TextEditingController txtPassword =
-      TextEditingController(); //passwordController
-  final TextEditingController confirmTxtPassword =
-      TextEditingController(); //confirmPasswordController
-
+   
     return Form(
         key: _formKey,
         child: Column(
@@ -258,8 +250,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else{
                     // we'll pass this to the backend
-                    name = value;
-                    print('name: ${name}');
+                    globals.name = value;
                     return null;
                   }
                   
@@ -278,6 +269,7 @@ class _buildForm extends StatelessWidget{
               // email
               child: TextFormField(
                 //focusNode: myFocusNode,
+                controller: txtEmail,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Email required';
@@ -286,8 +278,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else {
                     // we'll pass this to the backend
-                    email = value;
-                    print('email: ${email}');
+                    globals.email = value;
                     return null;
                   }
                 },
@@ -304,6 +295,7 @@ class _buildForm extends StatelessWidget{
               padding: const EdgeInsets.all(8.0),
               // Password
               child: TextFormField(
+                controller: txtPassword,
                 obscureText: true,
                 //controller: txtPassword,
                 validator: (value) {
@@ -314,8 +306,7 @@ class _buildForm extends StatelessWidget{
                   }
                   else {
                     // we'll pass this to the backend
-                    password = value;
-                    print('password: ${password}');
+                    globals.password = value;
                     return null;
                   }
                 },
@@ -333,7 +324,7 @@ class _buildForm extends StatelessWidget{
               // Confirm password
               child: TextFormField(
                 obscureText: true,
-                //controller: txtPassword,
+                controller: txtPassword,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Password required';
@@ -373,5 +364,6 @@ class _buildForm extends StatelessWidget{
             // ),
           ],
         ));
+        
   }
 }
