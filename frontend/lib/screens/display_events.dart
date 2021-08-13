@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/determine_query.dart';
+import 'package:frontend/screens/event_button_mode.dart';
+import 'package:frontend/widgets/event_page_button.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:frontend/screens/event_page.dart';
@@ -13,12 +16,13 @@ import 'browse_events.dart';
 import 'eventpg.dart';
 import 'screen_type.dart';
 import 'event_page.dart';
+import 'map_month.dart';
 
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
-  // final String pageName;
   final ScreenType screen;
-  const DisplayEvents({Key? key, required this.screen}) : super(key: key);
+  final EventButtonMode mode;
+  const DisplayEvents({Key? key, required this.screen, required this.mode}) : super(key: key);
 
   @override
   _DisplayEventsState createState() => _DisplayEventsState();
@@ -27,18 +31,10 @@ class DisplayEvents extends StatefulWidget {
 class _DisplayEventsState extends State<DisplayEvents> {
   @override
   Widget build(BuildContext context) {
-    final String getAllEvents = """
-        query getAllEvents {
-          allEvents {
-            id
-            name
-            date  
-            tag
-            organizer
-            location
-          }
-        }
-      """;
+    VoidCallback refetchQuery;
+    
+    // Based on param, determine type of request to make to the backend
+    final String getAllEvents = determineQuery(widget.screen);
 
     // render each event as a card
     return Scaffold(
@@ -53,9 +49,17 @@ class _DisplayEventsState extends State<DisplayEvents> {
               documentNode: gql(getAllEvents),
               fetchPolicy: FetchPolicy.networkOnly,
             ),
-            builder: (QueryResult? result,
-                {VoidCallback? refetch, FetchMore? fetchMore}) {
-              final events = result!.data['allEvents'];
+            
+            builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
+              // handle exceptions and loading
+              refetchQuery = refetch!;
+              if (result!.hasException) {
+                return Text(result.exception.toString());
+              }
+              if (result.loading) {
+                return Text(''); //just display a blank page when loading
+              }
+              final events = result.data['allEvents'];
 
               return ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -63,10 +67,6 @@ class _DisplayEventsState extends State<DisplayEvents> {
                 itemCount: events.length,
                 itemBuilder: (BuildContext context, int index) {
                   final event = events[index];
-                  // return ListTile(
-                  //   title: Text(event['name']),
-                  //   // subtitle: Text(event['description']),
-                  // );
                   return buildEventCard(event);
                 },
               );
@@ -93,9 +93,10 @@ class _DisplayEventsState extends State<DisplayEvents> {
       child: InkWell(
           // wrap in gesture detector to make card clickable
           onTap: (){
+            // We don't pop, bc we want to return to this pg when we dismiss the event page
             Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (context) => EventPage(eventID: event['id'])));
+            builder: (context) => EventPage(eventID: event['id'], mode: widget.mode, screen: ScreenType.EventPage,)));
           },
           borderRadius: BorderRadius.all(Radius.circular(50)),
           child: FittedBox(
@@ -109,11 +110,11 @@ class _DisplayEventsState extends State<DisplayEvents> {
                         eventName: event['name'],
                         location: event['location'],
                         time: event['date'],
-                        description: 'Team meeting to brief each other'),
+                        description: event['description']),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
-                        month: event['date'].substring(5, 7),
+                        month: mapMonth(event['date'].substring(5, 7)),
                         day: event['date'].substring(8, 10),
                       ),
                     )
@@ -122,41 +123,48 @@ class _DisplayEventsState extends State<DisplayEvents> {
           )));
 
   // card text in left col
-  Widget buildCardLeft(
-      {required String eventName,
-      required String location,
-      required String time,
-      required String description}) {
+  Widget buildCardLeft({required String eventName,required String location, required String time, required String description}) {
     print(eventName);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
         children: [
+          // event name
           Container(
-              child: Text(
+            width: 275,
+            child: Text(
             eventName,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          )),
+            overflow: TextOverflow.ellipsis
+            )
+          ),
+          // location
           Container(
-              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
-              child: Text(location,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic))),
+            padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+            child: Text(location,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic)
+              )
+          ),
+          // time
           Container(
-              padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-              child: Text(time,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic))),
+            padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+            child: Text(time,
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    fontStyle: FontStyle.italic)
+            )
+          ),
+          // description
           Container(
-              padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: 
-                  Text(description,
-                      style: TextStyle(fontSize: 15),
-                      overflow: TextOverflow.ellipsis)
-                ),
-            
+            padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+            width: 275,
+            child: Text(description,
+                style: TextStyle(fontSize: 16),
+                overflow: TextOverflow.ellipsis
+            )
+          )          
         ]);
   }
 
@@ -173,15 +181,8 @@ class _DisplayEventsState extends State<DisplayEvents> {
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Text(day,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
-          RegisterButton()
+          // RegisterButton()
+          eventPageButton(mode: widget.mode, screen: widget.screen)
         ]);
   }
-
-  // void _cardTapped{
-  //   print('card tapped');
-  //   // We don't pop, bc we want to return to this pg when we dismiss the event page
-  //   Navigator.of(context).push(MaterialPageRoute(
-  //     fullscreenDialog: true,
-  //     builder: (context) => EventPage(eventID: event['id'])));
-  // }
 }

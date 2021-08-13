@@ -5,10 +5,9 @@ import 'package:frontend/config/palette.dart';
 import 'package:frontend/widgets/nav_drawer.dart';
 import 'package:lottie/lottie.dart';
 import 'login.dart';
-import 'signup.dart';
+import 'create_account.dart';
 import 'login.dart';
 //import '../widgets/palette.dart';
-import 'delete.dart';
 
 class LandingPg extends StatefulWidget {
   const LandingPg({Key? key}) : super(key: key);

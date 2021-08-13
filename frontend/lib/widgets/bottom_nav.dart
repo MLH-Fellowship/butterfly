@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/eventpg.dart';
-import 'package:frontend/screens/event_register.dart';
+import 'package:frontend/screens/create_event_form.dart';
 import '../screens/screen_type.dart';
 
 class BottomNav extends StatefulWidget {
@@ -19,11 +20,11 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0; // determines which page to route to
   List<Widget> _navItems = [
-    DisplayEvents(screen: ScreenType.Browse,),
-    RegisterForm(screen: ScreenType.Create,),
-    DisplayEvents(screen: ScreenType.Hosting,),
-    DisplayEvents(screen: ScreenType.Attending,),
-    DummyPage(),
+    DisplayEvents(screen: ScreenType.Browse, mode: EventButtonMode.Register,), // browse events
+    CreateEventForm(screen: ScreenType.CreateEventForm,),
+    DisplayEvents(screen: ScreenType.Hosting, mode: EventButtonMode.Delete,), // events you're hosting
+    DisplayEvents(screen: ScreenType.Attending, mode: EventButtonMode.Cancel,), // events you're attending
+    DummyPage(), // profile
   ];
 
   void _onItemTap(int index){
@@ -31,7 +32,6 @@ class _BottomNavState extends State<BottomNav> {
       _selectedIndex = index;
     });
     // We don't pop, bc we want to return to this pg when we dismiss the event page
-    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => _navItems.elementAt(_selectedIndex)));
     Navigator.push(context, PageRouteBuilder(
         opaque: false,
         transitionDuration: Duration.zero,

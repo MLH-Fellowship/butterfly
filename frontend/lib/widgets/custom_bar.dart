@@ -35,8 +35,20 @@ String display_title(ScreenType screen){
   else if(screen == ScreenType.Attending){
     return 'Events you\'re attending';
   }
-  else if(screen == ScreenType.EventPg){
+  else if(screen == ScreenType.EventPage){
     return 'Event';
+  }
+  else if(screen == ScreenType.CreateAccount){
+    return 'Create Account';
+  }
+    else if(screen == ScreenType.CreateEventForm){
+    return 'Create Event';
+  }
+    else if(screen == ScreenType.EventRegister){
+    return 'Register for Event';
+  }  
+  else if(screen == ScreenType.EventConfirmation){
+    return 'Event Confirmation';
   }
   else return '';
 }

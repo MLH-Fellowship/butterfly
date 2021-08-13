@@ -1,26 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/dummy.dart';
+import 'package:frontend/screens/event_button_mode.dart';
+import 'package:frontend/screens/screen_type.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'map_month.dart';
+import 'package:frontend/screens/dummy.dart';
+import 'package:frontend/widgets/event_page_button.dart';
 
 
 import '../config/palette.dart';
 
 class EventPage extends StatelessWidget {
   final String eventID;
-  const EventPage({ Key? key, required this.eventID }) : super(key: key);
+  final EventButtonMode mode;
+  final ScreenType screen;
+  const EventPage({ Key? key, required this.eventID, required this.mode, required this.screen }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback refetchQuery;
+
     // pass eventID to the query
     final String getEventById = """
         query getEventById {
           event(eventId: "${eventID}") {
             name
-            date  
+            date
+            startTime
+            endTime  
             tag
-            organizer
             location
+            description
           }
         }
       """;
@@ -36,19 +46,26 @@ class EventPage extends StatelessWidget {
           icon: const Icon(CupertinoIcons.chevron_down), 
           label: Text('')
         ),
-        // title: Text('Browse Events'),
-        // centerTitle: false,
+        
       ),
       body: Query(
         options: QueryOptions(
           documentNode: gql(getEventById),
           fetchPolicy: FetchPolicy.networkOnly,
         ),
-        builder: (QueryResult? result,
-            {VoidCallback? refetch, FetchMore? fetchMore}) {
+        builder: (QueryResult? result,{VoidCallback? refetch, FetchMore? fetchMore}) {
+          // handle exceptions and loading
+          refetchQuery = refetch!;
+          if (result!.hasException) {
+            return Text(result.exception.toString());
+          }
+          if (result.loading) {
+            return Text(''); //just display a blank page when loading
+          }
+
           final event = result!.data['event'];
           return Container(
-            padding: EdgeInsets.all(30.0),
+            padding: EdgeInsets.all(45.0),
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -63,14 +80,14 @@ class EventPage extends StatelessWidget {
                     renderContent(
                       event['name'],
                       event['location'],
-                      event['date'].substring(5, 7),
-                      event['date'].substring(8, 10),
+                      mapMonth(event['date'].substring(5, 7)), // month
+                      event['date'].substring(8, 10), // day
                       event['date'],
-                      'Team meeting to brief each other on our progress and decide next steps. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                      event['description']
                     ),
                   ],
                 ),
-                eventPageButton(mode: 'Register')
+                eventPageButton(mode: mode, screen: screen)
               ],
             )
           );
@@ -99,19 +116,17 @@ class EventPage extends StatelessWidget {
           Column(
             children: [
               // title
-              Text(eventName, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Text(eventName, style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
               // location
               Container(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Column(
-                  children: [
-                    Text(location, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
-                    ],
-                )
+                child: Text(location, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)),
               ),
               // time
               Container(
-                padding: EdgeInsets.fromLTRB(0, 2, 0, 28),
+                padding: EdgeInsets.fromLTRB(0, 2, 0, 40),
                 child: Text(time, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
                 )
               ),
@@ -119,9 +134,9 @@ class EventPage extends StatelessWidget {
           ),
           // description 
           renderSection('Description', description),
-          SizedBox(height: 42,), // add spacing b/w sections
+          SizedBox(height: 50,), // add spacing b/w sections
           renderSection('Attendees', 'TBD'),
-          SizedBox(height: 42,),
+          SizedBox(height: 50,),
           renderSection('Discussion', 'TBD '),
         ]
     );
@@ -129,61 +144,22 @@ class EventPage extends StatelessWidget {
   
   Widget renderSection(String heading, String body){
     return Row(
+      children: [
+        Expanded( //wrap in expanded so the divider knows how much space to take
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded( //wrap in expanded so the divider knows how much space to take
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // heading
-                    Text(heading, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis),
-                    const Divider(
-                      color: Palette.primary_text,
-                      height: 14,
-                      thickness: 1.5,
-                    ),
-                    // body
-                    Text(body, style: TextStyle(fontSize: 15),)
-                  ],
-                ),
-              ),
+              // heading
+              Text(heading, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+              // divider
+              const Divider(color: Palette.primary_text, height: 14,thickness: 1.5,),
+              // body
+              Text(body, style: TextStyle(fontSize: 15),)
             ],
-          );             
+          ),
+        ),
+      ],
+    );             
   } // renderContent
 }
 
-class eventPageButton extends StatefulWidget {
-  final String mode;
-  const eventPageButton({ Key? key, required this.mode, }) : super(key: key);
-
-  @override
-  _eventPageButtonState createState() => _eventPageButtonState();
-}
-
-class _eventPageButtonState extends State<eventPageButton> {
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      // alignment: Alignment.bottomCenter,
-      bottom: 0.0,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(context, PageRouteBuilder(
-            opaque: false,
-            transitionDuration: Duration.zero,
-            pageBuilder: (BuildContext context, _, __) {
-              //return Center(child: Text('My PageRoute'));
-                    return DummyPage();
-              }
-            )
-          );
-        }, 
-        child: Text(widget.mode, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),), 
-        style: ElevatedButton.styleFrom(
-          primary: Palette.highlight_1, 
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          padding: EdgeInsets.all(12.0),
-          ),
-      )
-    );
-  }
-}
