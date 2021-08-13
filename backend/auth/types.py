@@ -5,9 +5,7 @@ import graphene
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description")
-        # To be implemented
-        # fields = ("id", "name", "date", "tag", "user", "location", "description", "attendees")
+        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description", "attendee")
 
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
@@ -19,8 +17,16 @@ class EventInput(graphene.InputObjectType):
     user_id = graphene.String(required=True, name="user")
     location = graphene.String(required=True)
     description = graphene.String(required=True)
-    # To be implemented
-    # attendees = graphene.String(required=True, name="User")
+    attendee_id = graphene.List(of_type=graphene.ID, required=True, name="attendee")
+
+# class AttendeeType(DjangoObjectType):
+#     class Meta:
+#         model = Attendee
+#         fields = ("id", "name", "email")
+
+# class AttendeeInput(graphene.InputObjectType):
+#     name = graphene.String(required=True)
+#     email = graphene.String(required=True)
 
 class UserType(DjangoObjectType):
     class Meta:
@@ -28,19 +34,13 @@ class UserType(DjangoObjectType):
         fields = ("id", "name", "email", "password")
 
     events = DjangoListField(EventType)
+    attending_events = DjangoListField(EventType)
 
     def resolve_events(self, info):
         return Event.objects.filter(user=self.id)
-    # To be implemented
-    # attendees = DjangoListField(UserType)
-    # events = DjangoListField(EventType)
-
-    # def resolve_events(self, info):
-    #     return Event.objects.filter(user=self.id)
-
-    # To be implemented
-    # def resolve_attendees(self, info):
-    #     return Event
+    
+    def resolve_attending_events(self, info):
+        return self.attending_events.all()
 
 class UserInput(graphene.InputObjectType):
     id = graphene.ID()
