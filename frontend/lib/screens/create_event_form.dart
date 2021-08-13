@@ -47,10 +47,10 @@ class _CreateEventFormState extends State<CreateEventForm> {
   TextEditingController txtFirstName = TextEditingController();
   TextEditingController txtLastName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
-  final TextEditingController txtPassword =
-      TextEditingController(); //passwordController
-  final TextEditingController confirmTxtPassword =
-      TextEditingController(); //confirmPasswordController
+  // final TextEditingController txtPassword =
+  //     TextEditingController(); //passwordController
+  // final TextEditingController confirmTxtPassword =
+  //     TextEditingController(); //confirmPasswordController
   Icon button = Icon(Icons.keyboard_return_rounded);
 
   GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
@@ -64,12 +64,12 @@ class _CreateEventFormState extends State<CreateEventForm> {
   //final _passwordController = TextEditingController();
   //final _confirmPasswordController = TextEditingController();
 
-  @override
-  void dispose() {
-    txtPassword.dispose();
-    confirmTxtPassword.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   txtPassword.dispose();
+  //   confirmTxtPassword.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +257,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // end time
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -281,13 +282,11 @@ class _buildForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               // tag
               child: TextFormField(
-                obscureText: true,
-                //controller: txtPassword,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Tag required';
                   } else if (value.length < 3) {
-                    return 'Tag must be at least 3 characters long.';
+                    return 'Tag not valid.';
                   }
                   else{
                     tag = value;
@@ -306,19 +305,20 @@ class _buildForm extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               // location
               child: TextFormField(
-                obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Location required';
-                  } 
+                  } else if (value.length < 3) {
+                    return 'Location not valid.';
+                  }
                   else{
-                    location = value;
+                    endTime = value;
                     return null;
                   }
                 },
                 decoration: InputDecoration(
-                  labelText: 'Enter location',
-                  hintText: 'Enter location',
+                  labelText: 'Location',
+                  hintText: 'Enter Location',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),
@@ -326,20 +326,22 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // description
               child: TextFormField(
-                obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Description required';
-                  } 
+                  } else if (value.length < 3) {
+                    return 'Description not valid.';
+                  }
                   else{
-                    description = value;
+                    endTime = value;
                     return null;
                   }
                 },
                 decoration: InputDecoration(
-                  labelText: 'Enter description',
-                  hintText: 'Enter description',
+                  labelText: 'Description',
+                  hintText: 'Enter Description',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                 ),

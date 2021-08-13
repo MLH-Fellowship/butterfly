@@ -7,6 +7,7 @@ import 'package:frontend/config/palette.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/event_button_mode.dart';
+import 'package:frontend/screens/event_register.dart';
 import 'package:frontend/screens/screen_type.dart';
 
 
@@ -84,7 +85,7 @@ class _eventPageButtonState extends State<eventPageButton> {
         transitionDuration: Duration.zero,
         pageBuilder: (BuildContext context, _, __) {
           //return Center(child: Text('My PageRoute'));
-                return DummyPage();
+                return EventRegister(screen: ScreenType.EventRegister);
           }
         )
       );

@@ -86,11 +86,7 @@ class _EventRegisterState extends State<EventRegister> {
           ],
         ),
       ),
-
-      // bottomNavigationBar: BottomNav(
-      //   screen: widget.screen,
-      // ),
-      //bottomNavigationBar: BottomNav(screen: ScreenType.EventRegister,),
+      bottomNavigationBar: BottomNav(screen: ScreenType.Browse,),
     );
   }
 
