@@ -139,6 +139,18 @@ class _CreateAccountState extends State<CreateAccount> {
                 var data = resultData.data["addUser"];
 
                 print("mutation added: ${data}");
+
+                // take user to the browse events page
+                Navigator.push(context, PageRouteBuilder(
+                  opaque: false,
+                  transitionDuration: Duration.zero,
+                  pageBuilder: (BuildContext context, _, __) {
+                    //return Center(child: Text('My PageRoute'));
+                    return DisplayEvents(
+                            screen: ScreenType.Browse, mode: EventButtonMode.Register,);
+                    }
+                  )
+                );
               },
             ), 
             builder: (RunMutation runMutation, QueryResult result){
