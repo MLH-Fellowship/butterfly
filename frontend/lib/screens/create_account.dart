@@ -29,20 +29,21 @@ class CreateAccount extends StatefulWidget {
   final bool isAdd; //Alert
   //late FocusNode myFocusNode;
 
+
   @override
   State<StatefulWidget> createState() =>
       _CreateAccountState(this.account, this.isAdd);
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  TextEditingController txtId = TextEditingController();
-  TextEditingController txtName = TextEditingController();
-  //TextEditingController txtLastName = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
-  final TextEditingController txtPassword =
-      TextEditingController(); //passwordController
-  final TextEditingController confirmTxtPassword =
-      TextEditingController(); //confirmPasswordController
+  // TextEditingController txtId = TextEditingController();
+  // TextEditingController txtName = TextEditingController();
+  // //TextEditingController txtLastName = TextEditingController();
+  // TextEditingController txtEmail = TextEditingController();
+  // final TextEditingController txtPassword =
+  //     TextEditingController(); //passwordController
+  // final TextEditingController confirmTxtPassword =
+  //     TextEditingController(); //confirmPasswordController
   //Icon backButton = Icon(Icons.keyboard_return_rounded);arrow_back_ios_rounded, arrow_back_rounded, navigate_next_rounded
 
   Icon backButton = Icon(Icons.arrow_back_ios_new_rounded);
@@ -67,16 +68,32 @@ class _CreateAccountState extends State<CreateAccount> {
     //myFocusNode = FocusNode();
   }
 
-  @override
-  void dispose() {
-    txtPassword.dispose();
-    confirmTxtPassword.dispose();
-    //myFocusNode.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   txtPassword.dispose();
+  //   confirmTxtPassword.dispose();
+  //   //myFocusNode.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
+
+    String name = "";
+    String email = "";
+    String password = "";
+
+    final String addUser = """
+      mutation addUser(\$input: UserInput!) {
+        addUser(input: \$input) {
+          user {
+            name
+            email
+            password
+          }
+        }
+      }
+      """;
     return Scaffold(
       appBar: CustomBar(widget.screen, false), //display a custom title
       body: ListView(
@@ -89,6 +106,9 @@ class _CreateAccountState extends State<CreateAccount> {
             child: Column(
               children: <Widget>[
                 _buildForm(
+                  name: name,
+                  email: email,
+                  password: password,
                   formKey: _formKey,
                   //myFocusNode: this.myFocusNode,
                 ),
@@ -114,28 +134,54 @@ class _CreateAccountState extends State<CreateAccount> {
               }),
             ),
           ),
-          FloatingActionButton(
-            heroTag: "nextBtn",
-            child: nextButton,
+          // next & submit button
+          Mutation(
+            options: MutationOptions(
+              documentNode: gql(addUser),
+              onCompleted: (dynamic resultData){
+                var data = resultData.data["addUser"];
 
-            onPressed: () => setState(() {
-              //myFocusNode.requestFocus();
-              if (_formKey.currentState!.validate()) {
-                debugPrint('All fields entered.');
-                ElevatedButton(
-                  onPressed: _registerPressed,
-                  //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-                  child: const Text('Add to calendar',
-                      style: TextStyle(fontSize: 11)),
-                  style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-                );
-                
-                nextButton = Icon(Icons.done);
-                debugPrint('submit clicked');
-              }
-            }),
-            //child: Icon(Icons.keyboard_return_rounded),
-          ),
+                print("mutation added: ${data}");
+              },
+            ), 
+            builder: (RunMutation runMutation, QueryResult result){
+              // next & submit button
+              return FloatingActionButton(
+              heroTag: "nextBtn",
+              child: nextButton,
+
+              onPressed: () => setState(() {
+                //myFocusNode.requestFocus();
+                if (_formKey.currentState!.validate()) {
+                  debugPrint('All fields entered.');
+                  // add to calendar button
+                  ElevatedButton(
+                    onPressed: _registerPressed,
+                    //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
+                    child: const Text('Add to calendar',
+                        style: TextStyle(fontSize: 11)),
+                    style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
+                  );
+                  
+                  nextButton = Icon(Icons.done);
+                  debugPrint('submit clicked');
+                  // run the mutation
+                  runMutation({
+                    "input": {
+                        "name": "Test",
+                        "email": "nhi",
+                        "password": "nhi"
+                      }
+                  });
+
+            
+                }
+              }),
+              //child: Icon(Icons.keyboard_return_rounded),
+              );
+            },
+          )
+          
         ],
       ),
       //       bottomNavigationBar: BottomNav(
@@ -144,21 +190,29 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
+
   void _registerPressed() {
+    print('Event Confirmation pressed');
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DisplayEvents(
                   screen: ScreenType.Browse, mode: EventButtonMode.Register,
                 )));
-    print('Event Confirmation pressed');
+    
   }
 }
 
 // ignore: must_be_immutable
-class _buildForm extends StatelessWidget {
+class _buildForm extends StatelessWidget{
+  String name = "";
+  String  email = "";
+  String  password = "";
   //removed const bc myFocusNode can't be final
   _buildForm({
+    required name,
+    required email,
+    required password,
     Key? key,
     required GlobalKey<FormState> formKey,
     //required this.myFocusNode,
@@ -170,13 +224,31 @@ class _buildForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     // vars to pass to mutation
+    // String name;
+    // String email;
+    // String password;
+
+
+
+  TextEditingController txtId = TextEditingController();
+  TextEditingController txtName = TextEditingController();
+  //TextEditingController txtLastName = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+  final TextEditingController txtPassword =
+      TextEditingController(); //passwordController
+  final TextEditingController confirmTxtPassword =
+      TextEditingController(); //confirmPasswordController
+
     return Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // Name
               child: TextFormField(
+                controller: txtName,
                 autofocus: true,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -184,7 +256,13 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Name must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    // we'll pass this to the backend
+                    name = value;
+                    print('name: ${name}');
+                    return null;
+                  }
+                  
                 },
                 decoration: InputDecoration(
                   labelText: 'Name',
@@ -197,6 +275,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // email
               child: TextFormField(
                 //focusNode: myFocusNode,
                 validator: (value) {
@@ -205,7 +284,12 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Email not valid.';
                   }
-                  return null;
+                  else {
+                    // we'll pass this to the backend
+                    email = value;
+                    print('email: ${email}');
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -218,6 +302,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // Password
               child: TextFormField(
                 obscureText: true,
                 //controller: txtPassword,
@@ -227,7 +312,12 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Password must be at least 3 characters long.';
                   }
-                  return null;
+                  else {
+                    // we'll pass this to the backend
+                    password = value;
+                    print('password: ${password}');
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -240,6 +330,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // Confirm password
               child: TextFormField(
                 obscureText: true,
                 //controller: txtPassword,
