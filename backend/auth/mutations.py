@@ -14,6 +14,14 @@ class AddEvent(graphene.Mutation):
         _event = Event.objects.create(**input)
         return AddEvent(event=_event)
 
+class DeleteEvent(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID()
+    
+    event = graphene.Field(EventType)
+    def mutate(self, parent):
+        return Event.objects.delete(id)
+
 class AddUser(graphene.Mutation):
     class Arguments:
         input = UserInput(required=True)
