@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block head %}
+        <!--Things to be overridden-->
+        <title>butterfly</title>
+
+        <!--Plain styling-->
+        <!--<link href="../static/styles/home.css" rel="stylesheet">-->
+
+
+        <!-- MDB -->
+        <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+        rel="stylesheet" >
+        <link href="../static/styles/iphone.css" rel="stylesheet">
+
+        <link rel="import" href="../static/styles/iphone.css">
+
+        <link rel="import" href="./iphone.html">
+
+        <!-- <link rel="import" href="./carousel.html"> -->
+        <!-- <link rel="import" href="../static/styles/carousel.css"> -->
+
+    {% endblock %}
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!--<link href="../static/styles/normalize.css" rel="stylesheet">-->
+          <!--iphone-->
+    
+</head>
+<body>
+
+    <!--Content-->
+    <div class="content">{% block content%}{% endblock %}</div>
+    
+
+    <!-- Footer -->
+    <!-- <footer class="text-center text-lg-start bg-light text-muted">
+        <section
+        class="d-flex justify-content-center justify-content-lg-between p-4 "
+        >
+        </section>
+    
+        <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <div class="row mt-3">
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                <h6 class="text-uppercase fw-bold mb-4">
+                    butterfly app
+                </h6>
+
+            </div>
+
+    
+        <div class="text-center p-4">
+            This website was created with Flask as a project for the MLH Fellowship
+        </div>
+    </footer> -->
+    <!-- Footer -->
+
+    <!--Boostrap script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <!--MDB script-->
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+    ></script>
+</body>
+</html>
