@@ -113,14 +113,16 @@ class _DisplayEventsState extends State<DisplayEvents> {
                     buildCardLeft(
                         eventName: event['name'],
                         location: event['location'],
-                        time: event['date'],
+                        startTime: event['startTime'],
+                        endTime: event['endTime'],
                         description: event['description']),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
                         month: mapMonth(event['date'].substring(5, 7)),
                         day: event['date'].substring(8, 10),
-                        eventID: event['id']
+                        eventID: event['id'],
+                        date: event['date']
                       ),
                     )
                   ],
@@ -128,7 +130,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
           )));
 
   // card text in left col
-  Widget buildCardLeft({required String eventName,required String location, required String time, required String description}) {
+  Widget buildCardLeft({required String eventName,required String location, required String startTime, required String endTime, required String description}) {
     print(eventName);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
         children: [
@@ -154,7 +156,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
           // time
           Container(
             padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-            child: Text(time,
+            child: Text('${startTime} - ${endTime}',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -174,17 +176,17 @@ class _DisplayEventsState extends State<DisplayEvents> {
   }
 
   // date and registration button in card's right col
-  Widget buildCardRight({required String month, required String day, required String eventID}) {
+  Widget buildCardRight({required String month, required String day, required String eventID, required String date}) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
         children: [
           Container(
               child: Text(
-            month,
+            date,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
           )),
           Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Text(day,
+              child: Text(date,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
           // RegisterButton()
           eventPageButton(mode: widget.mode, screen: widget.screen, eventID: eventID,)
