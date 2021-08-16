@@ -87,7 +87,7 @@ class EventPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                eventPageButton(mode: mode, screen: screen)
+                eventPageButton(mode: mode, screen: screen, eventID: event['id'],)
               ],
             )
           );

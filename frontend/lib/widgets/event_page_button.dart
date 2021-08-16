@@ -14,7 +14,8 @@ import 'package:frontend/screens/screen_type.dart';
 class eventPageButton extends StatefulWidget {
   final EventButtonMode mode; // determines text and colour
   final ScreenType screen; // determines size
-  const eventPageButton({ Key? key, required this.mode, required this.screen}) : super(key: key);
+  final String eventID;
+  const eventPageButton({ Key? key, required this.mode, required this.screen, required this.eventID}) : super(key: key);
 
   @override
   _eventPageButtonState createState() => _eventPageButtonState();
@@ -85,7 +86,7 @@ class _eventPageButtonState extends State<eventPageButton> {
         transitionDuration: Duration.zero,
         pageBuilder: (BuildContext context, _, __) {
           //return Center(child: Text('My PageRoute'));
-                return EventRegister(screen: ScreenType.EventRegister);
+                return EventRegister(screen: ScreenType.EventRegister, eventID: widget.eventID,);
           }
         )
       );

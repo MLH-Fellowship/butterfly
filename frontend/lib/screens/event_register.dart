@@ -10,9 +10,14 @@ import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
 import 'event_confirmation.dart';
 
+String username = "";
+String name = "";
+String email = "";
+
 class EventRegister extends StatefulWidget {
   final ScreenType screen;
-  EventRegister({Key? key, required this.screen}) : super(key: key);
+  final String eventID;
+  EventRegister({Key? key, required this.screen, required this.eventID}) : super(key: key);
 
   //final String title;
   //final Account account; //Alert
@@ -62,6 +67,20 @@ class _EventRegisterState extends State<EventRegister> {
 
   @override
   Widget build(BuildContext context) {
+    final String registerForEvent = """
+      mutation addAttendees(\$eventId: ID!, \$userId: ID!) {
+        addAttendees(eventId: \$eventId, userId: \$userId) {
+          event {
+            id
+            name
+            attendees {
+              name
+              id
+            }
+          }
+        }
+      }
+      """;
     //debug
     print('Create Event called');
     return Scaffold(
@@ -77,6 +96,7 @@ class _EventRegisterState extends State<EventRegister> {
             SizedBox(
               height: 15,
             ),
+            
             ElevatedButton(
               onPressed: _registerPressed,
               //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
@@ -143,6 +163,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // username
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -150,7 +171,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Username must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    username = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Username',
@@ -162,6 +186,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // name
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -169,7 +194,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Name must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    name = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Name',
@@ -181,6 +209,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // email
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -188,7 +217,10 @@ class _buildForm extends StatelessWidget {
                   } else if (value.length < 3) {
                     return 'Email must be at least 3 characters long.';
                   }
-                  return null;
+                  else{
+                    email = value;
+                    return null;
+                  }
                 },
                 decoration: InputDecoration(
                   labelText: 'Email',
