@@ -23,6 +23,7 @@ class AddEvent(graphene.Mutation):
         _event = Event.objects.create(**input)
         return AddEvent(event=_event)
 
+# GraphQL mutation for deleting an event from eventID
 class DeleteEvent(graphene.Mutation):
     """GraphQL mutation to delete an existing Event object by ID
 
