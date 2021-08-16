@@ -78,8 +78,8 @@ class _BottomNavState extends State<BottomNav> {
           label: 'Attending'
         ),
         BottomNavigationBarItem(
-          icon: const Icon(CupertinoIcons.person_crop_circle),
-          label: 'Profile'
+          icon: const Icon(CupertinoIcons.square_arrow_left),
+          label: 'Log out'
         ),
       ],
       // currentIndex: _selectedIndex,
