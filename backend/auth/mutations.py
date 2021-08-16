@@ -69,6 +69,7 @@ class AddAttendees(graphene.Mutation):
             _event.save()
         return AddAttendees(event=_event)
 
+# GraphQL mutation for deleting attendees from an event given an eventID and userID
 class DeleteAttendees(graphene.Mutation):
     """GraphQL mutation to delete a User object from an existing Event object's attendees
 
@@ -93,6 +94,7 @@ class DeleteAttendees(graphene.Mutation):
             _event.attendees.remove(_user)
         return DeleteAttendees(event=_event)
 
+# GraphQL mutation for adding a User from UserInput
 class AddUser(graphene.Mutation):
     """GraphQL mutation to create an User object from UserInput
 
