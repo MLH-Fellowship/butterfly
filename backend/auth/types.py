@@ -36,12 +36,13 @@ class UserType(DjangoObjectType):
         model = User
         fields = ("id", "name", "email", "password")
 
+    # GraphQL field for events user is hosting
     events = DjangoListField(EventType)
-    attending_events = DjangoListField(EventType)
-
     def resolve_events(self, info): 
         return Event.objects.filter(user=self.id)
     
+    # GraphQL field for events user is attending
+    attending_events = DjangoListField(EventType)
     def resolve_attending_events(self, info):
         return Event.objects.filter(attendees__id=self.id)
 
