@@ -18,6 +18,7 @@ import 'screen_type.dart';
 import 'event_page.dart';
 import 'map_month.dart';
 
+
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
   final ScreenType screen;
@@ -119,6 +120,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
                       child: buildCardRight(
                         month: mapMonth(event['date'].substring(5, 7)),
                         day: event['date'].substring(8, 10),
+                        eventID: event['id']
                       ),
                     )
                   ],
@@ -172,7 +174,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
   }
 
   // date and registration button in card's right col
-  Widget buildCardRight({required String month, required String day}) {
+  Widget buildCardRight({required String month, required String day, required String eventID}) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
         children: [
           Container(
@@ -185,7 +187,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
               child: Text(day,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
           // RegisterButton()
-          eventPageButton(mode: widget.mode, screen: widget.screen)
+          eventPageButton(mode: widget.mode, screen: widget.screen, eventID: eventID,)
         ]);
   }
 }
