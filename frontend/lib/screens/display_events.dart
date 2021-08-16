@@ -59,7 +59,10 @@ class _DisplayEventsState extends State<DisplayEvents> {
               if (result.loading) {
                 return Text(''); //just display a blank page when loading
               }
-              final events = result.data['allEvents'];
+              
+              final events = extractData(result, widget.screen);
+              print(" events is type: ${events.runtimeType}");
+              print('events we got back: ${events}');
 
               return ListView.builder(
                 scrollDirection: Axis.vertical,

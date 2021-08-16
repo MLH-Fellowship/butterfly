@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
+import 'package:frontend/screens/display_events.dart';
+import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/screen_type.dart';
 import 'package:frontend/widgets/bottom_nav.dart';
 import 'package:frontend/widgets/custom_bar.dart';
@@ -148,6 +150,14 @@ class _CreateEventFormState extends State<CreateEventForm> {
                           "description": description
                         }
                       });
+                      Navigator.push(context, PageRouteBuilder(
+                      opaque: false,
+                      transitionDuration: Duration.zero,
+                      pageBuilder: (BuildContext context, _, __) {
+                        return DisplayEvents(screen: ScreenType.Hosting, mode: EventButtonMode.Delete);
+                      }
+                    )
+    );
                     }
                     
                   },
@@ -213,6 +223,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // date
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -235,6 +246,7 @@ class _buildForm extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              // startTime
               child: TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -312,7 +324,7 @@ class _buildForm extends StatelessWidget {
                     return 'Location not valid.';
                   }
                   else{
-                    endTime = value;
+                    location = value;
                     return null;
                   }
                 },
@@ -335,7 +347,7 @@ class _buildForm extends StatelessWidget {
                     return 'Description not valid.';
                   }
                   else{
-                    endTime = value;
+                    description = value;
                     return null;
                   }
                 },

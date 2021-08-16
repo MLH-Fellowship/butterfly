@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/screen_type.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 String determineQuery(ScreenType screen){
   if(screen == ScreenType.Browse){
@@ -20,16 +21,18 @@ String determineQuery(ScreenType screen){
   }
   else if(screen == ScreenType.Hosting){
     return """
-        query getAllEvents {
-          allEvents {
-            id
-            name
-            date
-            startTime
-            endTime  
-            tag
-            location
-            description
+        query getHostedEvents{
+          user(userId:"1") {
+            events {
+              id
+              name
+              date
+              startTime
+              endTime
+              tag
+              location
+              description
+            }
           }
         }
       """;
@@ -64,4 +67,18 @@ String determineQuery(ScreenType screen){
           }
         }
       """;
+}
+
+List extractData(QueryResult result, ScreenType screen){
+  if(screen == ScreenType.Browse){
+    print(result.data["allEvents"].runtimeType);
+    return result.data["allEvents"];
+  }
+  else if(screen == ScreenType.Hosting){
+    return result.data["user"]["events"];
+  }
+  else if(screen == ScreenType.Attending){
+    return  result.data["allEvents"];
+  }
+  else return  result.data["allEvents"];
 }
