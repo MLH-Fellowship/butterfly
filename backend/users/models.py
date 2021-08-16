@@ -8,14 +8,6 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
-# class Attendee(models.Model):
-#     name = models.CharField(max_length=100, default="Filler Name")
-#     email = models.CharField(max_length=100, default="filler@gmail.com")
-#     attendingUser = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-
-#     def __str__(self):
-#         return self.attendeeName
-
 class Event(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateTimeField()
