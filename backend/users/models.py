@@ -10,7 +10,7 @@ class User(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=100)
-    date = models.DateTimeField()
+    date = models.DateField()
     startTime = models.TimeField(default="14:30:59")
     endTime = models.TimeField(default="14:30:59")
     tag = models.CharField(max_length=100)

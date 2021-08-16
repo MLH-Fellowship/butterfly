@@ -10,7 +10,7 @@ class EventType(DjangoObjectType):
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
     name = graphene.String(required=True)
-    date = graphene.DateTime(required=True)
+    date = graphene.Date(required=True)
     startTime = graphene.Time(required=True)
     endTime = graphene.Time(required=True)
     tag = graphene.String(required=True)
@@ -22,7 +22,7 @@ class EventInput(graphene.InputObjectType):
 class UpdateEventInput(graphene.InputObjectType):
     id = graphene.ID(required=True)
     name = graphene.String(required=False)
-    date = graphene.DateTime(required=False)
+    date = graphene.Date(required=False)
     startTime = graphene.Time(required=False)
     endTime = graphene.Time(required=False)
     tag = graphene.String(required=False)
