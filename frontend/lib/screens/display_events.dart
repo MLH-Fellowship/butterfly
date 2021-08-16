@@ -179,13 +179,13 @@ class _DisplayEventsState extends State<DisplayEvents> {
           // month
           Container(
               child: Text(
-            date,
+            month,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
           )),
           // day
           Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Text(date,
+              child: Text(day,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
           // RegisterButton()
           eventPageButton(mode: widget.mode, screen: widget.screen, eventID: eventID,)
