@@ -39,16 +39,18 @@ String determineQuery(ScreenType screen){
   }
   else if(screen == ScreenType.Attending){
     return """
-        query getAllEvents {
-          allEvents {
-            id
-            name
-            date
-            startTime
-            endTime  
-            tag
-            location
-            description
+        query getAttendingEvents{
+          user(userId:"1") {
+            attendingEvents {
+              id
+              name
+              date
+              startTime
+              endTime
+              tag
+              location
+              description
+            }
           }
         }
       """;
@@ -78,7 +80,7 @@ List extractData(QueryResult result, ScreenType screen){
     return result.data["user"]["events"];
   }
   else if(screen == ScreenType.Attending){
-    return  result.data["allEvents"];
+    return  result.data["user"]["attendingEvents"];
   }
   else return  result.data["allEvents"];
 }
