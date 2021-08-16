@@ -5,7 +5,7 @@ import graphene
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description", "attendee")
+        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description", "attendees")
 
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
@@ -17,16 +17,19 @@ class EventInput(graphene.InputObjectType):
     user_id = graphene.String(required=True, name="user")
     location = graphene.String(required=True)
     description = graphene.String(required=True)
-    attendee_id = graphene.List(of_type=graphene.ID, required=True, name="attendee")
+    attendees = graphene.List(graphene.String)
 
-# class AttendeeType(DjangoObjectType):
-#     class Meta:
-#         model = Attendee
-#         fields = ("id", "name", "email")
-
-# class AttendeeInput(graphene.InputObjectType):
-#     name = graphene.String(required=True)
-#     email = graphene.String(required=True)
+class UpdateEventInput(graphene.InputObjectType):
+    id = graphene.ID(required=True)
+    name = graphene.String(required=False)
+    date = graphene.DateTime(required=False)
+    startTime = graphene.Time(required=False)
+    endTime = graphene.Time(required=False)
+    tag = graphene.String(required=False)
+    user_id = graphene.String(required=False, name="user")
+    location = graphene.String(required=False)
+    description = graphene.String(required=False)
+    attendees = graphene.List(graphene.String, required=False)
 
 class UserType(DjangoObjectType):
     class Meta:
@@ -36,11 +39,11 @@ class UserType(DjangoObjectType):
     events = DjangoListField(EventType)
     attending_events = DjangoListField(EventType)
 
-    def resolve_events(self, info):
+    def resolve_events(self, info): 
         return Event.objects.filter(user=self.id)
     
     def resolve_attending_events(self, info):
-        return self.attending_events.all()
+        return Event.objects.filter(attendees__id=self.id)
 
 class UserInput(graphene.InputObjectType):
     id = graphene.ID()

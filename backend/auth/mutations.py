@@ -1,19 +1,10 @@
 import graphene
-from .types import EventType, EventInput, UserType, UserInput
+from .types import EventType, EventInput, UserType, UserInput, UpdateEventInput
 from users.models import Event, User
 
 class AddEvent(graphene.Mutation):
     class Arguments:
-        id = graphene.ID()
-        name = graphene.String(required=True)
-        date = graphene.DateTime(required=True)
-        startTime = graphene.Time(required=True)
-        endTime = graphene.Time(required=True)
-        tag = graphene.String(required=False)
-        user_id = graphene.String(required=True, name="user")
-        location = graphene.String(required=True)
-        description = graphene.String(required=True)
-        attendee_id = graphene.List(graphene.String(required=False, name="attendee"))
+        input = EventInput(required=True)
 
     event = graphene.Field(EventType)
 
@@ -22,6 +13,37 @@ class AddEvent(graphene.Mutation):
             return AddEvent(event=None)
         _event = Event.objects.create(**input)
         return AddEvent(event=_event)
+
+class AddAttendees(graphene.Mutation):
+    class Arguments:
+        eventId = graphene.ID()
+        userId = graphene.ID()
+
+    event = graphene.Field(EventType)
+    
+    def mutate(self, info, eventId, userId):
+        _event = Event.objects.get(id=eventId)
+        _user = User.objects.get(id=userId)
+
+        if not _event.attendees.filter(id=userId).exists():
+            _event.attendees.add(_user)
+            _event.save()
+        return AddAttendees(event=_event)
+
+class DeleteAttendees(graphene.Mutation):
+    class Arguments:
+        eventId = graphene.ID()
+        userId = graphene.ID()
+
+    event = graphene.Field(EventType)
+    
+    def mutate(self, info, eventId, userId):     
+        _event = Event.objects.get(id=eventId)
+        _user = User.objects.get(id=userId)
+
+        if _event.attendees.filter(id=userId).exists():
+            _event.attendees.remove(_user)
+        return DeleteAttendees(event=_event)
 
 class AddUser(graphene.Mutation):
     class Arguments:
@@ -35,19 +57,8 @@ class AddUser(graphene.Mutation):
         _user = User.objects.create(**input)
         return AddUser(user=_user)
 
-# class AddAttendee(graphene.Mutation):
-#     class Arguments:
-#         input = AttendeeInput(required=True)
-
-#     attendee = graphene.Field(AttendeeType)
-
-#     def mutate(self, parent, input=None):
-#         if input is None:
-#             return AddAttendee(attendee=None)
-#         _attendee = Attendee.objects.create(**input)
-#         return AddAttendee(attendee=_attendee)
-
 class Mutation(graphene.ObjectType):
     add_event = AddEvent.Field()
     add_user = AddUser.Field()
-    # add_attendee = AddAttendee.Field()
+    add_attendees = AddAttendees.Field()
+    delete_attendees = DeleteAttendees.Field()
