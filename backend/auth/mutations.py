@@ -2,6 +2,7 @@ import graphene
 from .types import EventType, EventInput, UserType, UserInput, UpdateEventInput
 from users.models import Event, User
 
+# GraphQL mutation for adding an event from EventInput
 class AddEvent(graphene.Mutation):
     class Arguments:
         input = EventInput(required=True)
@@ -14,6 +15,20 @@ class AddEvent(graphene.Mutation):
         _event = Event.objects.create(**input)
         return AddEvent(event=_event)
 
+class DeleteEvent(graphene.Mutation):
+    class Arguments:
+        eventId = graphene.ID()
+
+    deleted = graphene.Boolean()
+    
+    def mutate(self, info, eventId):
+        if Event.objects.get(id=eventId):
+            _event = Event.objects.get(id=eventId)
+            _event.delete()
+            return DeleteEvent(deleted=True)
+        return DeleteEvent(deleted=False)
+
+# GraphQL mutation for adding attendees to an event given an eventID and userID
 class AddAttendees(graphene.Mutation):
     class Arguments:
         eventId = graphene.ID()
@@ -30,6 +45,7 @@ class AddAttendees(graphene.Mutation):
             _event.save()
         return AddAttendees(event=_event)
 
+# GraphQL mutation for deleting attendees from an event given an eventID and userID
 class DeleteAttendees(graphene.Mutation):
     class Arguments:
         eventId = graphene.ID()
@@ -45,6 +61,7 @@ class DeleteAttendees(graphene.Mutation):
             _event.attendees.remove(_user)
         return DeleteAttendees(event=_event)
 
+# GraphQL mutation for adding a User from UserInput
 class AddUser(graphene.Mutation):
     class Arguments:
         input = UserInput(required=True)
@@ -62,3 +79,4 @@ class Mutation(graphene.ObjectType):
     add_user = AddUser.Field()
     add_attendees = AddAttendees.Field()
     delete_attendees = DeleteAttendees.Field()
+    delete_event = DeleteEvent.Field()

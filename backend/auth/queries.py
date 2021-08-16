@@ -7,8 +7,6 @@ class Query(graphene.ObjectType):
     event = graphene.Field(EventType, eventId=graphene.String())
     all_users = graphene.List(UserType)
     user = graphene.Field(UserType, userId=graphene.String())
-    # all_attendees = graphene.List(AttendeeType)
-    # attendee = graphene.Field(AttendeeType, attendeeId=graphene.String())
 
     # Resolver for allEvents query
     def resolve_all_events(self, parent):
@@ -25,11 +23,3 @@ class Query(graphene.ObjectType):
     # Resolver for userById query
     def resolve_user(self, info, userId):
         return User.objects.get(id=userId)
-
-    # # Resolver for allUsers query
-    # def resolve_all_attendees(self, parent):
-    #     return Attendee.objects.all()
-
-    # # Resolver for eventById query
-    # def resolve_attendee(self, parent, attendeeId):
-    #     return Attendee.objects.get(id=attendeeId)
