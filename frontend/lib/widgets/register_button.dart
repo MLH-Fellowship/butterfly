@@ -24,7 +24,7 @@ class _RegisterButtonState extends State<RegisterButton> {
 
   void _registerPressed() {
       Navigator.of(context).pop();
-      Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegister(screen: ScreenType.EventRegister,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => EventRegister(screen: ScreenType.EventRegister, eventID: "1",)));
       print('register pressed');
     }
 }
