@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block head %}
+        <title>butterfly</title>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com"> 
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+        <!--<link href="../static/styles/normalize.css" rel="stylesheet">-->
+
+        <!--Plain styling-->
+        <link href="../static/styles/home.css" rel="stylesheet">
+        
+
+        <!--Bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        
+        <!-- iphone -->
+        <link href="../static/styles/iphone.css" rel="stylesheet">
+        <link rel="import" href="../static/styles/iphone.css">
+        <link rel="import" href="./iphone.html">
+
+        <link href="../static/styles/carousel.css" rel="stylesheet">
+        <link rel="import" href="../static/styles/carousel.css">
+        <link rel="import" href="./carousel.html">
+        
+            
+    {% endblock %}
+{% block content %}
+
+    <!--Hero-->
+    <div id="hero">
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_xzIOCI.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player>
+        <div class="text-overlay">
+            <h1>butterfly</h1>
+            <h2>Events near you, for you</h2>        
+            
+            <div class="fellows-container">
+                    <a class="btn--home" href="/">View in App Store</a>
+        </div>
+
+        </div>
+    </div>
+
+    <!--Meet the Team-->
+    <div id="meet-team">
+        <h2 class="team-heading">Who We Are</h2>
+        <h4>Create and inform others on personalized events.</h4>
+        <div class="fellows-container">
+ 
+            <div class="container">
+                <div class="iphone">
+                    <div class="buttons">
+                        <div class="silent"></div>
+                        <div class="sleep"></div>
+                        <div class="vol-up"></div>
+                        <div class="vol-down"></div>
+                    </div>
+            
+                    <div class="screen"></div>
+                    <video preload="auto" loop="loop" autoplay="autoplay" muted="muted" width="100%">
+                            <source src="../static/media/Simulator.mp4" type="video/mp4" />
+                        </video>
+            
+                    </div>
+                </div>
+           
+
+            </div> 
+
+         
+                <!-- <video loop muted autoplay preload="auto" class="iphone">
+                    <source src="../static/media/Simulator.mp4" type="video/mp4">
+                </video>     -->
+
+            
+        </div>
+
+
+        <div class="fellows-container">
+
+                <a class="btn--home" href="/">View in App Store</a>
+           
+        </div>
+
+
+    
+    </div>
+    <!-- <div class="meet-team">
+
+                <div class="slider">
+                    <div class="slide-track">
+                        <div class="slide">
+                            <img src="../static/media/emulator.mp4" height="500" width="250" alt="" />
+                        </div>
+                        <div class="slide">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" />
+                        </div>
+
+
+                    </div>
+                </div> 
+    </div> -->
+
+
+{% endblock %}

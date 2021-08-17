@@ -1,0 +1,52 @@
+
+<div class="container">
+    <div class="iphone">
+        <div class="buttons">
+            <div class="silent"></div>
+            <div class="sleep"></div>
+            <div class="vol-up"></div>
+            <div class="vol-down"></div>
+        </div>
+        <div class="top">
+            <div class="black-bar"></div>
+            <div class="iphone-top"></div>
+        </div>
+        <div class="components">
+            <div class="speaker"></div>
+            <div class="camera">
+                <div class="shine-left"></div>
+                <div class="shine-right"></div>
+            </div>
+        </div>
+        <div class="top-bar"></div>
+        <div class="bottom-bar"></div>
+        <div class="screen"><video  loop muted autoplay preload="auto" loop="loop" autoplay="autoplay" muted="muted">
+                <source src="../static/media/Simulator.mp4" type="video/mp4" />
+            </video>
+            <div class="service">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="battery">
+                <div class="nub"></div>
+                <div class="energy"></div>
+            </div>
+            <div class="lock-carrier">AT&T</div>
+            <div class="lock-lock"></div>
+            <div class="info">
+                <div class="lock-time"> </div>
+                <div class="lock-date"> </div>
+            </div>
+            <div class="lock-bar"></div>
+        </div>
+    </div>
+</div>
+<!-- goo filter for notch shape--><svg viewbox="0 0 0 0" height="0" width="0">
+    <filter id="goo" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"></feGaussianBlur>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 8 -1" result="cm"></feColorMatrix>
+        <feBlend in="sourceGraphic" in2="cm" mode="multiply"></feBlend>
+    </filter>
+</svg>
