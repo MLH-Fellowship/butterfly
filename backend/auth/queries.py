@@ -7,6 +7,7 @@ class Query(graphene.ObjectType):
     event = graphene.Field(EventType, eventId=graphene.String())
     all_users = graphene.List(UserType)
     user = graphene.Field(UserType, userId=graphene.String())
+    userByUsername = graphene.Field(UserType, username=graphene.String())
 
     # Resolver for allEvents query
     def resolve_all_events(self, parent):
