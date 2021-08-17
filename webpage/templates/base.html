@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     {% block head %}
-        <!--Things to be overridden-->
-        <title>butterfly</title>
+    <!--Things to be overridden-->
+    <title>test</title>
 
-        <!--Plain styling-->
-        <!--<link href="../static/styles/home.css" rel="stylesheet">-->
+    <!--Plain styling-->
+    <!--<link href="../static/styles/home.css" rel="stylesheet">-->
 
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link href="../static/styles/iphone.css" rel="stylesheet" />
 
-        <!-- MDB -->
-        <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css"
-        rel="stylesheet" >
-        <link href="../static/styles/iphone.css" rel="stylesheet">
+    <link rel="import" href="../static/styles/iphone.css" />
 
-        <link rel="import" href="../static/styles/iphone.css">
+    <link rel="import" href="./iphone.html" />
 
-        <link rel="import" href="./iphone.html">
-
-        <!-- <link rel="import" href="./carousel.html"> -->
-        <!-- <link rel="import" href="../static/styles/carousel.css"> -->
+    <!-- <link rel="import" href="./carousel.html"> -->
+    <!-- <link rel="import" href="../static/styles/carousel.css"> -->
 
     {% endblock %}
     <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
 
     <!--Fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com"> 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
     <!--<link href="../static/styles/normalize.css" rel="stylesheet">-->
-          <!--iphone-->
-    
-</head>
-<body>
-
+    <!--iphone-->
+  </head>
+  <body>
     <!--Content-->
     <div class="content">{% block content%}{% endblock %}</div>
-    
 
     <!-- Footer -->
     <!-- <footer class="text-center text-lg-start bg-light text-muted">
@@ -68,11 +73,15 @@
     <!-- Footer -->
 
     <!--Boostrap script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
     <!--MDB script-->
     <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"
     ></script>
-</body>
+  </body>
 </html>
