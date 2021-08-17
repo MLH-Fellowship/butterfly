@@ -82,12 +82,13 @@ class EventPage extends StatelessWidget {
                       event['location'],
                       mapMonth(event['date'].substring(5, 7)), // month
                       event['date'].substring(8, 10), // day
-                      event['date'],
+                      event['startTime'],
+                      event['endTime'],
                       event['description']
                     ),
                   ],
                 ),
-                eventPageButton(mode: mode, screen: screen)
+                eventPageButton(mode: mode, screen: screen, eventID: event['id'],)
               ],
             )
           );
@@ -96,7 +97,7 @@ class EventPage extends StatelessWidget {
     );
   }
 
-  Widget renderContent(String eventName, String location, String month, String day, String time, String description, ){
+  Widget renderContent(String eventName, String location, String month, String day, String startTime, String endTime, String description, ){
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
         children: [
@@ -127,7 +128,7 @@ class EventPage extends StatelessWidget {
               // time
               Container(
                 padding: EdgeInsets.fromLTRB(0, 2, 0, 40),
-                child: Text(time, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
+                child: Text("${startTime} - ${endTime}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300, fontStyle: FontStyle.italic)
                 )
               ),
             ],

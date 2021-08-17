@@ -21,5 +21,5 @@ class Query(graphene.ObjectType):
         return User.objects.all()
     
     # Resolver for userById query
-    def resolve_user(parent, info, userId):
+    def resolve_user(self, info, userId):
         return User.objects.get(id=userId)

@@ -18,6 +18,7 @@ import 'screen_type.dart';
 import 'event_page.dart';
 import 'map_month.dart';
 
+
 class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
   final ScreenType screen;
@@ -59,7 +60,10 @@ class _DisplayEventsState extends State<DisplayEvents> {
               if (result.loading) {
                 return Text(''); //just display a blank page when loading
               }
-              final events = result.data['allEvents'];
+              
+              final events = extractData(result, widget.screen);
+              print(" events is type: ${events.runtimeType}");
+              print('events we got back: ${events}');
 
               return ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -109,13 +113,16 @@ class _DisplayEventsState extends State<DisplayEvents> {
                     buildCardLeft(
                         eventName: event['name'],
                         location: event['location'],
-                        time: event['date'],
+                        startTime: event['startTime'],
+                        endTime: event['endTime'],
                         description: event['description']),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
                         month: mapMonth(event['date'].substring(5, 7)),
                         day: event['date'].substring(8, 10),
+                        eventID: event['id'],
+                        date: event['date']
                       ),
                     )
                   ],
@@ -123,7 +130,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
           )));
 
   // card text in left col
-  Widget buildCardLeft({required String eventName,required String location, required String time, required String description}) {
+  Widget buildCardLeft({required String eventName,required String location, required String startTime, required String endTime, required String description}) {
     print(eventName);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
         children: [
@@ -149,7 +156,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
           // time
           Container(
             padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-            child: Text(time,
+            child: Text('${startTime} - ${endTime}',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -169,20 +176,22 @@ class _DisplayEventsState extends State<DisplayEvents> {
   }
 
   // date and registration button in card's right col
-  Widget buildCardRight({required String month, required String day}) {
+  Widget buildCardRight({required String month, required String day, required String eventID, required String date}) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
         children: [
+          // month
           Container(
               child: Text(
             month,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
           )),
+          // day
           Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Text(day,
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))),
           // RegisterButton()
-          eventPageButton(mode: widget.mode, screen: widget.screen)
+          eventPageButton(mode: widget.mode, screen: widget.screen, eventID: eventID,)
         ]);
   }
 }

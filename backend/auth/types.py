@@ -5,11 +5,7 @@ import graphene
 class EventType(DjangoObjectType):
     class Meta:
         model = Event
-        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description")
-        # To be implemented
-        # fields = ("id", "name", "date", "tag", "user", "location", "description", "attendees")
-
-
+        fields = ("id", "name", "date", "startTime", "endTime", "tag", "user", "location", "description", "attendees")
 
 class EventInput(graphene.InputObjectType):
     id = graphene.ID()
@@ -21,28 +17,34 @@ class EventInput(graphene.InputObjectType):
     user_id = graphene.String(required=True, name="user")
     location = graphene.String(required=True)
     description = graphene.String(required=True)
-    # To be implemented
-    # attendees = graphene.String(required=True, name="User")
+    attendees = graphene.List(graphene.String)
+
+class UpdateEventInput(graphene.InputObjectType):
+    id = graphene.ID(required=True)
+    name = graphene.String(required=False)
+    date = graphene.DateTime(required=False)
+    startTime = graphene.Time(required=False)
+    endTime = graphene.Time(required=False)
+    tag = graphene.String(required=False)
+    user_id = graphene.String(required=False, name="user")
+    location = graphene.String(required=False)
+    description = graphene.String(required=False)
+    attendees = graphene.List(graphene.String, required=False)
 
 class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = ("id", "name", "email", "password")
 
+    # GraphQL field for events user is hosting
     events = DjangoListField(EventType)
-
-    def resolve_events(self, info):
+    def resolve_events(self, info): 
         return Event.objects.filter(user=self.id)
-    # To be implemented
-    # attendees = DjangoListField(UserType)
-    # events = DjangoListField(EventType)
-
-    # def resolve_events(self, info):
-    #     return Event.objects.filter(user=self.id)
-
-    # To be implemented
-    # def resolve_attendees(self, info):
-    #     return Event
+    
+    # GraphQL field for events user is attending
+    attending_events = DjangoListField(EventType)
+    def resolve_attending_events(self, info):
+        return Event.objects.filter(attendees__id=self.id)
 
 class UserInput(graphene.InputObjectType):
     id = graphene.ID()
