@@ -69,8 +69,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.montserrat().fontFamily,
             textTheme: GoogleFonts.montserratTextTheme(),
             pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder( 
-                ),
+              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
               TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
             })),
         //home: const LoginPage(
@@ -274,22 +273,30 @@ class _LoginPageState extends State<LoginPage> {
     print('The user wants to login with $_email and $_password');
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+    final String userByEmail = """
+      query userByEmail(\$_email: String) {
+        userByEmail(email: \$email) {
+          email
+          password
+        }
+      }
+      """;
     Query(
-            options: QueryOptions(
-              documentNode: gql(getAllEvents),
-              fetchPolicy: FetchPolicy.networkOnly,
-            ),
-            
-            builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
-              // handle exceptions and loading
-              refetchQuery = refetch!;
-              if (result!.hasException) {
-                return Text(result.exception.toString());
-              }
-              if (result.loading) {
-                return Text(''); //just display a blank page when loading
-              }}
-    )
+        options: QueryOptions(
+          documentNode: gql(userByEmail),
+          fetchPolicy: FetchPolicy.networkOnly,
+        ),
+        builder: (QueryResult? result,
+            {VoidCallback? refetch, FetchMore? fetchMore}) {
+          // handle exceptions and loading
+          refetchQuery = refetch!;
+          if (result!.hasException) {
+            return Text(result.exception.toString());
+          }
+          if (result.loading) {
+            return Text(''); //just display a blank page when loading
+          }
+        });
     Navigator.push(
         context,
         PageRouteBuilder(
@@ -298,7 +305,8 @@ class _LoginPageState extends State<LoginPage> {
             pageBuilder: (BuildContext context, _, __) {
               //return Center(child: Text('My PageRoute'));
               return DisplayEvents(
-                screen: ScreenType.Browse, mode: EventButtonMode.Register,
+                screen: ScreenType.Browse,
+                mode: EventButtonMode.Register,
               );
             }));
   }
