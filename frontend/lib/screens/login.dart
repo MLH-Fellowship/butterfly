@@ -22,6 +22,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   var myFocusNode;
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController usernameController = new TextEditingController();
 
   get account => null;
 
@@ -37,6 +39,7 @@ class _LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextInputField(
+              // controller: emailController,
               icon: FontAwesomeIcons.envelope,
               hint: 'Email',
               inputType: TextInputType.emailAddress,

@@ -274,6 +274,22 @@ class _LoginPageState extends State<LoginPage> {
     print('The user wants to login with $_email and $_password');
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+    Query(
+            options: QueryOptions(
+              documentNode: gql(getAllEvents),
+              fetchPolicy: FetchPolicy.networkOnly,
+            ),
+            
+            builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
+              // handle exceptions and loading
+              refetchQuery = refetch!;
+              if (result!.hasException) {
+                return Text(result.exception.toString());
+              }
+              if (result.loading) {
+                return Text(''); //just display a blank page when loading
+              }}
+    )
     Navigator.push(
         context,
         PageRouteBuilder(
