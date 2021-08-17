@@ -1,12 +1,14 @@
 version: "3"
 services:
   web:
+    container_name: butterfly_web
     build: .
-    ports:
-      - "80:80"
     restart: always
+    volumes:
+      - .:/butterfly
 
   nginx:
+    container_name: butterfly_nginx
     image: jonasal/nginx-certbot:latest
     restart: unless-stopped
     env_file:
