@@ -5,3 +5,4 @@ __pycache__
 migrations
 *.env
 .vscode
+user_conf.d 
