@@ -2,10 +2,22 @@ version: "3"
 services:
   web:
     container_name: butterfly_web
-    build: .
+    build: ./webpage
     restart: always
     volumes:
-      - .:/butterfly
+      - ./webpage:/butterfly
+
+  backend:
+    container_name: butterfly_backend
+    build: ./backend
+    ports:
+      - 8000:8000
+    depends on: db
+
+  db:
+    container_name: butterfly_db
+    image: sqlite
+    restart: always
 
   nginx:
     container_name: butterfly_nginx
