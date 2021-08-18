@@ -12,12 +12,12 @@ services:
     build: ./backend
     ports:
       - 8000:8000
-    depends on: 
+    depends_on: 
       - db
 
   db:
     container_name: butterfly_db
-    image: sqlite
+    image: nouchka/sqlite3:latest
     restart: always
 
   nginx:
