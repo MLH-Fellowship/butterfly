@@ -12,7 +12,8 @@ services:
     build: ./backend
     ports:
       - 8000:8000
-    depends on: db
+    depends on: 
+      - db
 
   db:
     container_name: butterfly_db
