@@ -181,31 +181,6 @@ class _buildForm extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: RichText(
-                overflow: TextOverflow.clip,
-                text: TextSpan(
-                  text: 'Event Name \n\n',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Palette.highlight_1),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Event Date: Super long bolded text here \n\n',
-                      style: DefaultTextStyle.of(context).style,
-                    ),
-                    TextSpan(
-                      text:
-                          'Event Description:Super long unbolded text here \n',
-                      style: DefaultTextStyle.of(context).style,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Padding(
               padding: const EdgeInsets.all(8.0),
               // name
               child: TextFormField(

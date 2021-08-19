@@ -135,10 +135,6 @@ class EventPage extends StatelessWidget {
           ),
           // description 
           renderSection('Description', description),
-          SizedBox(height: 50,), // add spacing b/w sections
-          renderSection('Attendees', 'TBD'),
-          SizedBox(height: 50,),
-          renderSection('Discussion', 'TBD '),
         ]
     );
   }
