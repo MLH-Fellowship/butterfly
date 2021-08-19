@@ -2,10 +2,23 @@ version: "3"
 services:
   web:
     container_name: butterfly_web
-    build: .
+    build: ./webpage
     restart: always
     volumes:
-      - .:/butterfly
+      - ./webpage:/butterfly
+
+  backend:
+    container_name: butterfly_backend
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    container_name: butterfly_db
+    image: nouchka/sqlite3:latest
+    restart: always
 
   nginx:
     container_name: butterfly_nginx
@@ -14,13 +27,50 @@ services:
     env_file:
       - ./nginx-certbot.env
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt
       - ./user_conf.d:/etc/nginx/user_conf.d
     depends_on:
       - web
 
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run/:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_storage:/var/lib/grafana
+    depends_on:
+      - prometheus
+
 volumes:
   nginx_secrets:
+  grafana_storage:
