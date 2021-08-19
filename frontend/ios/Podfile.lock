@@ -1,5 +1,5 @@
 PODS:
-  - connectivity (0.0.1):
+  - connectivity_plus (0.0.1):
     - Flutter
     - Reachability
   - Flutter (1.0.0)
@@ -8,6 +8,8 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - integration_test (0.0.1):
+    - Flutter
   - path_provider (0.0.1):
     - Flutter
   - Reachability (3.2)
@@ -18,9 +20,10 @@ PODS:
     - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
-  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -31,12 +34,14 @@ SPEC REPOS:
     - Reachability
 
 EXTERNAL SOURCES:
-  connectivity:
-    :path: ".symlinks/plugins/connectivity/ios"
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
     :path: Flutter
   flutter_config:
     :path: ".symlinks/plugins/flutter_config/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -45,10 +50,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  connectivity_plus: 5f0eb61093bec56935f21a1699dd2758bc895587
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
