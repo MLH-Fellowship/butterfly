@@ -12,10 +12,8 @@ import 'graphql_conf.dart';
 import 'query_mutation.dart';
 
 // screens
-import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'screens/create_event_form.dart';
-import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +27,6 @@ import 'package:gql/operation.dart';
 import 'package:gql/schema.dart';
 
 import 'widgets/custom_bar.dart';
-import 'screens/eventpg.dart';
 import 'screens/display_events.dart';
 import 'screens/screen_type.dart';
 
@@ -69,8 +66,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.montserrat().fontFamily,
             textTheme: GoogleFonts.montserratTextTheme(),
             pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder( 
-                ),
+              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
               TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
             })),
         //home: const LoginPage(
@@ -270,10 +266,8 @@ class _LoginPageState extends State<LoginPage> {
   // These functions can self contain any user auth logic required, they all have access to _email and _password
 
   void _loginPressed() {
-    // ignore: avoid_print
     print('The user wants to login with $_email and $_password');
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => DisplayEvents(screen: ScreenType.Browse,)));
+    
     Navigator.push(
         context,
         PageRouteBuilder(
@@ -282,7 +276,8 @@ class _LoginPageState extends State<LoginPage> {
             pageBuilder: (BuildContext context, _, __) {
               //return Center(child: Text('My PageRoute'));
               return DisplayEvents(
-                screen: ScreenType.Browse, mode: EventButtonMode.Register,
+                screen: ScreenType.Browse,
+                mode: EventButtonMode.Register,
               );
             }));
   }

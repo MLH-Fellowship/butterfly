@@ -4,7 +4,6 @@ import 'package:frontend/screens/dummy.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/config/palette.dart';
 import 'package:frontend/screens/event_button_mode.dart';
-import 'package:frontend/screens/eventpg.dart';
 import 'package:frontend/screens/create_event_form.dart';
 import '../screens/screen_type.dart';
 

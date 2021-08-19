@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/palette.dart';
-import 'package:frontend/screens/browse_events.dart';
 import 'package:frontend/screens/display_events.dart';
 import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/screen_type.dart';
