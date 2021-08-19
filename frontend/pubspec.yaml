@@ -33,11 +33,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  graphql_flutter: any #^4.0.0-alpha.8
   flutter_dotenv: ^5.0.0
   flutter_form_builder: ^6.0.1
   velocity_x: ^3.3.0
-  http: '>=0.12.0+2 <0.13.3'
   flutter_chips_input: ^1.10.0
   animated_text_kit: ^4.2.1
   lottie:
@@ -45,22 +43,21 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   awesome_dialog: ^2.1.0
   shared_preferences:
-  dropdown_date_picker: 
+  dropdown_date_picker:
   sqflite: ^2.0.0+3
-  google_fonts: any
-  crypto: any
-  graphql: any
 
+  graphql_flutter: ^5.0.0
+  http: ^0.13.0
+  google_fonts: 
+  # graphql: ^5.0.0
+  # path_provider: ^2.0.2
+  # crypto: ^3.0.1
 
 dependency_overrides:
-    # path: ^2.1.3
-  path_provider: any
-
-
-
+  # path: ^2.1.3
 
 dev_dependencies:
-  flutter_config: ^1.0.5
+  flutter_config: ^1.0.8
   flutter_driver:
     sdk: flutter
   test: any
@@ -68,7 +65,6 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

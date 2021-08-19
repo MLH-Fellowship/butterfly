@@ -22,7 +22,8 @@ class DisplayEvents extends StatefulWidget {
   // takes a paramter to customize the page name
   final ScreenType screen;
   final EventButtonMode mode;
-  const DisplayEvents({Key? key, required this.screen, required this.mode}) : super(key: key);
+  const DisplayEvents({Key? key, required this.screen, required this.mode})
+      : super(key: key);
 
   @override
   _DisplayEventsState createState() => _DisplayEventsState();
@@ -32,7 +33,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
   @override
   Widget build(BuildContext context) {
     VoidCallback refetchQuery;
-    
+
     // Based on param, determine type of request to make to the backend
     final String getAllEvents = determineQuery(widget.screen);
 
@@ -46,20 +47,24 @@ class _DisplayEventsState extends State<DisplayEvents> {
         children: <Widget>[
           Query(
             options: QueryOptions(
-              documentNode: gql(getAllEvents),
+              // deprecated: documentNode: gql(getAllEvents),
+              document: gql(getAllEvents),
+
               fetchPolicy: FetchPolicy.networkOnly,
             ),
-            
-            builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
+            builder: (QueryResult? result,
+                {VoidCallback? refetch, FetchMore? fetchMore}) {
               // handle exceptions and loading
               refetchQuery = refetch!;
               if (result!.hasException) {
                 return Text(result.exception.toString());
               }
-              if (result.loading) {
+              // deprecated: if (result.loading) {
+
+              if (result.isLoading) {
                 return Text(''); //just display a blank page when loading
               }
-              final events = result.data['allEvents'];
+              final events = result.data!['allEvents'];
 
               return ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -92,11 +97,15 @@ class _DisplayEventsState extends State<DisplayEvents> {
       margin: EdgeInsets.all(12),
       child: InkWell(
           // wrap in gesture detector to make card clickable
-          onTap: (){
+          onTap: () {
             // We don't pop, bc we want to return to this pg when we dismiss the event page
             Navigator.of(context).push(MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => EventPage(eventID: event['id'], mode: widget.mode, screen: ScreenType.EventPage,)));
+                fullscreenDialog: true,
+                builder: (context) => EventPage(
+                      eventID: event['id'],
+                      mode: widget.mode,
+                      screen: ScreenType.EventPage,
+                    )));
           },
           borderRadius: BorderRadius.all(Radius.circular(50)),
           child: FittedBox(
@@ -123,48 +132,43 @@ class _DisplayEventsState extends State<DisplayEvents> {
           )));
 
   // card text in left col
-  Widget buildCardLeft({required String eventName,required String location, required String time, required String description}) {
+  Widget buildCardLeft(
+      {required String eventName,
+      required String location,
+      required String time,
+      required String description}) {
     print(eventName);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, //left-aligned
         children: [
           // event name
           Container(
-            width: 275,
-            child: Text(
-            eventName,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            overflow: TextOverflow.ellipsis
-            )
-          ),
+              width: 275,
+              child: Text(eventName,
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis)),
           // location
           Container(
-            padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
-            child: Text(location,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic)
-              )
-          ),
+              padding: EdgeInsets.fromLTRB(0, 4, 0, 0),
+              child: Text(location,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.italic))),
           // time
           Container(
-            padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-            child: Text(time,
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic)
-            )
-          ),
+              padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
+              child: Text(time,
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.italic))),
           // description
           Container(
-            padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-            width: 275,
-            child: Text(description,
-                style: TextStyle(fontSize: 16),
-                overflow: TextOverflow.ellipsis
-            )
-          )          
+              padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+              width: 275,
+              child: Text(description,
+                  style: TextStyle(fontSize: 16),
+                  overflow: TextOverflow.ellipsis))
         ]);
   }
 

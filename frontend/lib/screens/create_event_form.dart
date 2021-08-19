@@ -66,77 +66,85 @@ class _CreateEventFormState extends State<CreateEventForm> {
         }
       }
       """;
-    return Scaffold(
-      appBar: CustomBar(widget.screen, false), //display a custom title
-      body: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 10.0,
-            horizontal: 10.0,
-          ),
-          child: Column(children: [
-            _buildForm(formKey: _formKey),
-            SizedBox(
-              height: 15,
+    return GraphQLProvider(
+      client: GraphQLConfiguration.client,
+      child: Scaffold(
+        appBar: CustomBar(widget.screen, false), //display a custom title
+        body: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 10.0,
             ),
-            Mutation(
-              options: MutationOptions(
-                documentNode: gql(addEvent),
-                onCompleted: (dynamic resultData) {
-                  if (resultData?.isEmpty ?? true) {
-                    print('null data');
-                  } else {
-                    print('nonnull data');
-                    var data = resultData.data["addEvent"];
-
-                    setState(() {
-                      eventName = data['name'];
-                      date = data['date'];
-
-                      startTime = data['startTime'];
-                      endTime = data['endTime'];
-                      tag = data['tag'];
-                      location = data['location'];
-                      description = data['description'];
-                    });
-
-                    print("mutation added: ${data}");
-                  }
-                },
-                onError: (err) {
-                  print(err.graphqlErrors);
-                },
+            child: Column(children: <Widget>[
+              _buildForm(formKey: _formKey),
+              SizedBox(
+                height: 15,
               ),
-              builder: (RunMutation runMutation, QueryResult result) {
-                // next & submit button
-                return ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      debugPrint('All fields entered.');
-                      print('submit pressed');
-                      runMutation({
-                        "input": {
-                          "name": eventName,
-                          "date": date,
-                          "startTime": startTime,
-                          "endTime": endTime,
-                          "tag": tag,
-                          "user": "1",
-                          "location": location,
-                          "description": description
-                        }
+              Mutation(
+                options: MutationOptions(
+                  // deprecated: documentNode: gql(addEvent),
+                  document: gql(addEvent),
+
+                  onCompleted: (dynamic resultData) {
+                    if (resultData?.isEmpty ?? true) {
+                      print('null data');
+                    } else {
+                      print('nonnull data');
+                      var data = resultData.data["addEvent"];
+
+                      setState(() {
+                        eventName = data['name'];
+                        date = data['date'];
+
+                        startTime = data['startTime'];
+                        endTime = data['endTime'];
+                        tag = data['tag'];
+                        location = data['location'];
+                        description = data['description'];
                       });
+
+                      print("mutation added: ${data}");
                     }
                   },
-                  //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-                  child: const Text('Submit', style: TextStyle(fontSize: 11)),
-                  style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-                );
-              },
-            ),
-          ]
-              //child: Icon(Icons.keyboard_return_rounded),
-              )),
-      bottomNavigationBar: BottomNav(screen: ScreenType.Create),
+                  onError: (err) {
+                    print(err!.graphqlErrors);
+                  },
+                ),
+                builder: (RunMutation runMutation, QueryResult? result) {
+                  // next & submit button
+                  return Center(
+                    child: ElevatedButton(
+                      child:
+                          const Text('Submit', style: TextStyle(fontSize: 11)),
+                      style: ElevatedButton.styleFrom(
+                          primary: Palette.highlight_1),
+
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          debugPrint('All fields entered.');
+                          print('submit pressed');
+                          runMutation({
+                            "input": {
+                              "name": eventName,
+                              "date": date,
+                              "startTime": startTime,
+                              "endTime": endTime,
+                              "tag": tag,
+                              "user": "1",
+                              "location": location,
+                              "description": description
+                            }
+                          });
+                        }
+                      },
+                      // child: Icon(Icons.keyboard_return_rounded),
+                    ),
+                  );
+                },
+              ),
+            ])),
+        bottomNavigationBar: BottomNav(screen: ScreenType.Create),
+      ),
     );
   }
 

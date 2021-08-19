@@ -33,7 +33,6 @@ class CreateAccount extends StatefulWidget {
   final bool isAdd; //Alert
   //late FocusNode myFocusNode;
 
-
   @override
   State<StatefulWidget> createState() =>
       _CreateAccountState(this.account, this.isAdd);
@@ -82,7 +81,6 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
-
     final String addUser = """
       mutation addUser(\$input: UserInput!) {
         addUser(input: \$input) {
@@ -134,61 +132,65 @@ class _CreateAccountState extends State<CreateAccount> {
           // next & submit button
           Mutation(
             options: MutationOptions(
-              documentNode: gql(addUser),
-              onCompleted: (dynamic resultData){
+              //deprecated: documentNode: gql(addUser),
+              document: gql(addUser),
+
+              onCompleted: (dynamic resultData) {
                 var data = resultData.data["addUser"];
 
                 print("mutation added: ${data}");
 
                 // take user to the browse events page
-                Navigator.push(context, PageRouteBuilder(
-                  opaque: false,
-                  transitionDuration: Duration.zero,
-                  pageBuilder: (BuildContext context, _, __) {
-                    //return Center(child: Text('My PageRoute'));
-                    return DisplayEvents(
-                            screen: ScreenType.Browse, mode: EventButtonMode.Register,);
-                    }
-                  )
-                );
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration: Duration.zero,
+                        pageBuilder: (BuildContext context, _, __) {
+                          //return Center(child: Text('My PageRoute'));
+                          return DisplayEvents(
+                            screen: ScreenType.Browse,
+                            mode: EventButtonMode.Register,
+                          );
+                        }));
               },
-            ), 
-            builder: (RunMutation runMutation, QueryResult result){
+            ),
+            builder: (RunMutation runMutation, QueryResult? result) {
               // next & submit button
               return FloatingActionButton(
-              heroTag: "nextBtn",
-              child: nextButton,
+                heroTag: "nextBtn",
+                child: nextButton,
 
-              onPressed: () => setState(() {
-                //myFocusNode.requestFocus();
-                if (_formKey.currentState!.validate()) {
-                  debugPrint('All fields entered.');
-                  // add to calendar button
-                  ElevatedButton(
-                    onPressed: _registerPressed,
-                    //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-                    child: const Text('Add to calendar',
-                        style: TextStyle(fontSize: 11)),
-                    style: ElevatedButton.styleFrom(primary: Palette.highlight_1),
-                  );
-                  
-                  nextButton = Icon(Icons.done);
-                  debugPrint('submit clicked');
-                  // run the mutation
-                  runMutation({
-                    "input": {
+                onPressed: () => setState(() {
+                  //myFocusNode.requestFocus();
+                  if (_formKey.currentState!.validate()) {
+                    debugPrint('All fields entered.');
+                    // add to calendar button
+                    ElevatedButton(
+                      onPressed: _registerPressed,
+                      //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
+                      child: const Text('Add to calendar',
+                          style: TextStyle(fontSize: 11)),
+                      style: ElevatedButton.styleFrom(
+                          primary: Palette.highlight_1),
+                    );
+
+                    nextButton = Icon(Icons.done);
+                    debugPrint('submit clicked');
+                    // run the mutation
+                    runMutation({
+                      "input": {
                         "name": name,
                         "email": email,
                         "password": password
                       }
-                  });
-                }
-              }),
-              //child: Icon(Icons.keyboard_return_rounded),
+                    });
+                  }
+                }),
+                //child: Icon(Icons.keyboard_return_rounded),
               );
             },
           )
-          
         ],
       ),
       //       bottomNavigationBar: BottomNav(
@@ -197,21 +199,20 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-
   void _registerPressed() {
     print('Event Confirmation pressed');
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DisplayEvents(
-                  screen: ScreenType.Browse, mode: EventButtonMode.Register,
+                  screen: ScreenType.Browse,
+                  mode: EventButtonMode.Register,
                 )));
-    
   }
 }
 
 // ignore: must_be_immutable
-class _buildForm extends StatelessWidget{
+class _buildForm extends StatelessWidget {
   TextEditingController txtId = TextEditingController();
   TextEditingController txtName = TextEditingController();
   //TextEditingController txtLastName = TextEditingController();
@@ -220,7 +221,6 @@ class _buildForm extends StatelessWidget{
       TextEditingController(); //passwordController
   final TextEditingController confirmTxtPassword =
       TextEditingController(); //confirmPasswordController
-
 
   //removed const bc myFocusNode can't be final
   _buildForm({
@@ -235,9 +235,8 @@ class _buildForm extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-     // vars to pass to mutation
+    // vars to pass to mutation
 
-   
     return Form(
         key: _formKey,
         child: Column(
@@ -253,13 +252,11 @@ class _buildForm extends StatelessWidget{
                     return 'Name required';
                   } else if (value.length < 3) {
                     return 'Name must be at least 3 characters long.';
-                  }
-                  else{
+                  } else {
                     // we'll pass this to the backend
                     name = value;
                     return null;
                   }
-                  
                 },
                 decoration: InputDecoration(
                   labelText: 'Name',
@@ -281,8 +278,7 @@ class _buildForm extends StatelessWidget{
                     return 'Email required';
                   } else if (value.length < 3) {
                     return 'Email not valid.';
-                  }
-                  else {
+                  } else {
                     // we'll pass this to the backend
                     email = value;
                     return null;
@@ -309,8 +305,7 @@ class _buildForm extends StatelessWidget{
                     return 'Password required';
                   } else if (value.length < 3) {
                     return 'Password must be at least 3 characters long.';
-                  }
-                  else {
+                  } else {
                     // we'll pass this to the backend
                     password = value;
                     return null;
@@ -370,6 +365,5 @@ class _buildForm extends StatelessWidget{
             // ),
           ],
         ));
-        
   }
 }

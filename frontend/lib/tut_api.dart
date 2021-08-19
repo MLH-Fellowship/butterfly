@@ -1,11 +1,14 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 ValueNotifier<GraphQLClient> client = ValueNotifier(
   GraphQLClient(
-    cache: InMemoryCache(),
-    link: HttpLink(uri: 'http://127.0.0.1:8000/graphql'),
+    //deprecated: cache: InMemoryCache(),
+
+    cache: GraphQLCache(store: InMemoryStore()),
+    link: HttpLink(
+        // uri:
+        'http://127.0.0.1:8000/graphql'),
   ),
 );
 
@@ -41,5 +44,5 @@ mutation addEvent(\$input: EventInput!) {
 //   updateTodo(id: \$id, completed: \$completed) {
 //     id
 //   }
-// }  
+// }
 // """;

@@ -56,7 +56,7 @@ packages:
       name: awesome_dialog
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -156,7 +156,7 @@ packages:
     source: hosted
     version: "1.0.3"
   crypto:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -236,7 +236,7 @@ packages:
       name: flutter_dotenv
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.2"
   flutter_driver:
     dependency: "direct dev"
     description: flutter
@@ -354,7 +354,7 @@ packages:
     source: hosted
     version: "0.2.0"
   graphql:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: graphql
       url: "https://pub.dartlang.org"
@@ -380,7 +380,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.2"
+    version: "0.13.3"
   http_multi_server:
     dependency: transitive
     description:
@@ -492,7 +492,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path_provider:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -588,28 +588,42 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.7+3"
+    version: "2.0.6"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   shared_preferences_macos:
     dependency: transitive
     description:
       name: shared_preferences_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1+11"
+    version: "2.0.2"
   shared_preferences_platform_interface:
     dependency: transitive
     description:
       name: shared_preferences_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.0"
   shared_preferences_web:
     dependency: transitive
     description:
       name: shared_preferences_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2+7"
+    version: "2.0.1"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   shelf:
     dependency: transitive
     description:
