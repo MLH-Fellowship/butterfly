@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - development #change to main after final PR
+      - nhi_deploy #change to main after final PR
   workflow_dispatch:
 
 jobs:
