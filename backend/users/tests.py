@@ -2,9 +2,11 @@ from django.test import TestCase
 import json
 from .models import User, Event
 
-# Test user model string representation
 class UserTestCase(TestCase):
     def test_string_representation(self):
+        """ 
+        This test on the User model checks the string representation of User
+        """
         user = User.objects.create(
             name="Test User", email="testuser@gmail.com", password="testpassword123")
             
@@ -12,10 +14,12 @@ class UserTestCase(TestCase):
         self.assertEqual("testuser@gmail.com", user.email)
         self.assertEqual("testpassword123", user.password)
 
-
 # Test event model string representation, user to user relation, and attendee to user relation
 class EventTestCase(TestCase):
     def test_string_representation(self):
+        """ 
+        This test on the Event model checks the string representation of Event. A "user" object is declared but not used as every Event requires one User relation. 
+        """
         user = User.objects.create(
             name="Test User", email="testuser@gmail.com", password="testpassword123")
         event = Event.objects.create( 
@@ -28,8 +32,10 @@ class EventTestCase(TestCase):
         self.assertEqual("Test tag", event.tag)
         self.assertEqual("This is a test paragraph. This paragraph is longer than normal text", event.description)
 
-
     def test_user_relation(self):
+        """ 
+        This test on the Event model checks the ForeignKey relation of User and Event.user.
+        """
         user = User.objects.create(
             name="Test User", email="testuser@gmail.com", password="testpassword123")
         event = Event.objects.create(
@@ -41,6 +47,9 @@ class EventTestCase(TestCase):
         self.assertEqual("testpassword123", event.user.password)
     
     def test_attendee_relation(self):
+        """ 
+        This test on the Event model checks the ManyToMany relation of User and Event.attendees.
+        """
         user1 = User.objects.create(
             name="Test User 1", email="testuser1@gmail.com", password="testpassword123")
         user2 = User.objects.create(
