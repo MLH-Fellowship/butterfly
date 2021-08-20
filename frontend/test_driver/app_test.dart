@@ -1,12 +1,12 @@
 // Imports the Flutter Driver API.
 // this test contains the test suite, which drives the app and verifies that it works as expected
 
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter_driver/flutter_driver.dart';
 // import 'package:flutter_test/flutter_test.dart';
 import 'package:test/test.dart';
-import 'package:frontend/screens/login.dart';
+// import 'package:frontend/screens/login.dart';
 
 void main() {
   group('Butterfly App', () {
@@ -22,7 +22,7 @@ void main() {
 
     late FlutterDriver driver;
 
-    var login = Login();
+    // var login = Login();
 
     // Connect to the Flutter driver before running any tests waiting for main().
     setUpAll(() async {
