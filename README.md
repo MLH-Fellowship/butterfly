@@ -1,7 +1,7 @@
 # butterfly
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/58193906/130270620-8226315d-1a02-49b2-836f-bfac96b519fa.gif" />
+  <img src="https://user-images.githubusercontent.com/58193906/130270620-8226315d-1a02-49b2-836f-bfac96b519fa.gif" width=300 height=auto/>
 </div>
 
 <br>
