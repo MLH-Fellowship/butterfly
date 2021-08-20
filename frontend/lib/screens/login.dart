@@ -12,7 +12,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/loginWidgets.dart';
 import '../widgets/password-input.dart';
 import 'create_account.dart';
-import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -39,9 +38,6 @@ class _LoginState extends State<Login> {
               icon: FontAwesomeIcons.envelope,
               hint: 'Email',
               inputType: TextInputType.emailAddress,
-              onChanged: (value) {
-                    email = value;
-                  },
               inputAction: TextInputAction.next,
             ),
             PasswordInput(
@@ -51,6 +47,7 @@ class _LoginState extends State<Login> {
               inputAction: TextInputAction.done,
               inputType: TextInputType.text,
             ),
+
             SizedBox(
               height: 4,
             ),
