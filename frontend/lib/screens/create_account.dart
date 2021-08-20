@@ -132,6 +132,7 @@ class _CreateAccountState extends State<CreateAccount> {
             ),
           ),
           // next & submit button
+          /// Make a mutation to add a new account to the database
           Mutation(
             options: MutationOptions(
               documentNode: gql(addUser),

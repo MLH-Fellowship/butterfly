@@ -10,6 +10,9 @@ import '../screens/dummy.dart';
 import '../screens/display_events.dart';
 import '../screens/screen_type.dart';
 
+/// Hamburger menu
+/// 
+/// Deprecated, used for development when we need to quickly access a screen
 class NavDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
 
@@ -18,7 +21,7 @@ class NavDrawer extends StatelessWidget {
     // Menu items
     return Drawer(
       child: Material(
-        // Use material instead of container so it's clickable?
+        // Use material instead of container so it's clickable
         child: ListView(
           padding: padding,
           children: <Widget>[
@@ -37,7 +40,7 @@ class NavDrawer extends StatelessWidget {
                 text: 'Create Event',
                 icon: Icons.add,
                 onClicked: () => selectedItem(
-                    context, 1) //uncomment when the page has been created
+                    context, 1) 
                 ),
             const SizedBox(
               height: 16,
@@ -119,7 +122,7 @@ class NavDrawer extends StatelessWidget {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => DummyPage()));
         break;
- 
+      // uncomment when you want to add a route
       // case 3:
       //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => YourPageName()));
       //   break;

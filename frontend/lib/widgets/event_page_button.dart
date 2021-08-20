@@ -11,11 +11,13 @@ import 'package:frontend/screens/event_register.dart';
 import 'package:frontend/screens/screen_type.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-
+/// The button displayed on the event cards and event pages
+/// 
+/// Changes styling and function based on the screen it belongs to
 class eventPageButton extends StatefulWidget {
   final EventButtonMode mode; // determines text and colour
   final ScreenType screen; // determines size
-  final String eventID;
+  final String eventID; // used to query for a specific event
   const eventPageButton({ Key? key, required this.mode, required this.screen, required this.eventID}) : super(key: key);
 
   @override
@@ -27,34 +29,35 @@ class _eventPageButtonState extends State<eventPageButton> {
   Widget build(BuildContext context) {
   
     return Positioned(
-      // alignment: Alignment.bottomCenter,
       bottom: 0.0,
       child: renderButton(widget.mode, widget.screen)
     );
   }
 
+  /// Style the button according to screen type
   Widget renderButton(mode, screen){
-    // determine the size based on the page type
+    /// Determines the size based on the page type
     double buttonFontSize;
     double buttonRadius;
     double buttonPadding;
-    // if the screen is a display of event cards, then the button will be smaller
+    /// If the screen is a list of event cards, then the button will be smaller
     if(screen == ScreenType.Browse || screen == ScreenType.Hosting || screen == ScreenType.Attending){
       buttonFontSize = 16.0;
       buttonRadius = 15.0;
       buttonPadding = 10.0;
     }
-    // if the screen is an individual event page, then the button will be bigger
+    /// If the screen is an individual event page, then the button will be bigger
     else{
       buttonFontSize = 22.0;
       buttonRadius = 20.0;
       buttonPadding = 12.0;
     }
 
-    // determine text, colour, and function based on the mode
+    /// Determines text, colour, and function based on the mode
     Color buttonColor;
     String buttonText;
 
+    /// Return the appropriate button based on the mode we receive
     if(mode == EventButtonMode.Delete){
       buttonColor = Colors.red;
       buttonText = 'Delete';
@@ -73,6 +76,7 @@ class _eventPageButtonState extends State<eventPageButton> {
   }
 
   Widget deleteButton(Color buttonColor, String buttonText, double buttonFontSize, double buttonRadius, double buttonPadding){
+    /// Mutation string
     final String deleteEvent = """
       mutation deleteEvent(\$eventId: ID!) {
         deleteEvent(eventId: \$eventId) {
@@ -81,7 +85,8 @@ class _eventPageButtonState extends State<eventPageButton> {
       }
       """;
 
-      // Make a delete event mutation
+      /// Make a mutation to delete an event from the backend
+      /// Mutations wrap around the buttons that trigger them
       return Mutation(
       options: MutationOptions(
         documentNode: gql(deleteEvent),
@@ -99,7 +104,7 @@ class _eventPageButtonState extends State<eventPageButton> {
         },
       ), 
       builder: (RunMutation runMutation, QueryResult result){
-        // next & submit button
+        // Delete button
         return ElevatedButton(
           onPressed: () {
               runMutation({
@@ -147,7 +152,7 @@ class _eventPageButtonState extends State<eventPageButton> {
   } // deleteButton
 
   Widget cancelButton(Color buttonColor, String buttonText, double buttonFontSize, double buttonRadius, double buttonPadding){
-    // send a cancellation mutation
+    // Mutation string
     final String cancelRegistration = """
       mutation deleteAttendees(\$eventId: ID!, \$userId: ID!) {
         deleteAttendees(eventId: \$eventId, userId: \$userId) {
@@ -163,6 +168,7 @@ class _eventPageButtonState extends State<eventPageButton> {
       }
       """;
 
+    /// Make a mutation to delete an attendee from an event's list of attendees
     return Mutation(
       options: MutationOptions(
         documentNode: gql(cancelRegistration),
@@ -181,7 +187,7 @@ class _eventPageButtonState extends State<eventPageButton> {
         },
       ), 
       builder: (RunMutation runMutation, QueryResult result){
-        // next & submit button
+        // Cancel button button
         return ElevatedButton(
           onPressed: () {
               runMutation({

@@ -1,5 +1,5 @@
-// Converts the month number into the month word
-// e.g. '01' -> 'JAN'
+/// Converts a month from numbers into letetrs
+/// e.g. '01' -> 'JAN'
 String mapMonth(String month){
   if(month == '01'){
     return 'JAN';

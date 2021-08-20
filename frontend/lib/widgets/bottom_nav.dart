@@ -7,9 +7,11 @@ import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/create_event_form.dart';
 import '../screens/screen_type.dart';
 
+/// The bottom navigation bar
+/// 
+/// Added to the bottom of each screen
 class BottomNav extends StatefulWidget {
-  final ScreenType screen;
-  // final int pageIndex;
+  final ScreenType screen; // Determines which icon to highlight
   const BottomNav({ Key? key, required this.screen }) : super(key: key);
 
   @override
@@ -31,11 +33,11 @@ class _BottomNavState extends State<BottomNav> {
       _selectedIndex = index;
     });
     // We don't pop, bc we want to return to this pg when we dismiss the event page
+    // Navigate to the appropriate page when an icon is tapped
     Navigator.push(context, PageRouteBuilder(
         opaque: false,
         transitionDuration: Duration.zero,
         pageBuilder: (BuildContext context, _, __) {
-          //return Center(child: Text('My PageRoute'));
           return _navItems.elementAt(_selectedIndex);
         }
       )
@@ -46,11 +48,9 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     
     setState(() {
-      _selectedIndex = widget.screen.index;
+      _selectedIndex = widget.screen.index; // The screen we're currently on
     });
 
-    // print(_selectedIndex);
-    print(widget.screen.index);
     return BottomNavigationBar(
       backgroundColor: Palette.secondary_background,
       unselectedItemColor: Palette.primary_text,
@@ -81,7 +81,6 @@ class _BottomNavState extends State<BottomNav> {
           label: 'Log out'
         ),
       ],
-      // currentIndex: _selectedIndex,
       currentIndex: widget.screen.index,
       onTap: _onItemTap, // excl () bc we only call this func when we tap. Having () means we call it indefinitely
     );

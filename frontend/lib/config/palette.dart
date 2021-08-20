@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+/// Defines the colours used for the app's design scheme
 class Palette {
   static const Color primary_background = Color(0xFFFAEEE7); // need to prefix hex codes with '0xFF'
   static const Color secondary_background = Color(0xFFFFFDF8);
