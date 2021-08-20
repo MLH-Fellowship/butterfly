@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - development #change to main after final PR
+      - main
   workflow_dispatch:
 
 jobs:
@@ -29,4 +29,4 @@ jobs:
           SSH_IP: ${{ secrets.SSH_IP }}
 
       - name: Deploy site
-        run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && git fetch && git reset --hard origin/development && docker-compose down && docker-compose up -d --build'
+        run: ssh my-vm 'cd ${{ secrets.PROJECT_ROOT }} && git fetch && git reset --hard origin/main && docker-compose down && docker-compose up -d --build'
