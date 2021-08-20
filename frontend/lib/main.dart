@@ -8,20 +8,18 @@ import 'package:frontend/screens/event_button_mode.dart';
 import 'package:frontend/screens/landingpg.dart';
 import 'package:frontend/screens/create_account.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'graphql_conf.dart';
-import 'query_mutation.dart';
+import './graphql_conf.dart';
+import './query_mutation.dart';
 
 // screens
 import 'screens/browse_events.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'screens/create_event_form.dart';
-import '../widgets/exp_datetime.dart';
+// import '../widgets/exp_datetime.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/screens/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'config/palette.dart';
-import 'graphql_conf.dart';
-import 'query_mutation.dart';
 import 'package:gql/ast.dart';
 import 'package:gql/document.dart';
 import 'package:gql/language.dart';
@@ -32,12 +30,16 @@ import 'widgets/custom_bar.dart';
 import 'screens/eventpg.dart';
 import 'screens/display_events.dart';
 import 'screens/screen_type.dart';
+import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
 
 GraphQLConfiguration graphQLConfiguration = GraphQLConfiguration();
 
 void main() async {
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfig.loadEnvVariables();
+  await initHiveForFlutter();
 
   runApp(GraphQLProvider(
     client: GraphQLConfiguration.client,
@@ -69,8 +71,7 @@ class MyApp extends StatelessWidget {
             fontFamily: GoogleFonts.montserrat().fontFamily,
             textTheme: GoogleFonts.montserratTextTheme(),
             pageTransitionsTheme: PageTransitionsTheme(builders: {
-              TargetPlatform.android: CupertinoPageTransitionsBuilder( 
-                ),
+              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
               TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
             })),
         //home: const LoginPage(
@@ -282,7 +283,8 @@ class _LoginPageState extends State<LoginPage> {
             pageBuilder: (BuildContext context, _, __) {
               //return Center(child: Text('My PageRoute'));
               return DisplayEvents(
-                screen: ScreenType.Browse, mode: EventButtonMode.Register,
+                screen: ScreenType.Browse,
+                mode: EventButtonMode.Register,
               );
             }));
   }

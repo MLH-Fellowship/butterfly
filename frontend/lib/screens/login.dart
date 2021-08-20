@@ -12,6 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/loginWidgets.dart';
 import '../widgets/password-input.dart';
 import 'create_account.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -28,102 +29,58 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      //Scaffold(
-      //backgroundColor: Colors.transparent,
-      //body: Column(
       alignment: Alignment.center,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextInputField(
+              key: const Key('Email'),
               icon: FontAwesomeIcons.envelope,
               hint: 'Email',
               inputType: TextInputType.emailAddress,
+              onChanged: (value) {
+                    email = value;
+                  },
               inputAction: TextInputAction.next,
             ),
             PasswordInput(
+              key: const Key('Password'),
               icon: FontAwesomeIcons.lock,
               hint: 'Password',
               inputAction: TextInputAction.done,
               inputType: TextInputType.text,
             ),
-            // GestureDetector(
-            //   onTap: () => Navigator.pushNamed(context, 'ForgotPassword'),
-            //   child: Text(
-            //     'Forgot Password',
-            //     style: Palette.kBodyText,
-            //   ),
-            // ),
             SizedBox(
               height: 4,
             ),
             // @TODO INSERT that onPress() to ROUNDEDBUTTON to login
             RoundedButton(
               buttonName: 'Login',
+              key: const Key('Login'),
             ),
             SizedBox(
               height: 1,
             ),
             TextButton(
                 child: const Text('Create New Account'),
+                key: const Key('Create New Account'),
                 onPressed: () {
                   Route route = MaterialPageRoute(
-                      builder: (context) =>
-                          CreateAccount(account: this.account, isAdd: false, screen: ScreenType.CreateAccount, ));
+                      builder: (context) => CreateAccount(
+                            account: this.account,
+                            isAdd: false,
+                            screen: ScreenType.CreateAccount,
+                          ));
                   Navigator.push(context, route);
                 },
-                style: TextButton.styleFrom(primary: Palette.highlight_1)
-                ),
+                style: TextButton.styleFrom(primary: Palette.highlight_1)),
           ],
         ),
-        // GestureDetector(
-        //   onTap: () => Navigator.pushNamed(context, 'CreateNewAccount'),
-        //   child: Container(
-        //     child: Text(
-        //       'Create New Account',
-        //       style: Palette.kBodyText,
-        //     ),
-        //     decoration: BoxDecoration(
-        //         border: Border(
-        //             bottom: BorderSide(width: 1, color: Palette.highlight_1))),
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 20,
-        // ),
+
       ], //Column of Scaffold
-      //),
+    
     );
-    //  ElevatedButton(
-    // onPressed: _registerPressed,
-    //  //style: ButtonStyle(padding: EdgeInsets.all(0.0), ),
-    // child: const Text('Register', style: TextStyle(fontSize: 11)),
-    // style: ElevatedButton.styleFrom(primary: Palette.highlight_2),
-    // );
-
-    // Scaffold(
-    //   endDrawer: NavDrawer(),
-    //   body: Container(
-    //       padding: EdgeInsets.symmetric(
-    //         vertical: 50.0,
-    //         horizontal: 10.0,
-    //       ),
-    //       child: _buildForm(formKey: _formKey)
-    //       ),
-    //   floatingActionButton: FloatingActionButton(
-    //     child: button,
-    //     onPressed: () => setState(() {
-    //       if (_formKey.currentState!.validate()) {
-    //         debugPrint('All fields entered.');
-
-    //         button = Icon(Icons.done);
-    //         debugPrint('submit clicked');
-    //       }
-    //     }),
-    //     //child: Icon(Icons.keyboard_return_rounded),
-    //   ),
-    // );
   }
 
   void _registerPressed() {

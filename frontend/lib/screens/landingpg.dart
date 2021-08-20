@@ -56,6 +56,7 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
         children: [
           FadeTransition(
             opacity: _logoController,
+            key: const Key('lottie'),
             child: Column(
               children: [
                 Padding(
@@ -73,18 +74,13 @@ class _LandingPgState extends State<LandingPg> with TickerProviderStateMixin {
           ),
           FadeTransition(
             opacity: _buttonsController,
+            key: const Key('buttonsController'),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(40.0, 1.0, 40.0, 5.0),
                   child: Login(),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
-                //   child:
-                //   //SignUp(),
-                //   Delete(),
-                // ),
               ],
             ),
           ),

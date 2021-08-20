@@ -43,8 +43,8 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   awesome_dialog: ^2.1.0
   shared_preferences:
-  dropdown_date_picker:
   sqflite: ^2.0.0+3
+  provider: ^6.0.0
 
   graphql_flutter: ^5.0.0
   http: ^0.13.0
@@ -57,7 +57,7 @@ dependency_overrides:
   # path: ^2.1.3
 
 dev_dependencies:
-  flutter_config: ^1.0.8
+  flutter_config: ^2.0.0
   flutter_driver:
     sdk: flutter
   test: any

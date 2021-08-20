@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:hive/hive.dart';
 
 class GraphQLConfiguration {
   static HttpLink httpLink = HttpLink(
@@ -11,6 +12,7 @@ class GraphQLConfiguration {
   static ValueNotifier<GraphQLClient> client = ValueNotifier(
     GraphQLClient(
       link: httpLink,
+      
       cache: GraphQLCache(store: HiveStore()),
       //deprecated: graphql_flutter ^3.0.0
       // cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
