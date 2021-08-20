@@ -4,6 +4,14 @@ from users.models import Event, User
 
 # GraphQL mutation for adding an event from EventInput
 class AddEvent(graphene.Mutation):
+    """GraphQL mutation to create an Event object from EventInput
+
+        Args:
+            input (EventInput): All fields of EventInput are required.
+
+        Returns:
+            EventType: An Event object
+    """
     class Arguments:
         input = EventInput(required=True)
 
@@ -15,8 +23,15 @@ class AddEvent(graphene.Mutation):
         _event = Event.objects.create(**input)
         return AddEvent(event=_event)
 
-# GraphQL mutation for deleting an event from eventID
 class DeleteEvent(graphene.Mutation):
+    """GraphQL mutation to delete an existing Event object by ID
+
+        Args:
+            eventId (graphene.ID): ID of Event object
+
+        Returns:
+            Boolean: True/False value of whether the object was deleted
+    """
     class Arguments:
         eventId = graphene.ID()
 
@@ -29,8 +44,16 @@ class DeleteEvent(graphene.Mutation):
             return DeleteEvent(deleted=True)
         return DeleteEvent(deleted=False)
 
-# GraphQL mutation for adding attendees to an event given an eventID and userID
 class AddAttendees(graphene.Mutation):
+    """GraphQL mutation to add a User object to an existing Event object's attendees
+
+    Args:
+        eventId (graphene.ID): ID of Event object
+        userId (graphene.ID): ID of User object
+
+    Returns:
+        [EventType]: An Event object
+    """
     class Arguments:
         eventId = graphene.ID()
         userId = graphene.ID()
@@ -46,8 +69,16 @@ class AddAttendees(graphene.Mutation):
             _event.save()
         return AddAttendees(event=_event)
 
-# GraphQL mutation for deleting attendees from an event given an eventID and userID
 class DeleteAttendees(graphene.Mutation):
+    """GraphQL mutation to delete a User object from an existing Event object's attendees
+
+    Args:
+        eventId (graphene.ID): ID of Event object
+        userId (graphene.ID): ID of User object
+
+    Returns:
+        EventType: An Event object
+    """
     class Arguments:
         eventId = graphene.ID()
         userId = graphene.ID()
@@ -62,8 +93,15 @@ class DeleteAttendees(graphene.Mutation):
             _event.attendees.remove(_user)
         return DeleteAttendees(event=_event)
 
-# GraphQL mutation for adding a User from UserInput
 class AddUser(graphene.Mutation):
+    """GraphQL mutation to create an User object from UserInput
+
+        Args:
+            input (UserInput): All fields of UserInput are required.
+
+        Returns:
+            UserType: A User object
+    """
     class Arguments:
         input = UserInput(required=True)
 
