@@ -10,10 +10,14 @@ import 'package:frontend/widgets/event_page_button.dart';
 
 import '../config/palette.dart';
 
+/// Displays an individual event page
+/// 
+/// Renders as an expanded card that slides up when an event card is clicked
+/// Slides down to reveal the event cards when dismissed
 class EventPage extends StatelessWidget {
-  final String eventID;
-  final EventButtonMode mode;
-  final ScreenType screen;
+  final String eventID; // determines which event to query for
+  final EventButtonMode mode; // determines which button to display
+  final ScreenType screen; // determines which type of screen to display
   const EventPage({ Key? key, required this.eventID, required this.mode, required this.screen }) : super(key: key);
 
   @override
@@ -37,30 +41,32 @@ class EventPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // leadingWidth: 145.0, //to avoid overflow error
         backgroundColor: Palette.primary_background,
         elevation: 0,
         leading: TextButton.icon(
           style: TextButton.styleFrom(primary: Palette.primary_text),
-          onPressed: () => Navigator.of(context).pop(), //dismiss the screen
+          onPressed: () => Navigator.of(context).pop(), // dismiss the screen
           icon: const Icon(CupertinoIcons.chevron_down), 
           label: Text('')
         ),
         
       ),
+      /// Make a query to the database for a single event based on its ID
       body: Query(
         options: QueryOptions(
           documentNode: gql(getEventById),
           fetchPolicy: FetchPolicy.networkOnly,
         ),
         builder: (QueryResult? result,{VoidCallback? refetch, FetchMore? fetchMore}) {
-          // handle exceptions and loading
+          /// Handle exceptions and loading
+          /// Necessary. Otherwise, an error will be thrown 
+          /// while we wait for the database to return our requested data
           refetchQuery = refetch!;
           if (result!.hasException) {
             return Text(result.exception.toString());
           }
           if (result.loading) {
-            return Text(''); //just display a blank page when loading
+            return Text(''); // Just display a blank page when loading
           }
 
           final event = result!.data['event'];
@@ -72,16 +78,16 @@ class EventPage extends StatelessWidget {
               color: Palette.secondary_background,
               borderRadius: BorderRadius.circular(40.0)
             ),
-            child: Stack( // we want the button to overlap/ "float over" the content
+            child: Stack( /// We want the button to overlap/ "float over" the content
               alignment: Alignment.center,
               children: [
-                ListView( //display as listview so we can scroll
+                ListView( /// Display as listview so we can scroll
                   children: [
                     renderContent(
                       event['name'],
                       event['location'],
-                      mapMonth(event['date'].substring(5, 7)), // month
-                      event['date'].substring(8, 10), // day
+                      mapMonth(event['date'].substring(5, 7)), // extract month, convert it to letters
+                      event['date'].substring(8, 10), // extract day
                       event['startTime'],
                       event['endTime'],
                       event['description']
@@ -97,6 +103,7 @@ class EventPage extends StatelessWidget {
     );
   }
 
+  // Renders the page as a whole
   Widget renderContent(String eventName, String location, String month, String day, String startTime, String endTime, String description, ){
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center, //left-aligned
@@ -139,10 +146,11 @@ class EventPage extends StatelessWidget {
     );
   }
   
+  /// Renders the page body
   Widget renderSection(String heading, String body){
     return Row(
       children: [
-        Expanded( //wrap in expanded so the divider knows how much space to take
+        Expanded( //wrap in expanded so the divider knows how much space to take up
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

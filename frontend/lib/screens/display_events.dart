@@ -15,9 +15,13 @@ import 'screen_type.dart';
 import 'event_page.dart';
 import 'map_month.dart';
 
-
+/// Displays a list of events based on 3 tabs:
+/// 
+/// 1. Browse Events
+/// 2. Events You're Attending
+/// 3. Events You're hosting
 class DisplayEvents extends StatefulWidget {
-  // takes a paramter to customize the page name
+  /// Determines which screen and button to render
   final ScreenType screen;
   final EventButtonMode mode;
   const DisplayEvents({Key? key, required this.screen, required this.mode}) : super(key: key);
@@ -31,16 +35,14 @@ class _DisplayEventsState extends State<DisplayEvents> {
   Widget build(BuildContext context) {
     VoidCallback refetchQuery;
     
-    // Based on param, determine type of request to make to the backend
+    /// Based on [screen] type, determine type of request to make to the backend
     final String getAllEvents = determineQuery(widget.screen);
 
-    // render each event as a card
+    /// Render each event as a card
     return Scaffold(
-      // endDrawer: NavDrawer(),
-      appBar: CustomBar(widget.screen, false), //display a custom title
+      appBar: CustomBar(widget.screen, false), /// Display a custom title
       body: ListView(
-        padding: EdgeInsets.fromLTRB(
-            2, 5, 2, 5), //add padding to outside of the cards
+        padding: EdgeInsets.fromLTRB(2, 5, 2, 5), // Add padding to outside of the cards
         children: <Widget>[
           Query(
             options: QueryOptions(
@@ -48,20 +50,24 @@ class _DisplayEventsState extends State<DisplayEvents> {
               fetchPolicy: FetchPolicy.networkOnly,
             ),
             
+            /// Make a query to the database for a list of events
             builder: (QueryResult? result, {VoidCallback? refetch, FetchMore? fetchMore}) {
-              // handle exceptions and loading
+              /// Handle exceptions and loading
+              /// Necessary. Otherwise, an error will be thrown 
+              /// while we wait for the database to return our requested data
               refetchQuery = refetch!;
               if (result!.hasException) {
                 return Text(result.exception.toString());
               }
               if (result.loading) {
-                return Text(''); //just display a blank page when loading
+                return Text(''); // just display a blank page when loading
               }
               
               final events = extractData(result, widget.screen);
-              print(" events is type: ${events.runtimeType}");
-              print('events we got back: ${events}');
+              debugPrint(" events is type: ${events.runtimeType}");
+              debugPrint('events we got back: ${events}');
 
+              /// Display a list of cards. 1 card per event
               return ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -81,8 +87,7 @@ class _DisplayEventsState extends State<DisplayEvents> {
     );
   }
 
-  //TODO: Based on param, determine type of request to make to the backend
-
+  /// Formats and renders the info from each event
   Widget buildEventCard(event) => Card(
       // make corners rounded
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
@@ -92,11 +97,12 @@ class _DisplayEventsState extends State<DisplayEvents> {
       elevation: 5,
       margin: EdgeInsets.all(12),
       child: InkWell(
-          // wrap in gesture detector to make card clickable
+          // wrap in inkwell to make card clickable
           onTap: (){
             // We don't pop, bc we want to return to this pg when we dismiss the event page
             Navigator.of(context).push(MaterialPageRoute(
             fullscreenDialog: true,
+            /// When a card is clicked, navigate to the individual event page
             builder: (context) => EventPage(eventID: event['id'], mode: widget.mode, screen: ScreenType.EventPage,)));
           },
           borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -107,24 +113,29 @@ class _DisplayEventsState extends State<DisplayEvents> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Cards are split into left and right for formatting purposes
                     buildCardLeft(
                         eventName: event['name'],
                         location: event['location'],
                         startTime: event['startTime'],
                         endTime: event['endTime'],
-                        description: event['description']),
+                        description: event['description']
+                    ),
                     Container(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: buildCardRight(
-                        month: mapMonth(event['date'].substring(5, 7)),
-                        day: event['date'].substring(8, 10),
-                        eventID: event['id'],
-                        date: event['date']
-                      ),
+                              month: mapMonth(event['date'].substring(5, 7)),
+                              day: event['date'].substring(8, 10),
+                              eventID: event['id'],
+                              date: event['date']
+                            ),
                     )
                   ],
-                )),
-          )));
+                )
+              ),
+          )
+        )
+  );
 
   // card text in left col
   Widget buildCardLeft({required String eventName,required String location, required String startTime, required String endTime, required String description}) {
@@ -154,10 +165,10 @@ class _DisplayEventsState extends State<DisplayEvents> {
           Container(
             padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
             child: Text('${startTime} - ${endTime}',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic)
+                style: TextStyle(fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          fontStyle: FontStyle.italic
+                        )
             )
           ),
           // description

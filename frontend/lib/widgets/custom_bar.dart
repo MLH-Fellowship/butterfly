@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import '../config/palette.dart';
 import '../screens/screen_type.dart';
 
+/// Our app bar. Displays the header of each page
+/// 
+/// [screen] determines which title to display
+/// [centeredTitle] determines the title alignment
 PreferredSizeWidget CustomBar(ScreenType screen, bool centeredTitle) {
-  // Custom app bar
   return AppBar(
     centerTitle: centeredTitle, // left-align the text
     title: Text(display_title(screen), 
@@ -21,7 +24,7 @@ PreferredSizeWidget CustomBar(ScreenType screen, bool centeredTitle) {
 
 }
 
-// determines which title to display, based on the screen type
+/// Determines which title to display, based on the screen type
 String display_title(ScreenType screen){
   if(screen == ScreenType.Butterfly){
     return 'Butterfly';

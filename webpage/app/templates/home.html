@@ -2,8 +2,9 @@
 {% block head %}
         <title>butterfly</title>
 
-        <link rel="preconnect" href="https://fonts.gstatic.com"> 
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <!--<link href="../static/styles/normalize.css" rel="stylesheet">-->
 
         <!--Plain styling-->
@@ -30,13 +31,16 @@
     <div id="hero">
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_xzIOCI.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player>
-        <div class="text-overlay">
+    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_xzIOCI.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  loop autoplay></lottie-player>
+        <div class="col-md-6 text-overlay">
             <h1>butterfly</h1>
-            <h2>Events near you, for you. Insert additional description</h2>        
-            
+            <div>
+                <h2>vents for you, near you.
+                </h2>    
+            </div>
+                
             <div class="fellows-container">
-                    <a class="btn--home" href="/">View in App Store</a>
+                    <a class="btn--home" href="https://github.com/MLH-Fellowship/butterfly">View on GitHub</a>
         </div>
 
         </div>
@@ -44,8 +48,12 @@
 
     <!--Meet the Team-->
     <div id="meet-team">
-        <h2 class="team-heading">Who We Are</h2>
-        <h4>Create and inform others on personalized events.</h4>
+        <div class="col-md-6">
+            <h2 class="team-heading">Who We Are</h2>
+            <h4>Butterfly is an application built with a django and graphql backend and flutter front end. This application is intended to cultivate a community of activists so they are effectively able to communicate their events. Users can post events and choose to attend certain events based on the event list.</h4>
+        </div>
+
+        
         <div class="fellows-container">
  
             <div class="container">
@@ -79,7 +87,7 @@
 
         <div class="fellows-container">
 
-                <a class="btn--home" href="/">View in App Store</a>
+                <a class="btn--home" href="https://github.com/MLH-Fellowship/butterfly">View on GitHub</a>
            
         </div>
 

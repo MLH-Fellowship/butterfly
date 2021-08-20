@@ -11,6 +11,7 @@ import '../../query_mutation.dart';
 import '../models/account.dart';
 import '../widgets/nav_drawer.dart';
 
+/// Parameters to pass in the mutation
 String eventName = "";
 String date = "";
 String startTime = "";
@@ -103,6 +104,7 @@ class _CreateEventFormState extends State<CreateEventForm> {
             SizedBox(
               height: 15,
             ),
+            /// Make a mutation to add an event to the database
             Mutation(
               options: MutationOptions(
                 documentNode: gql(addEvent),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/screens/screen_type.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+
+/// Used by [DisplayEvents] to make the appropriate query to the database
 String determineQuery(ScreenType screen){
   if(screen == ScreenType.Browse){
     return """
@@ -71,6 +73,8 @@ String determineQuery(ScreenType screen){
       """;
 }
 
+/// Since the data we receive is formatted differently for each query,
+/// we need to adjust our indexing accordingly
 List extractData(QueryResult result, ScreenType screen){
   if(screen == ScreenType.Browse){
     print(result.data["allEvents"].runtimeType);
